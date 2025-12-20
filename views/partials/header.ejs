@@ -1,0 +1,80 @@
+<header>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<div id="sideNav" class="side-nav">
+    <a href="javascript:void(0)" class="closebtn">&times;</a>
+    <div class="side-nav-content">
+        <a href="/"><i class="fa-solid fa-house"></i> Početna</a>
+        <a href="/profile"><i class="fa-solid fa-user"></i> Moj Profil</a>
+        <a href="/my-books"><i class="fa-solid fa-book"></i> Oglasi</a>
+        <a href="/settings"><i class="fa-solid fa-circle-plus"></i> Objavi oglas</a>
+       
+    </div>
+</div>
+
+<div id="overlay" class="overlay"></div>
+    <div class="header-container">
+        <div class="header-left">
+            <button class="menu-toggle" aria-label="Open Menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+        </div>
+
+        <div class="header-center">
+            <a href="/" class="logo">
+                <img src="/images/logo.png" alt="BookHub Logo">
+            </a>
+        </div>
+
+        <div class="header-right">
+         
+              <div class="buttons">
+                <a href="/login" class="btn btn-login">Prijava</a>
+                <a href="/register" class="btn btn-register">Registracija</a>
+            </div>
+           
+         
+        </div>
+    </div>
+<div class="second-container">
+    <form action="/search" method="GET" class="inputArea">
+        <div class="search-wrapper">
+            <span class="search-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            </span>
+            <input type="text" name="q" placeholder="Pretraži knjige, autore, žanrove...">
+        </div>
+    </form>
+  <a href="/add-book" class="btn btn-add-book">
+    <i class="fa-solid fa-circle-plus"></i>
+    <span>Objavi knjigu</span>
+</a>
+</div>
+</header>
+
+<script>
+    const menuBtn = document.querySelector('.menu-toggle');
+    const sideNav = document.getElementById('sideNav');
+    const closeBtn = document.querySelector('.closebtn');
+    const overlay = document.getElementById('overlay');
+
+    // Otvori meni
+    menuBtn.addEventListener('click', () => {
+        sideNav.classList.add('open');
+        overlay.style.display = 'block';
+    });
+
+    // Zatvori meni na X
+    closeBtn.addEventListener('click', () => {
+        sideNav.classList.remove('open');
+        overlay.style.display = 'none';
+    });
+
+    // Zatvori meni klikom bilo gdje na zatamnjenu pozadinu
+    overlay.addEventListener('click', () => {
+        sideNav.classList.remove('open');
+        overlay.style.display = 'none';
+    });
+</script>
