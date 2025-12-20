@@ -5,10 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const sequelize = require('./config/db');
 require('dotenv').config();
-
-const Book =  require('./models/Book');
-const User =  require('./models/tables/Users');
-const Order =  require('./models/Order');
+const { User, Book, Cart, Order, OrderItem, UserGenres, Users, UserLanguages, GenresLK, LanguagesLK, BookConditionsLK, LocationsLK } = require('./models/associations');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');

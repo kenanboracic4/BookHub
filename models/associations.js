@@ -8,7 +8,7 @@ const UserLanguages = require("./tables/UserLanguages");
 const UserGenres = require("./tables/UserGenres");
 
 const GenresLK = require("./Lookups/GenresLK");
-const LanguagesLK = require("./Lookups/LanguagesLK");
+const LanguagesLK = require("./Lookups/LanguageLK");
 const LocationsLK = require("./Lookups/LocationsLK");
 const BookConditionsLK = require("./Lookups/BookConditionsLK");
 
