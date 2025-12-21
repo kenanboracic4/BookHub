@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/header.css' />
+    <link rel='stylesheet' href='/stylesheets/bookDetail.css' />
+
+  
+  </head>
+  <body>
+
+    <% include partials/header %>
+
+<div class="book-detail-container">
+  <div class="book-image">
+    <img src='/images/jezevaKucica.png'  alt="<%= book.title %>">
+  </div>
+
+  <div class="book-info">
+    <div class="info-header">
+      <h1 class="book-title"><%= book.title %></h1>
+      <p class="book-author">Autor knjige: <span><%= book.author %></span></p>
+      
+      <div class="meta-row">
+        <div class="rating-box">
+          <img src="/images/star.svg" alt="star" class="star-icon">
+          <span class="rating"><%= book.averageRating %> / 5</span>
+        </div>
+        <div class="view-count">
+          <i class="fa fa-eye"></i> <%= book.viewCount %> pregleda
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+   <div class="price-section">
+  <span class="price-amount">Cijena: <%= parseFloat(book.price).toFixed(2) %> KM</span>
+</div>
+
+<div class="seller-meta-box">
+  <div class="seller-info">
+    <div class="seller-avatar">
+      <i class="fa fa-user"></i> </div>
+    <div class="seller-details">
+      <span class="posted-by">Prodaje:</span>
+      <span class="seller-name">
+        <%= (book.seller) ? book.seller.firstName + ' ' + book.seller.lastName : ' Nepoznato ' %>
+      </span>
+    </div>
+  </div>
+
+  <div class="post-date">
+    <i class="fa fa-calendar-alt"></i>
+    <span><%= new Date(book.createdAt).toLocaleDateString('bs-BA', { day: 'numeric', month: 'long', year: 'numeric' }) %></span>
+  </div>
+</div>
+
+<hr class="divider">
+
+       <div class="description-box">
+      <h3>O knjizi</h3>
+      <p><%= book.description %></p>
+    </div> 
+    <hr class="divider">
+
+    <div class="details-grid">
+      <div class="detail-item">
+        <span class="label">Žanr</span>
+        <span class="value"><%= (book.genre && book.genre.name) ? book.genre.name : 'Nema žanra' %></span>
+      </div>
+      <div class="detail-item">
+        <span class="label">Stanje</span>
+        <span class="value"><%= (book.condition && book.condition.name) ? book.condition.name : 'Nije navedeno' %></span>
+      </div>
+      <div class="detail-item">
+        <span class="label">Lokacija</span>
+        <span class="value"><%= (book.location && book.location.name) ? book.location.name : 'Nije navedeno' %></span>
+      </div>
+      <div class="detail-item">
+        <span class="label">Jezik</span>
+        <span class="value"><%= (book.language && book.language.name) ? book.language.name : 'Nije navedeno' %></span>
+      </div>
+    </div>
+
+ 
+
+   <div class="action-buttons">
+  <a href="/cart/add/<%= book.id %>" class="btn-link btn-buy">
+    <i class="fa fa-shopping-cart"></i> Dodaj u korpu
+  </a>
+  <a href="/messages/user/<%= book.sellerId %>" class="btn-link btn-msg">
+    <i class="fa fa-envelope"></i> Kontaktiraj prodavača
+  </a>
+</div>
+  </div>
+</div>
+
+  
+  </body>
+</html>

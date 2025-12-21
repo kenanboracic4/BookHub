@@ -3,7 +3,7 @@ const bookService = require('../services/bookService');
 exports.renderHomePage = async (req, res) => {
     try {
         const books = await bookService.getHomePageBooks();
-        console.log(books);
+       
         res.render('index',{
             books: books
         });

@@ -1,4 +1,6 @@
-/* Reset osnovnih margina */
+:root {
+    --primary: #183b5e;
+}
 .main-header {
     background-color: #ffffff;
     border-bottom: 1px solid #e0e0e0;
@@ -18,7 +20,7 @@
     padding: 0 10px;
 }
 
-/* Lijeva strana - Hamburger */
+
 .menu-toggle {
     background: none;
     border: none;
@@ -31,11 +33,11 @@
 .bar {
     display: block;
     width: 25px;
-    height: 2px;
-    background-color: #000;
+    height: 3px;
+    background-color: var(--primary);
 }
 
-/* Centar - Logo */
+
 .header-center {
     position: absolute;
     left: 50%;
@@ -44,11 +46,11 @@
 }
 
 .logo img {
-    height: 140px; /* Podesi spram tvog logotipa */
+    height: 140px; 
     width: auto;
 }
 
-/* Desna strana - Ikone */
+
 .header-right {
     display: flex;
     align-items: center;
@@ -57,7 +59,7 @@
 
 .icon-link {
     padding: 0 5px;
-    color: #000;
+    color: var(--primary);
     text-decoration: none;
     transition: opacity 0.2s;
     
@@ -74,13 +76,13 @@
     text-decoration: none;
     font-size: 18px;
     cursor: pointer;
-    color:#000;
+    color: var(--primary);
     font-weight: 600;
 
     transition: background-color 0.2s, color 0.2s;
 }
 .btn-login{
-    border-right: 0.5px solid #00000027;
+    border-right: 0.5px solid var(--primary);
 }
 .second-container {
     display: flex;
@@ -88,14 +90,14 @@
     align-items: center;
     margin-top: 20px;
     gap: 15px;
-    width: 100%; /* Centriranje kontejnera */
+    width: 100%; 
     max-width: 1200px;
     margin-left: auto;
     margin-right: auto;
 }
 
 .inputArea {
-    flex: 1; /* Uzima sav preostali prostor */
+    flex: 1; 
     max-width:100%;
     min-width: 75%;
 }
@@ -117,7 +119,7 @@
 
 .search-wrapper input {
     width: 100%;
-    padding: 12px 12px 12px 40px; /* Veći padding lijevo da napravi mjesta za ikonu */
+    padding: 12px 12px 12px 40px; 
     border: 1px solid #ccc;
     border-radius: 8px;
     font-size: 16px;
@@ -126,29 +128,28 @@
 }
 
 .search-wrapper input:focus {
-    border-color: #262424;
+    border-color: var(--primary);
 }
 
 .btn-add-book {
-    display: inline-flex; /* Omogućava poravnanje elemenata unutra */
-    align-items: center;  /* Centrira ikonu i tekst vertikalno */
+    display: inline-flex; 
+    align-items: center; 
     gap: 8px;
-    background-color: #262424;
+    background-color: var(--primary);
     color: #fff;
     border-radius: 8px;
     font-size: 16px;
     padding: 12px 20px;
     text-decoration: none;
-    white-space: nowrap; /* Sprečava pucanje teksta u dva reda */
+    white-space: nowrap; 
     display: inline-flex;
     align-items: center;
     height: 100%;
 }
 
-/* RESPONZIVNOST */
 @media (max-width: 820px) {
     .second-container {
-        flex-direction: column; /* Na mobitelu ide jedno ispod drugog */
+        flex-direction: column; 
         align-items: stretch;
     }
     
@@ -166,24 +167,29 @@
         left: 50%;
         transform: translateX(-70%);
     }
-     .divider { display: none; }
-    .header-right { gap: 5px; }
-    .logo img { height: 100px; }
+     .divider {
+         display: none;
+         }
+    .header-right {
+         gap: 5px; 
+        }
+    .logo img { 
+        height: 100px;
+     }
 }
 
 
-/* hamburger meni
-/* Side Nav Stil */
+
 .side-nav {
     height: 100%;
-    width: 0; /* Početno sakriven */
+    width: 0;
     position: fixed;
-    z-index: 2000; /* Iznad svega */
+    z-index: 2000; 
     top: 0;
     left: 0;
     background-color: #ffffff;
     overflow-x: hidden;
-    transition: 0.5s; /* Glatko otvaranje */
+    transition: 0.5s; 
     padding-top: 60px;
     box-shadow: 2px 1px 10px rgba(0, 0, 0, 0.519);
 }
@@ -192,7 +198,7 @@
     padding: 15px 32px;
     text-decoration: none;
     font-size: 18px;
-    color: #262424;
+    color: var(--primary);
     display: block;
     transition: 0.3s;
     font-weight: 500;
@@ -214,10 +220,10 @@
     font-size: 36px;
     margin-left: 50px;
     cursor: pointer;
-    color: #000;
+    color: var(--primary);
 }
 
-/* Overlay efekt */
+
 .overlay {
     display: none;
     position: fixed;
@@ -229,14 +235,14 @@
     z-index: 1999;
 }
 
-/* Desktop: 20% širine */
+
 @media screen and (min-width: 821px) {
     .side-nav.open {
         width: 20%;
     }
 }
 
-/* Mobitel: 100% širine */
+
 @media screen and (max-width: 820px) {
     .side-nav.open {
         width: 100%;
