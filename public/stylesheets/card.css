@@ -1,4 +1,6 @@
-
+:root {
+    --primary: #183b5e;
+}
 .card {
     
     max-width: 300px;
@@ -42,7 +44,7 @@
 .card-content h3 {
     margin: 0;
     font-size: 1.5rem;
-    color: #1a1a1a;
+    color: var(--primary);
     font-weight: 800;
     letter-spacing: -0.5px;
 }
@@ -79,7 +81,7 @@
     display: block;
     text-align: center;
     padding: 14px;
-    background: #000000;
+    background: var(--primary);
     color: #ffffff;
     text-decoration: none;
     border-radius: 10px;
