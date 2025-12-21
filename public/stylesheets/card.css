@@ -1,0 +1,105 @@
+
+.card {
+    
+    max-width: 300px;
+    background: #ffffff;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05), 0 20px 48px rgba(0,0,0,0.05);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    font-family: 'Inter',  sans-serif;
+    position: relative;
+    padding: 8px;
+}
+
+.card:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 30px 60px rgba(0,0,0,0.12);
+}
+
+
+.card img {
+    width: 100%;
+    height: 240px; 
+    object-fit: contain;
+    object-position: center;
+    transition: transform 0.5s ease;
+    border-radius: 10px 10px 0 0;
+}
+
+.card:hover img {
+    transform: scale(1.01); 
+}
+
+.card-content {
+    margin-top: 4px;
+    padding: 10px;
+    background: white;
+    position: relative;
+    z-index: 1;
+}
+
+.card-content h3 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: #1a1a1a;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+}
+
+.author {
+    margin-top: 4px;
+    color: #6c757d;
+    font-size: 0.9rem;
+}
+
+.genre {
+    display: inline-block;
+    margin-top: 4px;
+    padding: 8px 15px;
+    background: #f3f4f6;
+    color: #4b5563;
+    border-radius: 6px;
+    font-size: 0.70rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.price {
+    display: block;
+    margin: 5px 0px 15px  0;
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: #111827be;
+}
+
+
+.btn-details {
+    display: block;
+    text-align: center;
+    padding: 14px;
+    background: #000000;
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 1rem;
+    transition:all 0.43s ease-in-out;
+}
+
+.btn-details:hover {
+    background: #ffffffcb;
+    color:#000000;
+    border: 1px solid #000000;
+}
+
+/* Prilagodba za mobilne uređaje */
+@media (max-width: 480px) {
+    .card {
+        max-width: 100%;
+    }
+    .card img {
+        height: 320px;
+    }
+}

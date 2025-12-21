@@ -24,24 +24,25 @@ Book.belongsTo(User, { foreignKey: 'sellerId', as: 'seller' });
 
 // Žanrovi 
 GenresLK.hasMany(Book, { foreignKey: 'genreId' });
-Book.belongsTo(GenresLK, { foreignKey: 'genre' });
+Book.belongsTo(GenresLK, { foreignKey: 'genreId', as: 'genre' }); 
 
 // Jezici 
 LanguagesLK.hasMany(Book, { foreignKey: 'languageId' });
-Book.belongsTo(LanguagesLK, { foreignKey: 'language' });
+Book.belongsTo(LanguagesLK, { foreignKey: 'languageId', as: 'language' });
 
 // Stanje knjige 
 BookConditionsLK.hasMany(Book, { foreignKey: 'conditionId' });
-Book.belongsTo(BookConditionsLK, { foreignKey: 'condition' });
+Book.belongsTo(BookConditionsLK, { foreignKey: 'conditionId', as: 'condition' });
 
 // Lokacije 
 LocationsLK.hasMany(Book, { foreignKey: 'locationId' });
-Book.belongsTo(LocationsLK, { foreignKey: 'location' });
+Book.belongsTo(LocationsLK, { foreignKey: 'locationId', as: 'location' });
 
 // Povezivanje korisnika sa gradom
+// Napomena: Proveri da li User model ima kolonu 'locationId'. 
+// Ako u User modelu imaš kolonu 'locationId', koristi nju ovde:
 LocationsLK.hasMany(User, { foreignKey: 'locationId' });
-User.belongsTo(LocationsLK, { foreignKey: 'location' });
-
+User.belongsTo(LocationsLK, { foreignKey: 'locationId', as: 'location' });
 
  // INTERESI KORISNIKA (Many-to-Many)
  // Kupci pri registraciji biraju žanrove i jezike koji ih zanimaju 
