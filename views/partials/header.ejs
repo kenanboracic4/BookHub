@@ -6,7 +6,7 @@
     <div class="side-nav-content">
         <a href="/"><i class="fa-solid fa-house"></i> Početna</a>
         <a href="/profile"><i class="fa-solid fa-user"></i> Moj Profil</a>
-        <a href="/my-books"><i class="fa-solid fa-book"></i> Oglasi</a>
+        <a href="/books"><i class="fa-solid fa-book"></i> Oglasi</a>
         <a href="/settings"><i class="fa-solid fa-circle-plus"></i> Objavi oglas</a>
 
        
@@ -61,19 +61,19 @@
     const closeBtn = document.querySelector('.closebtn');
     const overlay = document.getElementById('overlay');
 
-    // Otvori meni
+    
     menuBtn.addEventListener('click', () => {
         sideNav.classList.add('open');
         overlay.style.display = 'block';
     });
 
-    // Zatvori meni na X
+    
     closeBtn.addEventListener('click', () => {
         sideNav.classList.remove('open');
         overlay.style.display = 'none';
     });
 
-    // Zatvori meni klikom bilo gdje na zatamnjenu pozadinu
+  
     overlay.addEventListener('click', () => {
         sideNav.classList.remove('open');
         overlay.style.display = 'none';

@@ -4,8 +4,8 @@
         <div class="card-content">
             <h3> <%= book.title %></h3>
             <p class="author">Autor: <%= book.author %></p>
-            <p class="genre">Žanr: <%= book.genre %></p>
-            <p class="price">Cijena: <%= book.price %> KM</p>
-            <a href="#" class="btn btn-details">Detalji</a>
+            <p class="genre">Žanr: <%= book.genre ? book.genre.name : 'Nema žanra' %></p>
+            <p class="price">Cijena: <%= parseFloat(book.price).toFixed(2) %> KM</p>
+            <a href="/books/<%= book.id %>" class="btn btn-details">Detalji</a>
         </div>
     </div>
