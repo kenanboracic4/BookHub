@@ -44,5 +44,17 @@ module.exports = {
         ],
         }
         );
+    },
+    getAllGenres() {
+        return GenresLK.findAll();
+    },
+    getAllLocations() {
+        return LocationsLK.findAll();
+    },
+    getAllConditions() {
+        return BookConditionsLK.findAll();
+    },
+    getAllLanguages() {
+        return LanguagesLK.findAll();
     }
 };

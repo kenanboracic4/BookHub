@@ -17,12 +17,6 @@ const Book = sequelize.define("Book", {
         type: DataTypes.STRING, 
         allowNull: false 
     },
-    publisher: { 
-        type: DataTypes.STRING 
-    },
-    yearPublished: { 
-        type: DataTypes.INTEGER 
-    },
     description: { 
         type: DataTypes.TEXT
      },
