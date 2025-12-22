@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="/stylesheets/register.css"/> <title>Prijava | BookHub</title>
+</head>
+<body>
+
+    <div class="container">
+        <div class="image-container">
+            <img src="/images/logo.png" alt="Logo" class="logo-img">
+        </div>
+        <div class="form-container-register">
+            <h2>Dobrodošli nazad</h2>
+            <h5>Unesite podatke za prijavu na nalog:</h5>
+            
+            <form action="/user/login" method="POST" class="register-form" id="login-form">
+                
+                <div class="form-group">
+                    <i class="fa-solid fa-envelope icon"></i>
+                    <input type="email" id="email" name="email" required placeholder="Email">
+                </div>
+
+                <div class="form-group">
+                    <i class="fa-solid fa-lock icon"></i>
+                    <input type="password" id="password" name="password" required placeholder="Lozinka">
+                </div>
+
+                <button id="register-button" type="submit">Prijavi se</button>
+            </form>
+            
+            <p>Nemate nalog? <a href="/user/register">Registrujte se</a></p>
+        </div>
+    </div>
+
+</body>
+</html>
