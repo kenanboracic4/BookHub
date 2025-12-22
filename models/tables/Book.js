@@ -29,7 +29,8 @@ const Book = sequelize.define("Book", {
         },
     isForExchange: {
          type: DataTypes.BOOLEAN, 
-         defaultValue: false },
+         defaultValue: false 
+        },
     status: { 
         type: DataTypes.ENUM('active', 'reserved', 'sold', 'archived'), 
         defaultValue: 'active' 

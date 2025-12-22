@@ -20,6 +20,21 @@ module.exports = {
             bookDao.getAllLanguages()
         ]);
         return { genres, locations, conditions, languages };
+    },
+
+    async addBook(bookData) {
+
+        if(!bookData.title || !bookData.author || !bookData.description){
+            throw new Error('Nedostaju obavezna polja za dodavanje knjige.');
+        }
+
+      
+        if(bookData.price < 0){
+            throw new Error('Cijena knjige ne može biti negativna.');
+        }
+
+        const newBook = await bookDao.createBook(bookData);
+        return newBook;
     }
 
 };

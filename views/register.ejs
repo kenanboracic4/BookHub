@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="/stylesheets/register.css"/>
+    <title>Registracija | BookHub</title>
+</head>
+<body>
+
+    <div class="container">
+        <div class="image-container">
+            <img src="/images/logo.png" alt="Logo" class="logo-img">
+        </div>
+        <div class="form-container-register">
+            <h2>Registracija</h2>
+            <h5>Popunite podatke za kreiranje naloga:</h5>
+            
+            <form action="/user/register" method="POST" class="register-form" id="register-form">
+                
+                <div class="form-group">
+                    <i class="fa-solid fa-user icon"></i>
+                    <input type="text" id="name" name="firstName" required placeholder="Ime">
+                </div>
+
+                <div class="form-group">
+                    <i class="fa-solid fa-address-card icon"></i>
+                    <input type="text" id="surname" name="lastName" required placeholder="Prezime">
+                </div>
+
+                <div class="form-group">
+                    <i class="fa-solid fa-envelope icon"></i>
+                    <input type="email" id="email" name="email" required placeholder="Email">
+                </div>
+
+                <div class="form-group">
+                    <i class="fa-solid fa-lock icon"></i>
+                    <input type="password" id="password" name="password" required placeholder="Lozinka">
+                </div>
+
+        
+
+               <div class="form-group multiple-group">
+    <div class="selection-header">
+        <label><i class="fa-solid fa-tags"></i> Omiljeni žanrovi</label>
+        <span class="instruction-badge">
+            <span class="desktop-info">Držite <b>CTRL</b> za više</span>
+            <span class="mobile-info">Dodirnite za više</span>
+        </span>
+    </div>
+    <select name="genreIds[]" id="genreIds" multiple required class="custom-scroll">
+        <option value="1">Drama</option>
+        <option value="2">Triler</option>
+        <option value="3">Sci-Fi</option>
+        <option value="4">Klasici</option>
+        <option value="5">Horor</option>
+        <option value="6">Istorijski</option>
+        <option value="7">Biografija</option>
+        <option value="8">Fantastika</option>
+        </select>
+</div>
+
+<div class="form-group multiple-group">
+    <div class="selection-header">
+        <label><i class="fa-solid fa-language"></i> Jezici koje čitate</label>
+        <span class="instruction-badge">
+            <span class="desktop-info">Držite <b>CTRL</b></span>
+            <span class="mobile-info">Tapnite više</span>
+        </span>
+    </div>
+    <select name="languageIds[]" id="languageIds" multiple required class="custom-scroll">
+        <option value="1">Bosanski</option>
+        <option value="2">Engleski</option>
+        <option value="3">Njemački</option>
+        <option value="4">Francuski</option>
+        </select>
+</div>
+                <button id="register-button" type="submit">Registruj se</button>
+            </form>
+            
+            <p>Već imate nalog? <a href="/user/login">Prijavite se</a></p>
+        </div>
+    </div>
+
+</body>
+</html>

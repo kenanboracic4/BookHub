@@ -56,5 +56,22 @@ module.exports = {
     },
     getAllLanguages() {
         return LanguagesLK.findAll();
+    },
+
+    createBook(bookData) {
+        return Book.create({
+            title: bookData.title,
+            author: bookData.author,
+            description: bookData.description,
+            price: bookData.price,
+            imageUrl: bookData.imageUrl,
+            isForExchange: bookData.isForExchange || false,
+            genreId: bookData.genreId,
+            locationId: bookData.locationId,
+            conditionId: bookData.conditionId,
+            languageId: bookData.languageId,
+            sellerId: 1 
+
+        });
     }
 };

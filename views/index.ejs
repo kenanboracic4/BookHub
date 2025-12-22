@@ -38,6 +38,35 @@
     </div>
       </div>
 
-  
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+    const urlParams = new URLSearchParams(window.location.search);
+    
+    if (urlParams.get('success') === 'true') {
+        // Kreiramo Toast konfiguraciju
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end', // Možeš staviti i 'bottom-end' za donji ćošak
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        });
+
+        // Ispucavamo obavještenje
+        Toast.fire({
+            icon: 'success',
+            title: 'Knjiga uspješno dodana!'
+        });
+
+        // Čistimo URL
+        window.history.replaceState({}, document.title, window.location.pathname);
+    }
+</script>
+</script>
   </body>
 </html>

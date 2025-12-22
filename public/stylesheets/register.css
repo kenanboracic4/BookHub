@@ -1,0 +1,212 @@
+* {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: radial-gradient(circle, rgba(41, 31, 105, 1) 0%, rgba(35, 25, 99, 1) 57%, rgba(28, 16, 107, 1) 100%);
+    display: flex;
+    justify-content: center; 
+    align-items: center;     
+    min-height: 100vh;       
+    padding: 40px 0; 
+}
+
+.container {
+    width: 90%;
+    max-width: 500px;
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex; 
+    flex-direction: column;
+    align-items: center;
+    padding: 2.5rem;
+}
+.image-container {
+    width: 100%;
+    height: 280px; /* Smanjio sam sa 300px jer je 300 previše i pojest će cijeli ekran */
+   
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+   
+
+.logo-img {
+    max-width: 300px; /* Podesi veličinu logotipa ovdje */
+    height: auto;
+    object-fit: contain;
+    /* Dodajemo blagi sjaj logotipu da iskoči iz plave pozadine */
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+}
+
+/* Popravka za glavni kontejner da se slika uklopi do ivica */
+.container {
+    padding: 0 !important; /* Uklanjamo padding da image-container dodirne ivice */
+    overflow: hidden; /* Da slika ne "pobjegne" van zaobljenih ivica kontejnera */
+}
+
+.form-container-register {
+    padding: 0 2.5rem 2.5rem 2.5rem; /* Vraćamo padding samo formi */
+}
+
+.form-container-register {
+    width: 100%;
+}
+
+h2 { color: white; margin-bottom: 0.5rem; text-align: center; }
+h5 { color: rgba(255,255,255,0.7); margin-bottom: 2rem; text-align: center; font-weight: normal; }
+
+.form-group {
+    margin-bottom: 1.2rem;
+    width: 100%;
+    position: relative;
+}
+
+
+.form-group > i.icon {
+    position: absolute; 
+    left: 15px;         
+    top: 50%;
+    transform: translateY(-50%);
+    color: #ffffff;
+    font-size: 1rem;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.form-group input, 
+.form-group select:not([multiple]) {
+    background-color: transparent;
+    width: 100%;
+    padding: 0.8rem 0.8rem 0.8rem 45px; 
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 12px;
+    font-size: 1rem;
+    color: #ffffff;
+    outline: none;
+    transition: 0.3s;
+}
+
+
+.multiple-group {
+    display: flex;
+    flex-direction: column;
+    color:white;
+    margin-bottom: 1.2rem;
+}
+
+.selection-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+    padding-left: 5px;
+}
+
+.selection-header label {
+    color: white;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.instruction-badge {
+    background: rgba(0, 212, 255, 0.15);
+    color: #00d4ff;
+    padding: 3px 10px;
+    border-radius: 8px;
+    font-size: 0.65rem;
+    border: 1px solid rgba(0, 212, 255, 0.3);
+}
+
+
+select[multiple] {
+    background-color: rgba(0, 0, 0, 0.2) !important;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    border-radius: 12px;
+    color: white;
+    padding: 8px !important;
+    height: 140px;
+    outline: none;
+    cursor: default;
+}
+
+select[multiple] option {
+    padding: 10px;
+    margin-bottom: 3px;
+    border-radius: 8px;
+    background-color: transparent;
+    transition: 0.2s;
+}
+
+.form-group select[multiple] option:checked,
+.form-group select[multiple] option:hover,
+.form-group select[multiple]:focus option:checked {
+    background: #00d4ff linear-gradient(0deg, #00d4ff 0%, #00d4ff 100%) !important;
+    color: #1c106b !important;
+    -webkit-text-fill-color: #1c106b !important; /* Za Chrome/Safari */
+}
+
+
+.custom-scroll::-webkit-scrollbar { 
+    width: 6px;
+ }
+.custom-scroll::-webkit-scrollbar-thumb { 
+    background: #00d4ff; border-radius: 10px; 
+}
+.custom-scroll::-webkit-scrollbar-track { 
+    background: transparent; 
+}
+
+
+#register-button {
+    width: 100%;
+    padding: 1rem;
+    margin-top: 1.5rem;
+    border: none;
+    border-radius: 12px;
+    background-color: #00d4ff;
+    color: #1c106b;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+#register-button:hover {
+    background-color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 212, 255, 0.3);
+}
+
+.form-container-register p {
+    margin-top: 1.5rem;
+    text-align: center;
+    color: white;
+    font-size: 0.9rem;
+}
+
+.form-container-register p a {
+     color: #00d4ff; 
+     font-weight: bold; 
+     text-decoration: none;
+     }
+
+.mobile-info {
+     display: none; 
+    }
+@media (max-width: 768px) {
+    .desktop-info {
+         display: none; 
+        }
+    .mobile-info {
+         display: inline; 
+        }
+    .container {
+         padding: 1.5rem; 
+        }
+}
