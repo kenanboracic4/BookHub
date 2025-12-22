@@ -48,14 +48,10 @@
         </span>
     </div>
     <select name="genreIds[]" id="genreIds" multiple required class="custom-scroll">
-        <option value="1">Drama</option>
-        <option value="2">Triler</option>
-        <option value="3">Sci-Fi</option>
-        <option value="4">Klasici</option>
-        <option value="5">Horor</option>
-        <option value="6">Istorijski</option>
-        <option value="7">Biografija</option>
-        <option value="8">Fantastika</option>
+        <% genres.forEach(function(genre) { %>
+            <option value="<%= genre.id %>"><%= genre.name %>
+            </option>
+        <% }); %>
         </select>
 </div>
 
@@ -68,10 +64,10 @@
         </span>
     </div>
     <select name="languageIds[]" id="languageIds" multiple required class="custom-scroll">
-        <option value="1">Bosanski</option>
-        <option value="2">Engleski</option>
-        <option value="3">Njemački</option>
-        <option value="4">Francuski</option>
+        <% languages.forEach(function(language) { %>
+            <option value="<%= language.id %>"><%= language.name %>
+            </option>
+        <% }); %>
         </select>
 </div>
                 <button id="register-button" type="submit">Registruj se</button>

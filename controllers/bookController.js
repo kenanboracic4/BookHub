@@ -22,7 +22,7 @@ module.exports = {
        
        const LKData = await bookService.getAllLookupData();
 
-
+       
        res.render('addBook', {
             ...LKData
        });
