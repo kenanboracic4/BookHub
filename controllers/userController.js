@@ -116,7 +116,7 @@ module.exports ={
         const id = req.params.id;
 
         const user = await userService.findUserDataById(parseInt(id));
-
+        const userBooks = await userService.getUserBooks(id);
 
         if(!user){
             res.status(404).send('Korisnik nije pronađen.');
@@ -124,7 +124,8 @@ module.exports ={
         }
 
         res.render('userProfile',{
-            user: user
+            user: user,
+            userBooks: userBooks
         });
     }
 

@@ -2,6 +2,7 @@
 const languageLK = require('../models/associations').LanguagesLK;
 const genresLK = require('../models/associations').GenresLK;
 const Users = require('../models/associations').User;
+const Book = require('../models/associations').Book;
 
 module.exports = {
 
@@ -46,6 +47,12 @@ module.exports = {
             await user.setLanguages(userData.languageIds);
         }
         return user;
+    },
+
+    async getUserBooks(id) {
+        return await Book.findAll({
+            where: {sellerId: id}
+        })
     }
     
 };
