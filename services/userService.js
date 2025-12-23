@@ -67,6 +67,14 @@ module.exports = {
     async getUserBooks(id){
 
         return await userDao.getUserBooks(id);
+    },
+
+    async getAllGenres() {
+        return userDao.getAllGenres();
+    },
+
+    async getAllLanguages() {
+        return userDao.getAllLanguages();
     }
 
 };

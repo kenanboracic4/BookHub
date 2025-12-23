@@ -54,5 +54,6 @@ module.exports = {
             where: {sellerId: id}
         })
     }
+
     
 };

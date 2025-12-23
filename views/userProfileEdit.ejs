@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel='stylesheet' href='/stylesheets/header.css' />
+    <link rel="stylesheet" href="/stylesheets/userProfileEdit.css" />
+</head>
+
+<body>
+
+    <% include partials/header %>
+
+    <div class="profile-container">
+        <form action="/user/profile/<%= user.id %>/update" method="POST">
+            
+            <div class="profile-header">
+                <div class="user-meta">
+                    <div class="avatar-wrapper">
+                        <img src="<%= user.profileImage || '/images/noProfileImage.png' %>" alt="Profile">
+                    </div>
+                    <div class="user-basics">
+                        <h1><%= user.firstName %> <%= user.lastName %></h1>
+                        <p><i class="fa-solid fa-envelope"></i> <%= user.email %></p>
+                    </div>
+                </div>
+                <button type="submit" class="btn-edit">
+                    <i class="fa-solid fa-floppy-disk"></i> Sačuvaj
+                </button>
+            </div>
+
+            <div class="profile-grid">
+                <div class="input-group">
+                    <label>Status:</label>
+                    <select name="status">
+                        <option value="Aktivan" <%= user.status === 'Aktivan' ? 'selected' : '' %>>Aktivan</option>
+                        <option value="Neaktivan" <%= user.status === 'Neaktivan' ? 'selected' : '' %>>Neaktivan</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label>Uloga:</label>
+                    <select name="role">
+                        <option value="Kupac" <%= user.role === 'Kupac' ? 'selected' : '' %>>Kupac</option>
+                        <option value="Prodavač" <%= user.role === 'Prodavač' ? 'selected' : '' %>>Prodavač</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label><i class="fa-solid fa-tags"></i> Žanrovi (CTRL + klik):</label>
+                    <select name="genreIds[]" multiple class="multiple-select  big-dropdown">
+                        <% genres.forEach(function(genre) { %>
+                            <option value="<%= genre.id %>" 
+                                <%= user.Genres && user.Genres.some(g => g.id === genre.id) ? 'selected' : '' %>>
+                                <%= genre.name %>
+                            </option>
+                        <% }); %>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label><i class="fa-solid fa-language"></i> Jezici (CTRL + klik):</label>
+                    <select name="languageIds[]" multiple class="multiple-select">
+                        <% languages.forEach(function(lang) { %>
+                            <option value="<%= lang.id %>"
+                                <%= user.Languages && user.Languages.some(l => l.id === lang.id) ? 'selected' : '' %>>
+                                <%= lang.name %>
+                            </option>
+                        <% }); %>
+                    </select>
+                </div>
+
+                <div class="profile-bio">
+                    <label>Biografija:</label>
+                    <textarea name="bio" rows="5" placeholder="Unesite podatke o sebi..."><%= user.bio %></textarea>
+                </div>
+            </div>
+        </form>
+
+        <div class="user-books-section">
+            <h2 class="section-title">Moji oglasi</h2>
+
+            <% if (userBooks && userBooks.length > 0) { %>
+                <div class="books-list">
+                    <% userBooks.forEach(book => { %>
+                        <div class="book-horizontal-card">
+                            <div class="book-main-content">
+                                <div class="book-img-mini">
+                                    <img src="<%= book.imageUrl || '/images/default-book.png' %>" alt="Book cover">
+                                </div>
+                                <div class="book-details-mini">
+                                    <h3><%= book.title %></h3>
+                                    <p class="book-date">
+                                        <i class="fa fa-calendar-alt"></i>
+                                        Objavljeno: <%= new Date(book.createdAt).toLocaleDateString('bs-BA') %>
+                                    </p>
+                                    <p class="book-price-mini"><%= parseFloat(book.price).toFixed(2) %> KM</p>
+                                </div>
+                            </div>
+
+                            <div class="book-actions">
+                                <a href="/books/edit/<%= book.id %>" class="btn-action btn-edit-book">
+                                    <i class="fa fa-edit"></i> Uredi
+                                </a>
+                                <button onclick="deleteBook('<%= book.id %>')" class="btn-action btn-delete-book">
+                                    <i class="fa fa-trash"></i> Obriši
+                                </button>
+                            </div>
+                        </div>
+                    <% }) %>
+                </div>
+            <% } else { %>
+                <p class="no-data">Još niste objavili nijednu knjigu.</p>
+            <% } %>
+        </div>
+    </div>
+
+</body>
+</html>

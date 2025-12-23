@@ -127,6 +127,31 @@ module.exports ={
             user: user,
             userBooks: userBooks
         });
+    },
+
+    async renderUserProfileEditPage(req,res){
+    
+
+    
+       const id = req.params.id;
+
+        const user = await userService.findUserDataById(parseInt(id));
+        const userBooks = await userService.getUserBooks(id);
+        const genres = await userService.getAllGenres();
+        const languages = await userService.getAllLanguages();
+
+        if(!user){
+            res.status(404).send('Korisnik nije pronađen.');
+            return;
+        }
+
+        res.render('userProfileEdit',{
+            user: user,
+            userBooks: userBooks,
+            genres: genres,
+            languages: languages
+        });
     }
+
 
 }
