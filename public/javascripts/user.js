@@ -1,5 +1,5 @@
-$(document).ready(($)=>{
-    $('#registration_form').on('submit', function(event){
+$(document).ready(($)=>{ 
+    $('#registration_form').on('submit', function(event){ // registracija
         event.preventDefault();
 
 
@@ -34,7 +34,7 @@ $(document).ready(($)=>{
         });
     });
 
-    $('#login-form').on('submit', (event)=>{
+    $('#login-form').on('submit', (event)=>{ // login
         event.preventDefault();
          $('#error-message').hide();
 

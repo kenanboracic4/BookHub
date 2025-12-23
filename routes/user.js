@@ -3,6 +3,7 @@ var router = express.Router();
 
 const userController = require('../controllers/userController');
 
+
 router.get('/', function(req, res, next) {
     res.render('userProfile');
 });

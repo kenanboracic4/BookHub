@@ -38,10 +38,10 @@
                 <div class="user-logged-in">
                     <a href="/cart" class="cart-icon-wrapper">
                         <i class="fa-solid fa-cart-shopping"></i>
-                        <span class="cart-badge">0</span>
+                        <span class="cart-badge">3</span>
                     </a>
                     <span class="user-name-text">
-                        <%= user.firstName %>
+                        <%= user.firstName || user.email.split('@')[0] %>
                     </span>
                 </div>
             <% } else { %>
@@ -51,6 +51,24 @@
                 </div>
             <% } %>
         </div>
+    </div>
+
+    <div class="second-container">
+        <form action="/search" method="GET" class="inputArea">
+            <div class="search-wrapper">
+                <span class="search-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                </span>
+                <input type="text" name="q" placeholder="Pretraži knjige, autore, žanrove...">
+            </div>
+        </form>
+        <a href="/books/add-book" class="btn btn-add-book">
+            <i class="fa-solid fa-circle-plus"></i>
+            <span>Objavi knjigu</span>
+        </a>
     </div>
 </header>
 
@@ -67,14 +85,12 @@
                 overlay.style.display = 'block';
             });
         }
-
         if(closeBtn) {
             closeBtn.addEventListener('click', () => {
                 sideNav.classList.remove('open');
                 overlay.style.display = 'none';
             });
         }
-
         if(overlay) {
             overlay.addEventListener('click', () => {
                 sideNav.classList.remove('open');
