@@ -70,8 +70,16 @@ module.exports = {
             locationId: bookData.locationId,
             conditionId: bookData.conditionId,
             languageId: bookData.languageId,
-            sellerId: 1 
+            sellerId: bookData.sellerId
 
+        });
+    },
+
+    async incrementBookViewCount(bookId){
+       
+        return await Book.increment('viewCount',{
+            by: 1,
+            where: {id: bookId}
         });
     }
 };

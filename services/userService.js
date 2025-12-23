@@ -57,6 +57,11 @@ module.exports = {
         }
 
         return user;
+        },
+
+        async findUserDataById(id){
+            
+            return await userDao.findUserDataById(id);
         }
     
 };

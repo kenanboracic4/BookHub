@@ -16,6 +16,16 @@ module.exports = {
         return Users.findOne({ where: { email } });
     },
 
+    async findUserDataById(id) {
+        return Users.findOne({
+            where: { id },
+            include: [
+                { model: genresLK, as: 'Genres', through: { attributes: [] } },
+                { model: languageLK, as: 'Languages', through: { attributes: [] } }
+            ]
+        })
+    },
+
     async createUser(userData) {
 
         const user = await Users.create(
@@ -37,4 +47,5 @@ module.exports = {
         }
         return user;
     }
+    
 };

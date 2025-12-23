@@ -26,13 +26,13 @@ const User = sequelize.define("Users", {
         allowNull: false
     },
     role: {
-        type: DataTypes.ENUM('seller', 'buyer','admin'),
+        type: DataTypes.ENUM('Prodavač', 'Kupac','Admin'),
         allowNull: false,
-        defaultValue: 'buyer'
+        defaultValue: 'Kupac'
     },
     status: {
-        type: DataTypes.ENUM('active', 'inactive', 'banned', 'archived'),
-        defaultValue: 'active'
+        type: DataTypes.ENUM('Aktivan', 'Blokiran', 'Arhiviran'),
+        defaultValue: 'Aktivan'
     },
     blockExpiresAt: {
         type: DataTypes.DATE,
@@ -45,10 +45,6 @@ const User = sequelize.define("Users", {
     profileImage: {
         type: DataTypes.STRING,
         allowNull: true 
-    },
-    locationId: {
-        type: DataTypes.INTEGER,
-        allowNull: true
     }
 }, {
     tableName: "Users",

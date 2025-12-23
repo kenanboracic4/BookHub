@@ -35,6 +35,10 @@ module.exports = {
 
         const newBook = await bookDao.createBook(bookData);
         return newBook;
-    }
+    },
 
+
+    async incrementBookViewCount(bookId){
+        return await bookDao.incrementBookViewCount(bookId);
+    }
 };

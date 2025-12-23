@@ -6,23 +6,28 @@ module.exports = {
        const id = req.params.id;
        const book = await bookService.getBookById(parseInt(id));
 
+       if (isNaN(parseInt(id))) {
+            return res.status(400).send('Neispravan format ID-a knjige.');
+        }
 
 
+       
        if(!book){
               res.status(404).send('Knjiga nije pronađena');
               return;
 
        }
+
+       await bookService.incrementBookViewCount(parseInt(id));
        res.render('bookDetail', {
               book: book
        });
     },
-
+    
     async renderAddBookPage(req, res) {
        
        const LKData = await bookService.getAllLookupData();
-
-       
+      
        res.render('addBook', {
             ...LKData
        });
@@ -39,7 +44,8 @@ module.exports = {
                      genreId: req.body.genreId || null,
                      locationId: req.body.locationId || null,
                      conditionId: req.body.conditionId || null,
-                     languageId: req.body.languageId || null
+                     languageId: req.body.languageId || null,
+                     sellerId: req.user.id       
               };
               await bookService.addBook(bookData);
               

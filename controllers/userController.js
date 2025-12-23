@@ -7,7 +7,7 @@ module.exports ={
 
     async renderRegisterPage(req, res){
         const data = await userService.getLKDataForRegister();
-        console.log(data);
+        
         res.render('register',{
             ...data
         });
@@ -108,6 +108,24 @@ module.exports ={
     async logoutUser(req,res){
          res.clearCookie("token");
         res.redirect("/");
+    },
+
+
+    async renderUserProfilePage(req,res){
+
+        const id = req.params.id;
+
+        const user = await userService.findUserDataById(parseInt(id));
+
+
+        if(!user){
+            res.status(404).send('Korisnik nije pronađen.');
+            return;
+        }
+
+        res.render('userProfile',{
+            user: user
+        });
     }
 
 }
