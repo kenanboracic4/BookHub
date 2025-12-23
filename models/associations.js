@@ -46,12 +46,21 @@ User.belongsTo(LocationsLK, { foreignKey: 'locationId', as: 'location' });
 
  // INTERESI KORISNIKA (Many-to-Many)
  // Kupci pri registraciji biraju žanrove i jezike koji ih zanimaju 
-User.belongsToMany(GenresLK, { through: UserGenres, foreignKey: 'userId' });
+User.belongsToMany(GenresLK, { 
+    through: UserGenres, 
+    foreignKey: 'userId', 
+    otherKey: 'genreId', // Dobra praksa je dodati i otherKey
+    as: 'Genres' // Ovo stvara metodu setGenres
+});
 GenresLK.belongsToMany(User, { through: UserGenres, foreignKey: 'genreId' });
 
-User.belongsToMany(LanguagesLK, { through: UserLanguages, foreignKey: 'userId' });
+User.belongsToMany(LanguagesLK, { 
+    through: UserLanguages, 
+    foreignKey: 'userId', 
+    otherKey: 'languageId',
+    as: 'Languages' // Ovo stvara metodu setLanguages
+});
 LanguagesLK.belongsToMany(User, { through: UserLanguages, foreignKey: 'languageId' });
-
 // NARUDŽBE, STAVKE I KORPA
 
 // Korpa povezuje kupca sa knjigama koje planira naručiti 
