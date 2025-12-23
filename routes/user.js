@@ -9,9 +9,12 @@ router.get('/', function(req, res, next) {
 
 router.get('/register', userController.renderRegisterPage);
 router.get('/login', userController.renderLoginPage);
+router.get('/logout', userController.logoutUser);
 
 router.post('/register-new-user', userController.registerUser);
 router.post('/login',userController.loginUser);
+
+
 
 
 module.exports = router;

@@ -70,8 +70,10 @@ module.exports ={
             const user = await userService.loginUser(email, password);
 
            const token = jwt.sign(
-            {id: user.id ,
-                email: user.email
+            {
+            id: user.id ,
+            email: user.email,
+            firstName: user.firstName
             },
             JWT_SECRET,
             {expiresIn: '1h'}
@@ -101,6 +103,11 @@ module.exports ={
             res.status(500).send('Došlo je do greške na serveru.');
         }
 
+    },
+
+    async logoutUser(req,res){
+         res.clearCookie("token");
+        res.redirect("/");
     }
 
 }

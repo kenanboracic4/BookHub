@@ -5,7 +5,11 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const sequelize = require('./config/db');
 require('dotenv').config();
+const jwt = require('jsonwebtoken');
 const { User, Book, Cart, Order, OrderItem, UserGenres, Users, UserLanguages, GenresLK, LanguagesLK, BookConditionsLK, LocationsLK } = require('./models/associations');
+const {setUserContext} = require('./middleware/auth');
+
+
 
 var indexRouter = require('./routes/index');
 var booksRouter = require('./routes/books');
@@ -21,6 +25,8 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(setUserContext);
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);

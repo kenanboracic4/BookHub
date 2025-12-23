@@ -1,22 +1,26 @@
 <header>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-<div id="sideNav" class="side-nav">
-    <a href="javascript:void(0)" class="closebtn">&times;</a>
-    <div class="side-nav-content">
-        <a href="/"><i class="fa-solid fa-house"></i> Početna</a>
-        <a href="/profile"><i class="fa-solid fa-user"></i> Moj Profil</a>
-        <a href="/books"><i class="fa-solid fa-book"></i> Oglasi</a>
-        <a href="/settings"><i class="fa-solid fa-circle-plus"></i> Objavi oglas</a>
-
-       
+    <div id="sideNav" class="side-nav">
+        <a href="javascript:void(0)" class="closebtn" id="closeBtn">&times;</a>
+        <div class="side-nav-content">
+            <a href="/"><i class="fa-solid fa-house"></i> Početna</a>
+            <a href="/user/profile"><i class="fa-solid fa-user"></i> Moj Profil</a>
+            <a href="/books"><i class="fa-solid fa-book"></i> Oglasi</a>
+            <a href="/books/add-book"><i class="fa-solid fa-circle-plus"></i> Objavi oglas</a>
+            
+            <% if (user) { %>
+                <hr>
+                <a href="/user/logout" class="logout-link"><i class="fa-solid fa-right-from-bracket"></i> Odjavi se</a>
+            <% } %>
+        </div>
     </div>
-</div>
 
-<div id="overlay" class="overlay"></div>
+    <div id="overlay" class="overlay"></div>
+    
     <div class="header-container">
         <div class="header-left">
-            <button class="menu-toggle" aria-label="Open Menu">
+            <button class="menu-toggle" id="menuBtn" aria-label="Open Menu">
                 <span class="bar"></span>
                 <span class="bar"></span>
                 <span class="bar"></span>
@@ -30,52 +34,52 @@
         </div>
 
         <div class="header-right">
-         
-              <div class="buttons">
-                <a href="/login" class="btn btn-login">Prijava</a>
-                <a href="/register" class="btn btn-register">Registracija</a>
-            </div>
-           
-         
+            <% if (user) { %>
+                <div class="user-logged-in">
+                    <a href="/cart" class="cart-icon-wrapper">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                        <span class="cart-badge">0</span>
+                    </a>
+                    <span class="user-name-text">
+                        <%= user.firstName %>
+                    </span>
+                </div>
+            <% } else { %>
+                <div class="buttons">
+                    <a href="/user/login" class="btn btn-login">Prijava</a>
+                    <a href="/user/register" class="btn btn-register">Registracija</a>
+                </div>
+            <% } %>
         </div>
     </div>
-<div class="second-container">
-    <form action="/search" method="GET" class="inputArea">
-        <div class="search-wrapper">
-            <span class="search-icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-            </span>
-            <input type="text" name="q" placeholder="Pretraži knjige, autore, žanrove...">
-        </div>
-    </form>
-  <a href="/books/add-book" class="btn btn-add-book">
-    <i class="fa-solid fa-circle-plus"></i>
-    <span>Objavi knjigu</span>
-</a>
-</div>
 </header>
 
 <script>
-    const menuBtn = document.querySelector('.menu-toggle');
-    const sideNav = document.getElementById('sideNav');
-    const closeBtn = document.querySelector('.closebtn');
-    const overlay = document.getElementById('overlay');
+    document.addEventListener('DOMContentLoaded', () => {
+        const menuBtn = document.getElementById('menuBtn');
+        const sideNav = document.getElementById('sideNav');
+        const closeBtn = document.getElementById('closeBtn');
+        const overlay = document.getElementById('overlay');
 
-    
-    menuBtn.addEventListener('click', () => {
-        sideNav.classList.add('open');
-        overlay.style.display = 'block';
-    });
+        if(menuBtn) {
+            menuBtn.addEventListener('click', () => {
+                sideNav.classList.add('open');
+                overlay.style.display = 'block';
+            });
+        }
 
-    
-    closeBtn.addEventListener('click', () => {
-        sideNav.classList.remove('open');
-        overlay.style.display = 'none';
-    });
+        if(closeBtn) {
+            closeBtn.addEventListener('click', () => {
+                sideNav.classList.remove('open');
+                overlay.style.display = 'none';
+            });
+        }
 
-  
-    overlay.addEventListener('click', () => {
-        sideNav.classList.remove('open');
-        overlay.style.display = 'none';
+        if(overlay) {
+            overlay.addEventListener('click', () => {
+                sideNav.classList.remove('open');
+                overlay.style.display = 'none';
+            });
+        }
     });
 </script>
