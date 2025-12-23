@@ -42,5 +42,21 @@ module.exports = {
     });
 
         return newUser;
-    }
+    },
+
+    async loginUser(email, password){
+        const user = await userDao.findUserByEmail(email);
+        if(!user){
+            throw new Error('Email nije pronađen.');
+        }
+
+        const MatchedPassword = await bcrypt.compare(password, user.password);
+
+        if(!MatchedPassword){
+            throw new Error('Lozinka nije tačna.');
+        }
+
+        return user;
+        }
+    
 };

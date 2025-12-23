@@ -34,4 +34,30 @@ $(document).ready(($)=>{
         });
     });
 
+    $('#login-form').on('submit', (event)=>{
+        event.preventDefault();
+         $('#error-message').hide();
+
+        const loginData = {
+            email: $('#email').val(),
+            password: $('#password').val()
+        };
+
+        $.ajax({
+            url: '/user/login',
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(loginData),
+            success: function(response){
+                window.location.href = '/books';
+            },
+            error: function(xhr){
+                const errorMessage = xhr.responseText || 'Došlo je do greške prilikom prijave.';
+                $('#error-message').text(errorMessage);
+                $('#error-message').show();
+            }
+        })
+    })
+
+
 });

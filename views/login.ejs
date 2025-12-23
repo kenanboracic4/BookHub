@@ -14,7 +14,7 @@
             <h2>Dobrodošli nazad</h2>
             <h5>Unesite podatke za prijavu na nalog:</h5>
             
-            <form action="/user/login" method="POST" class="register-form" id="login-form">
+            <form  class="register-form" id="login-form">
                 
                 <div class="form-group">
                     <i class="fa-solid fa-envelope icon"></i>
@@ -25,7 +25,10 @@
                     <i class="fa-solid fa-lock icon"></i>
                     <input type="password" id="password" name="password" required placeholder="Lozinka">
                 </div>
-
+                <div id="error-message"
+                    style="display: none; color: #ff4d4d;  margin-bottom: 15px; text-align: center;">
+                    <i class="fa-solid fa-circle-exclamation"></i> <span id="error-text"></span>
+                </div>
                 <button id="register-button" type="submit">Prijavi se</button>
             </form>
             
@@ -33,5 +36,8 @@
         </div>
     </div>
 
+
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/javascripts/user.js"></script>
 </body>
 </html>
