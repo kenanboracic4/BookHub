@@ -38,11 +38,12 @@
                 <div class="user-logged-in">
                     <a href="/cart" class="cart-icon-wrapper">
                         <i class="fa-solid fa-cart-shopping"></i>
-                        <span class="cart-badge">3</span>
+                        <span class="cart-badge">0</span>
                     </a>
-                    <span class="user-name-text">
-                        <%= user.firstName || user.email.split('@')[0] %>
-                    </span>
+                   
+
+                        <a class="user-name-text" href="/user/profile"><%= user.firstName %></a>
+                   
                 </div>
             <% } else { %>
                 <div class="buttons">

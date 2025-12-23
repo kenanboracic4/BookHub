@@ -6,7 +6,7 @@
     --gray-border: #e0e0e0;
 }
 
-/* --- OSNOVNI HEADER STIL --- */
+
 .main-header {
     background-color: var(--white);
     border-bottom: 1px solid var(--gray-border);
@@ -27,7 +27,7 @@
     position: relative;
 }
 
-/* --- LIJEVA STRANA (MENU) --- */
+
 .menu-toggle {
     background: none;
     border: none;
@@ -45,7 +45,7 @@
     background-color: var(--primary);
 }
 
-/* --- LOGO (CENTAR) --- */
+
 .header-center {
     position: absolute;
     left: 50%;
@@ -57,14 +57,14 @@
     width: auto;
 }
 
-/* --- DESNA STRANA (AUTH & USER) --- */
+
 .header-right {
     display: flex;
     align-items: center;
     gap: 20px;
 }
 
-/* Dio za prijavljenog korisnika */
+
 .user-logged-in {
     display: flex;
     align-items: center;
@@ -109,7 +109,7 @@
     font-size: 16px;
 }
 
-/* Dugmad za goste */
+
 .buttons {
     display: flex;
     gap: 10px;
@@ -131,7 +131,7 @@
     padding-right: 15px;
 }
 
-/* --- PRETRAGA I DRUGI KONTEJNER --- */
+
 .second-container {
     display: flex;
     justify-content: center;
@@ -192,7 +192,7 @@
     height: 100%;
 }
 
-/* --- SIDE NAV (HAMBURGER) --- */
+
 .side-nav {
     height: 100%;
     width: 0;
@@ -261,10 +261,11 @@
 .user-logged-in {
     display: flex;
     align-items: center;
-    gap: 15px; /* Razmak između korpe i imena */
+    gap: 15px; 
 }
 
 .user-name-text {
+    text-decoration: none;
     font-weight: 600;
     color: var(--primary);
     font-size: 15px;
@@ -276,7 +277,7 @@
     text-overflow: ellipsis;
 }
 
-/* --- RESPONSIVE --- */
+
 @media (max-width: 820px) {
     .second-container {
         flex-direction: column; 
@@ -296,7 +297,7 @@
     }
 
     .user-name span {
-        display: none; /* Sakrij tekst imena na mobitelu, ostavi ikonu */
+        display: none; 
     }
 
     .side-nav.open {

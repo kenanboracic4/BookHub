@@ -96,7 +96,7 @@
     border: 1px solid #000000;
 }
 
-/* Prilagodba za mobilne uređaje */
+
 @media (max-width: 480px) {
     .card {
         max-width: 100%;

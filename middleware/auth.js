@@ -19,7 +19,7 @@ const verifyToken = async (req, res, next) => { // verifikacija tokena
     
 }
 
-const setUserContext = (req, res, next) =>{
+const setUserContext = (req, res, next) =>{ // dodavanje korisnika u res.locals
 
     const token = req.cookies.token;
 
