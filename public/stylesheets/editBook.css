@@ -185,6 +185,19 @@
 }
 
 
+#error-container {
+    display: none;
+     background-color: #e0ddddae; 
+     color: #dc2626; 
+     padding: 12px;
+      border-radius: 10px; 
+      border: 1px solid #fecaca;
+       margin: 20px auto; 
+       font-size: 0.9rem; 
+       align-items: center;
+     gap: 10px;
+}
+    
 .btn-msg {
     background-color: #ffffff;
     color: var(--primary);

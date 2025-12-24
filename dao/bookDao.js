@@ -1,3 +1,4 @@
+
 const Book = require('../models/associations').Book;
 const GenresLK = require('../models/associations').GenresLK;
 const LocationsLK = require('../models/associations').LocationsLK;
@@ -81,5 +82,32 @@ module.exports = {
             by: 1,
             where: {id: bookId}
         });
+    },
+
+    async updateBook(bookId, bookData) {
+    const book = await Book.findByPk(bookId);
+    if (!book) {
+        throw new Error('Knjiga nije pronađena.');
     }
+
+    // Kreiramo objekt za update
+    const updateFields = {
+        title: bookData.title,
+        author: bookData.author,
+        description: bookData.description,
+        price: bookData.price,
+        genreId: bookData.genreId,
+        locationId: bookData.locationId,
+        conditionId: bookData.conditionId,
+        languageId: bookData.languageId
+    };
+
+    // Ako u bookData postoji nova slika, dodaj je u polja za update
+    if (bookData.imageUrl) {
+        updateFields.imageUrl = bookData.imageUrl;
+    }
+
+    return await book.update(updateFields);
+}
+
 };

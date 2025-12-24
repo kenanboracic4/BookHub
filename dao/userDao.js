@@ -57,20 +57,19 @@ module.exports = {
     },
 
     async updateUserProfile(userData, genreIds, languageIds) {
-    // 1. Pronađi korisnika
+    
     const user = await Users.findByPk(userData.id);
     
     if (!user) throw new Error('Korisnik nije pronađen');
 
-    // 2. Update osnovnih polja
+    
     await user.update({
         status: userData.status,
         role: userData.role,
         bio: userData.bio
     });
 
-    // 3. Update asocijacija (OVO SADA RADI jer je 'user' instanca)
-    // Prosleđujemo prazan niz [] ako ništa nije odabrano da bi obrisao stare veze
+    
     await user.setGenres(genreIds || []);
     await user.setLanguages(languageIds || []);
 

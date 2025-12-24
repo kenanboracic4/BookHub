@@ -10,9 +10,10 @@ const verifyToken = require('../middleware/auth').verifyToken;
 
 router.get('/add-book',verifyToken,  bookController.renderAddBookPage);
 router.get('/',  homeController.renderHomePage);
-router.get('/:id',  bookController.renderBooksPage);
+router.get('/details/:id',  bookController.renderBooksPage);
 router.get('/edit/:id', bookController.renderEditBookPage);
 
 router.post('/add-book', verifyToken, upload.single('image'), bookController.handleAddBook);
 
+router.put('/edit/:id', verifyToken, upload.single('image'), bookController.handleEditBook);
 module.exports = router;

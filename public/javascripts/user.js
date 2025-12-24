@@ -60,7 +60,7 @@ $(document).ready(($)=>{
     })
 
    $('#user-update-form').on('submit', function(event) {
-    event.preventDefault(); // OVO MORA DA RADI
+    event.preventDefault(); 
         event.stopPropagation();
 
     
@@ -75,7 +75,7 @@ $(document).ready(($)=>{
         bio: $('textarea[name="bio"]').val()
     };
 
-    console.log("Šaljem podatke:", formData);
+    
     $.ajax({
         url: '/user/profile/' + userId + '/update',
         method: 'PUT',

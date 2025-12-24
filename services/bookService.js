@@ -12,7 +12,7 @@ module.exports = {
         return book;
     },
 
-    async getAllLookupData(){
+    async getAllLookupData() {
         const [genres, locations, conditions, languages] = await Promise.all([
             bookDao.getAllGenres(),
             bookDao.getAllLocations(),
@@ -24,12 +24,12 @@ module.exports = {
 
     async addBook(bookData) {
 
-        if(!bookData.title || !bookData.author || !bookData.description){
+        if (!bookData.title || !bookData.author || !bookData.description) {
             throw new Error('Nedostaju obavezna polja za dodavanje knjige.');
         }
 
-      
-        if(bookData.price < 0){
+
+        if (bookData.price < 0) {
             throw new Error('Cijena knjige ne može biti negativna.');
         }
 
@@ -38,23 +38,39 @@ module.exports = {
     },
 
 
-    async incrementBookViewCount(bookId){
+    async incrementBookViewCount(bookId) {
         return await bookDao.incrementBookViewCount(bookId);
     },
 
-    async getAllGenres(){
+    async getAllGenres() {
         return await bookDao.getAllGenres();
     },
 
-    async getAllLocations(){
+    async getAllLocations() {
         return await bookDao.getAllLocations();
     },
 
-    async getAllConditions(){
+    async getAllConditions() {
         return await bookDao.getAllConditions();
     },
 
-    async getAllLanguages(){
+    async getAllLanguages() {
         return await bookDao.getAllLanguages();
+    },
+
+    async updateBook(bookId, bookData) {
+
+        if (isNaN(bookData.price) || parseFloat(bookData.price) < 0) {
+            throw new Error('Cijena knjige ne moze biti negativna.');
+        }
+
+        if (!bookData.title || !bookData.title.trim() ||
+            !bookData.author || !bookData.author.trim() ||
+            !bookData.description || !bookData.description.trim()) {
+            throw new Error('Nedostaju obavezna polja za ažuriranje knjige.');
+        }
+        return await bookDao.updateBook(bookId, bookData);
+
+
     }
 };
