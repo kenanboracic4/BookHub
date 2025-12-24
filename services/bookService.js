@@ -40,5 +40,21 @@ module.exports = {
 
     async incrementBookViewCount(bookId){
         return await bookDao.incrementBookViewCount(bookId);
+    },
+
+    async getAllGenres(){
+        return await bookDao.getAllGenres();
+    },
+
+    async getAllLocations(){
+        return await bookDao.getAllLocations();
+    },
+
+    async getAllConditions(){
+        return await bookDao.getAllConditions();
+    },
+
+    async getAllLanguages(){
+        return await bookDao.getAllLanguages();
     }
 };

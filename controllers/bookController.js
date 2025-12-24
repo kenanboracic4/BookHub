@@ -54,5 +54,33 @@ module.exports = {
               console.error('Greška prilikom dodavanja knjige:', error);
               res.status(500).send('Došlo je do greške prilikom dodavanja knjige.');
        }
+    },
+
+    async renderEditBookPage(req,res){
+
+       const id = req.params.id;
+       const book = await bookService.getBookById(parseInt(id));
+
+       const genres = await bookService.getAllGenres();
+        const languages = await bookService.getAllLanguages();
+       const conditions = await bookService.getAllConditions();
+       const locations = await bookService.getAllLocations();       
+
+
+       
+       if(!book){
+              res.status(404).send('Knjiga nije pronađena');
+              return;
+
+       }
+
+       await bookService.incrementBookViewCount(parseInt(id));
+       res.render('editBook', {
+              book: book,
+              genres: genres,
+              languages: languages,
+              conditions: conditions,
+              locations: locations
+       });
     }
 };

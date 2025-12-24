@@ -32,7 +32,7 @@
             <div class="profile-grid">
                 <div class="input-group">
                     <label>Status:</label>
-                    <select id="status" name="status">
+                    <select id="status" name="status" disabled>
                         <option value="Aktivan" <%= user.status === 'Aktivan' ? 'selected' : '' %>>Aktivan</option>
                         <option value="Neaktivan" <%= user.status === 'Neaktivan' ? 'selected' : '' %>>Neaktivan</option>
                     </select>
@@ -40,7 +40,7 @@
 
                 <div class="input-group">
                     <label>Uloga:</label>
-                    <select id="role" name="role">
+                    <select id="role" name="role" disabled>
                         <option value="Kupac" <%= user.role === 'Kupac' ? 'selected' : '' %>>Kupac</option>
                         <option value="Prodavač" <%= user.role === 'Prodavač' ? 'selected' : '' %>>Prodavač</option>
                     </select>

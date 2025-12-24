@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel='stylesheet' href='/stylesheets/header.css' />
+    <link rel='stylesheet' href='/stylesheets/editBook.css' />
+    <link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+<body>
+
+    <% include partials/header %>
+
+    <div class="book-detail-container">
+        <div class="book-image">
+            <img src="<%= book.imageUrl %>" alt="<%= book.title %> cover">
+            <span class="image-note">Promijenite sliku oglasa. <br></span>
+                    <input type="file" id="image" name="image" accept="image/*" required>
+        </div>
+
+        <form id="edit-book-form" class="book-info">
+            <div class="info-header">
+                <label class="input-label">Naslov knjige</label>
+                <input type="text" name="title" class="edit-input title-input" value="<%= book.title %>">
+                
+                <label class="input-label">Autor</label>
+                <input type="text" name="author" class="edit-input author-input" value="<%= book.author %>">
+            </div>
+
+            <hr class="divider">
+
+            <div class="price-section">
+                <label class="input-label">Cijena (KM)</label>
+                <input type="number" step="0.01" name="price" class="edit-input price-input" value=" <%= parseFloat(book.price).toFixed(2) %>">
+            </div>
+
+            <div class="description-box">
+                <label class="input-label">Opis knjige</label>
+                <textarea name="description" class="edit-textarea"><%= book.description %></textarea>
+            </div>
+
+            <hr class="divider">
+
+            <div class="details-grid">
+                <div class="detail-item">
+                    <span class="label">Žanr</span>
+                    <select name="genreId" class="edit-select">
+                        <% genres.forEach(genre => { %>
+                            <option value="<%= genre.id %>" <%= book.genreId === genre.id ? 'selected' : '' %>><%= genre.name %></option>
+                        <% }) %>
+                    </select>
+                </div>
+                <div class="detail-item">
+                    <span class="label">Stanje</span>
+                    <select name="conditionId" class="edit-select">
+                        <% conditions.forEach(cond => { %>
+                            <option value="<%= cond.id %>" <%= book.conditionId === cond.id ? 'selected' : '' %>><%= cond.name %></option>
+                        <% }) %>
+                    </select>
+                </div>
+                <div class="detail-item">
+                    <span class="label">Lokacija</span>
+                    <select name="locationId" class="edit-select">
+                        <% locations.forEach(loc => { %>
+                            <option value="<%= loc.id %>" <%= book.locationId === loc.id ? 'selected' : '' %>><%= loc.name %></option>
+                        <% }) %>
+                    </select>
+                </div>
+                <div class="detail-item">
+                    <span class="label">Jezik</span>
+                    <select name="languageId" class="edit-select">
+                        <% languages.forEach(lang => { %>
+                            <option value="<%= lang.id %>" <%= book.languageId === lang.id ? 'selected' : '' %>><%= lang.name %></option>
+                        <% }) %>
+                    </select>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button type="submit" class="btn-link btn-buy">
+                    <i class="fa fa-floppy-disk"></i> Sačuvaj izmjene
+                </button>
+                <a href="/books/details/<%= book.id %>" class="btn-link btn-msg">
+                    Otkaži
+                </a>
+            </div>
+        </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $('#edit-book-form').on('submit', function(e) {
+            e.preventDefault();
+            const bookId = "<%= book.id %>";
+            const formData = $(this).serializeArray().reduce((obj, item) => {
+                obj[item.name] = item.value;
+                return obj;
+            }, {});
+
+            $.ajax({
+                url: '/books/edit/' + bookId,
+                method: 'PUT',
+                contentType: 'application/json',
+                data: JSON.stringify(formData),
+                success: function() {
+                    window.location.href = '/books/details/' + bookId;
+                },
+                error: function() {
+                    alert('Greška prilikom spašavanja.');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
