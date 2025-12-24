@@ -83,7 +83,7 @@ $(document).ready(($)=>{
         data: JSON.stringify(formData),
         success: function(response) {
            
-            window.location.href = '/user/profile/' + userId;
+            window.location.href = '/user/profile/' + userId+ '?success=true';
         },
         error: function(xhr) {
             const errorMessage = xhr.responseText || 'Greška prilikom ažuriranja.';

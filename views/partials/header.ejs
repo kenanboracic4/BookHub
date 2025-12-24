@@ -5,7 +5,7 @@
         <a href="javascript:void(0)" class="closebtn" id="closeBtn">&times;</a>
         <div class="side-nav-content">
             <a href="/"><i class="fa-solid fa-house"></i> Početna</a>
-            <a href="/user/profile"><i class="fa-solid fa-user"></i> Moj Profil</a>
+            <a href="/user/profile/<%= user.id %>"><i class="fa-solid fa-user"></i> Moj Profil</a>
             <a href="/books"><i class="fa-solid fa-book"></i> Oglasi</a>
             <a href="/books/add-book"><i class="fa-solid fa-circle-plus"></i> Objavi oglas</a>
             
@@ -36,7 +36,7 @@
         <div class="header-right">
             <% if (user) { %>
                 <div class="user-logged-in">
-                    <a href="/cart" class="cart-icon-wrapper">
+                    <a href="/" class="cart-icon-wrapper">
                         <i class="fa-solid fa-cart-shopping"></i>
                         <span class="cart-badge">0</span>
                     </a>
@@ -100,3 +100,4 @@
         }
     });
 </script>
+

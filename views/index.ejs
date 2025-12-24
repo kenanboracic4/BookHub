@@ -44,10 +44,10 @@
     const urlParams = new URLSearchParams(window.location.search);
     
     if (urlParams.get('success') === 'true') {
-        // Kreiramo Toast konfiguraciju
+      
         const Toast = Swal.mixin({
             toast: true,
-            position: 'top-end', // Možeš staviti i 'bottom-end' za donji ćošak
+            position: 'top-end', 
             showConfirmButton: false,
             timer: 3000,
             timerProgressBar: true,
@@ -57,13 +57,13 @@
             }
         });
 
-        // Ispucavamo obavještenje
+        
         Toast.fire({
             icon: 'success',
             title: 'Knjiga uspješno dodana!'
         });
 
-        // Čistimo URL
+        
         window.history.replaceState({}, document.title, window.location.pathname);
     }
 </script>
