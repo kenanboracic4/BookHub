@@ -45,6 +45,20 @@ body {
     margin: 5px 0 0;
 }
 
+.btn-edit-left{
+     background-color: rgb(24, 59, 94);
+    color: white;
+    border: none;
+    padding: 10px 30px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
 .btn-edit {
     background-color: #4d9c37;
     color: white;

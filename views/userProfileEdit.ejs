@@ -24,9 +24,12 @@
                         <p><i class="fa-solid fa-envelope"></i> <%= user.email %></p>
                     </div>
                 </div>
+                <div class="buttons">
+                <a href="/user/profile/<%= user.id %> " class="btn-edit-left"><i class="fa-solid fa-arrow-left"></i> Napusti</a>
                 <button type="submit" class="btn-edit">
                     <i class="fa-solid fa-floppy-disk"></i> Sačuvaj
                 </button>
+                </div>
             </div>
 
             <div class="profile-grid">
