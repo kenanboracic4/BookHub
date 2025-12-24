@@ -151,7 +151,35 @@ module.exports ={
             genres: genres,
             languages: languages
         });
-    }
+    },
+
+    async updateUserProfile(req,res){
+        try{
+
+            const { genreIds, languageIds, status, role, bio} = req.body;
+            const id = req.params.id;
+
+          const updatedUser = await userService.updateUserProfile({
+            id,
+            status,
+            role,
+            bio
+        }, genreIds, languageIds);
+
+        // Ovdje provjeravamo 'updatedUser', a ne 'user'
+        if (!updatedUser) {
+            return res.status(404).send('Korisnik nije pronađen.');
+        }
+           
+
+            res.status(200).send('Uspešno ste ažurirali profil.');
+            
+            }catch(error){
+                console.error(error);
+                res.status(500).send('Došlo je do greške.');
+            }   
+        }
+    
 
 
 }

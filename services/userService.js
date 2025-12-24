@@ -75,6 +75,10 @@ module.exports = {
 
     async getAllLanguages() {
         return userDao.getAllLanguages();
+    },
+
+    async updateUserProfile(userData, genreIds, languageIds){
+        return await userDao.updateUserProfile(userData, genreIds, languageIds);
     }
 
 };

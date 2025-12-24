@@ -17,6 +17,8 @@ router.get('/profile/:id/edit',verifyToken, userController.renderUserProfileEdit
 router.post('/register-new-user', userController.registerUser);
 router.post('/login',userController.loginUser);
 
+router.put('/profile/:id/update', verifyToken, userController.updateUserProfile);
+
 
 
 

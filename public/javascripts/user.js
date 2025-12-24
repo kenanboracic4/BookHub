@@ -59,5 +59,38 @@ $(document).ready(($)=>{
         })
     })
 
+   $('#user-update-form').on('submit', function(event) {
+    event.preventDefault(); // OVO MORA DA RADI
+        event.stopPropagation();
+
+    
+    const pathArray = window.location.pathname.split('/'); 
+    const userId = pathArray[3]; 
+
+    const formData = {
+        status: $('#status').val(),
+        role: $('#role').val(),
+        genreIds: $('select[name="genreIds[]"]').val() || [],
+        languageIds: $('select[name="languageIds[]"]').val() || [],
+        bio: $('textarea[name="bio"]').val()
+    };
+
+    console.log("Šaljem podatke:", formData);
+    $.ajax({
+        url: '/user/profile/' + userId + '/update',
+        method: 'PUT',
+        contentType: 'application/json',
+        data: JSON.stringify(formData),
+        success: function(response) {
+           
+            window.location.href = '/user/profile/' + userId;
+        },
+        error: function(xhr) {
+            const errorMessage = xhr.responseText || 'Greška prilikom ažuriranja.';
+            alert(errorMessage); 
+        }
+    });
+});
+
 
 });

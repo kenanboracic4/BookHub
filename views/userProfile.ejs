@@ -30,15 +30,15 @@
             <div class="input-group">
                 <label>Status: </label>
                 
-                <input type="text" value="<%= user.status %>" readonly>
+                <input type="text" value="<%= user.status %>" readonly disabled>
             </div>
             <div class="input-group">
                 <label>Uloga:</label>
-                <input type="text" value="<%= user.role %>" readonly>
+                <input type="text" value="<%= user.role %>" readonly disabled>
             </div>
             <div class="profile-bio">
                 <label>Bio: </label>
-                <textarea rows="5"  readonly placeholder="Unesite podatke o sebi kako bi drugi znali ko ste Vi"><%= user.bio %></textarea>
+                <textarea rows="5"  readonly  disabled placeholder="Unesite podatke o sebi kako bi drugi znali ko ste Vi"><%= user.bio %></textarea>
             </div>
         </div>
         <div class="preferences-section">
