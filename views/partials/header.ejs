@@ -1,103 +1,170 @@
 <header>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <div id="sideNav" class="side-nav">
-        <a href="javascript:void(0)" class="closebtn" id="closeBtn">&times;</a>
+        <div class="side-nav-header">
+            <span class="nav-title">Meni</span>
+            <a href="javascript:void(0)" class="closebtn" id="closeBtn"><i class="fa-solid fa-xmark"></i></a>
+        </div>
         <div class="side-nav-content">
-            <a href="/"><i class="fa-solid fa-house"></i> Početna</a>
-            <a href="/user/profile/<%= user.id %>"><i class="fa-solid fa-user"></i> Moj Profil</a>
-            <a href="/books"><i class="fa-solid fa-book"></i> Oglasi</a>
-            <a href="/books/add-book"><i class="fa-solid fa-circle-plus"></i> Objavi oglas</a>
+            <a href="/" class="nav-link"><i class="fa-solid fa-house"></i> Početna</a>
             
             <% if (user) { %>
-                <hr>
-                <a href="/user/logout" class="logout-link"><i class="fa-solid fa-right-from-bracket"></i> Odjavi se</a>
+                <a href="/user/profile/<%= user.id %>" class="nav-link"><i class="fa-solid fa-user"></i> Moj Profil</a>
             <% } %>
+
+            <a href="/books" class="nav-link"><i class="fa-solid fa-book-open"></i> Oglasi</a>
+            <a href="/books/add-book" class="nav-link highlight"><i class="fa-solid fa-circle-plus"></i> Objavi oglas</a>
+
+            <% if (user) { %>
+                <div class="nav-divider"></div>
+                <a href="/user/logout" class="nav-link logout"><i class="fa-solid fa-arrow-right-from-bracket"></i> Odjavi se</a>
+            <% } %>
+        </div>
+    </div>
+
+    <div id="cartNav" class="side-nav-right">
+        <div class="side-nav-header cart-header-bg">
+            <div class="cart-header-top">
+                <h3>Vaša Korpa <span class="cart-count-bubble"><%= (user && user.cartCount) ? user.cartCount : 0 %></span></h3>
+                <a href="javascript:void(0)" class="closebtn" id="closeCartBtn"><i class="fa-solid fa-xmark"></i></a>
+            </div>
+            <p class="cart-subtitle">Pregled odabranih knjiga</p>
+        </div>
+
+        <div id="cartContent" class="cart-content-area">
+            <p class="empty-cart-msg">Vaša korpa je trenutno prazna.</p>
+        </div>
+
+        <div class="cart-footer">
+            <div class="cart-summary">
+                <span class="label">Ukupno za plaćanje:</span>
+                <span class="amount" id="cartTotalSum">0.00 KM</span>
+            </div>
+            <a href="/cart" class="btn-checkout">
+                Završi kupovinu <i class="fa-solid fa-arrow-right"></i>
+            </a>
         </div>
     </div>
 
     <div id="overlay" class="overlay"></div>
-    
-    <div class="header-container">
-        <div class="header-left">
-            <button class="menu-toggle" id="menuBtn" aria-label="Open Menu">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
-            </button>
-        </div>
 
-        <div class="header-center">
-            <a href="/" class="logo">
-                <img src="/images/logo.png" alt="BookHub Logo">
+    <div class="main-header">
+        <div class="header-container">
+            
+            <div class="header-left">
+                <button class="menu-toggle" id="menuBtn" aria-label="Open Menu">
+                    <i class="fa-solid fa-bars-staggered"></i>
+                </button>
+            </div>
+
+            <div class="header-center">
+                <a href="/" class="logo">
+                    <img src="/images/logo.png" alt="BookHub">
+                </a>
+            </div>
+
+            <div class="header-right">
+    <% if (user) { %>
+        <div class="user-actions">
+            <a href="#" class="icon-btn cart-trigger">
+                <i class="fa-solid fa-bag-shopping"></i>
+                
+                <% if (user && user.cartCount > 0) { %>
+                    <span class="cart-badge-count">
+                        <%= user.cartCount %>
+                    </span>
+                <% } %>
+            </a>
+            
+            <a href="/user/profile/<%= user.id %>" class="user-pill">
+                <div class="avatar-circle">
+                    <%= user.firstName.charAt(0) %>
+                </div>
+                <span class="desktop-only"><%= user.firstName %></span>
             </a>
         </div>
-
-        <div class="header-right">
-            <% if (user) { %>
-                <div class="user-logged-in">
-                    <a href="/" class="cart-icon-wrapper">
-                        <i class="fa-solid fa-cart-shopping"></i>
-                        <span class="cart-badge">0</span>
-                    </a>
-                   
-
-                        <a class="user-name-text" href="/user/profile/<%= user.id %>"><%= user.firstName %></a>
-                   
-                </div>
-            <% } else { %>
-                <div class="buttons">
-                    <a href="/user/login" class="btn btn-login">Prijava</a>
-                    <a href="/user/register" class="btn btn-register">Registracija</a>
-                </div>
-            <% } %>
+    <% } else { %>
+        <div class="auth-buttons">
+            <a href="/user/login" class="btn-ghost">Prijava</a>
+            <a href="/user/register" class="btn-primary-sm">Registracija</a>
+        </div>
+    <% } %>
+</div>
         </div>
     </div>
 
-    <div class="second-container">
-        <form action="/search" method="GET" class="inputArea">
-            <div class="search-wrapper">
-                <span class="search-icon">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="11" cy="11" r="8"></circle>
-                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                    </svg>
-                </span>
-                <input type="text" name="q" placeholder="Pretraži knjige, autore, žanrove...">
-            </div>
-        </form>
-        <a href="/books/add-book" class="btn btn-add-book">
-            <i class="fa-solid fa-circle-plus"></i>
-            <span>Objavi knjigu</span>
-        </a>
+    <div class="action-bar-container">
+        <div class="action-bar-wrapper">
+            <form action="/search" method="GET" class="search-form">
+                <div class="search-input-group">
+                    <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                    <input type="text" name="q" placeholder="Pronađi knjigu, autora, žanr..." autocomplete="off">
+                </div>
+            </form>
+            
+            <a href="/books/add-book" class="btn-action">
+                <i class="fa-solid fa-plus"></i>
+                <span>Objavi knjigu</span>
+            </a>
+        </div>
     </div>
 </header>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="/javascripts/cart.js"></script> 
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         const menuBtn = document.getElementById('menuBtn');
-        const sideNav = document.getElementById('sideNav');
         const closeBtn = document.getElementById('closeBtn');
+        const sideNav = document.getElementById('sideNav');
+        
+        // Cart elements
+        const cartTriggers = document.querySelectorAll('.cart-trigger'); // Selektujemo sve trigere
+        const cartNav = document.getElementById('cartNav');
+        const closeCartBtn = document.getElementById('closeCartBtn');
         const overlay = document.getElementById('overlay');
 
-        if(menuBtn) {
-            menuBtn.addEventListener('click', () => {
-                sideNav.classList.add('open');
-                overlay.style.display = 'block';
+        const closeAll = () => {
+            sideNav.classList.remove('open');
+            cartNav.classList.remove('open');
+            overlay.classList.remove('active');
+            document.body.style.overflow = 'auto'; // Enable scroll
+        };
+
+        // Open Left Menu
+        menuBtn.addEventListener('click', () => {
+            sideNav.classList.add('open');
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Disable scroll
+        });
+
+        // Open Cart (Right)
+        cartTriggers.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                cartNav.classList.add('open');
+                overlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
+                
+                // Poziv tvoje funkcije iz cart.js ako postoji
+                if (typeof osvjeziSadrzajKorpe === 'function') {
+                    osvjeziSadrzajKorpe();
+                }
             });
-        }
-        if(closeBtn) {
-            closeBtn.addEventListener('click', () => {
-                sideNav.classList.remove('open');
-                overlay.style.display = 'none';
-            });
-        }
-        if(overlay) {
-            overlay.addEventListener('click', () => {
-                sideNav.classList.remove('open');
-                overlay.style.display = 'none';
-            });
-        }
+        });
+
+        closeBtn.addEventListener('click', closeAll);
+        closeCartBtn.addEventListener('click', closeAll);
+        overlay.addEventListener('click', closeAll);
+        
+        // Close on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === "Escape") closeAll();
+        });
     });
 </script>
-

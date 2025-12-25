@@ -79,6 +79,9 @@ module.exports = {
 
     async updateUserProfile(userData, genreIds, languageIds){
         return await userDao.updateUserProfile(userData, genreIds, languageIds);
+    },
+    async updateUserRole(userId){
+        return await userDao.updateUserRole(userId);
     }
 
 };

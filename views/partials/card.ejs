@@ -1,11 +1,19 @@
-
-    <div class="card">
-        <img src="<%= book.imageUrl || '/images/jezevaKucica.png' %>" alt="Ježeva kucica">
+<div class="card">
+        <div class="card-image-wrapper">
+            <img src="<%= book.imageUrl %>" alt="<%= book.title %>">
+        </div>
+        
         <div class="card-content">
-            <h3> <%= book.title %></h3>
-            <p class="author">Autor: <%= book.author %></p>
-            <p class="genre">Žanr: <%= book.genre ? book.genre.name : 'Nema žanra' %></p>
-            <p class="price">Cijena: <%= parseFloat(book.price).toFixed(2) %> KM</p>
-            <a href="/books/details/<%= book.id %>" class="btn btn-details">Detalji</a>
+            <div class="card-meta">
+                <span class="genre"><%= book.genre && book.genre.name ? book.genre.name : 'Nema žanra' %></span>
+            </div>
+            
+            <h3><%= book.title %></h3>
+            <p class="author"><%= book.author %></p>
+            
+            <div class="card-footer">
+                <div class="price"><%= parseFloat(book.price).toFixed(2) %> KM</div>
+                <a href="/books/details/<%= book.id %>" class="btn-details">Detalji</a>
+            </div>
         </div>
     </div>

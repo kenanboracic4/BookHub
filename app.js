@@ -14,7 +14,7 @@ const {setUserContext} = require('./middleware/auth');
 var indexRouter = require('./routes/index');
 var booksRouter = require('./routes/books');
 var userRouter = require('./routes/user');
-
+var cartRouter = require('./routes/cart');
 var app = express();
 
 // view engine setup
@@ -32,6 +32,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/books', booksRouter);
 app.use('/user', userRouter);
+app.use('/cart', cartRouter);
 
 
 // catch 404 and forward to error handler

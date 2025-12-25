@@ -123,9 +123,13 @@ module.exports ={
             return;
         }
 
+        if (req.user && req.user.id === user.id) {
+        user.cartCount = req.user.cartCount;
+    }
+
         res.render('userProfile',{
-            user: user,
-            userBooks: userBooks
+            profileUser: user,
+            profileUserBooks: userBooks
         });
     },
 

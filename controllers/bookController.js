@@ -1,4 +1,5 @@
 const bookService = require('../services/bookService');
+const userService = require('../services/userService');
 
 module.exports = {
 
@@ -41,12 +42,16 @@ module.exports = {
                             description: req.body.description,
                             price: parseFloat(req.body.price) || 0.00,
                             imageUrl: req.file ? `/uploads/${req.file.filename}` : null,
+                            isForExchange: req.body.isExchange,
                             genreId: req.body.genreId || null,
                             locationId: req.body.locationId || null,
                             conditionId: req.body.conditionId || null,
                             languageId: req.body.languageId || null,
                             sellerId: req.user.id
                      };
+              
+                     const userId = req.user.id;
+                     await userService.updateUserRole(userId);
                      await bookService.addBook(bookData);
 
                      res.redirect('/books?success=true');

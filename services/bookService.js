@@ -1,4 +1,5 @@
 const bookDao = require('../dao/bookDao');
+const userDao = require('../dao/userDao');
 
 module.exports = {
 
@@ -28,6 +29,7 @@ module.exports = {
             throw new Error('Nedostaju obavezna polja za dodavanje knjige.');
         }
 
+        
 
         if (bookData.price < 0) {
             throw new Error('Cijena knjige ne može biti negativna.');

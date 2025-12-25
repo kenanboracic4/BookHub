@@ -52,28 +52,36 @@ module.exports = {
 
     async getUserBooks(id) {
         return await Book.findAll({
-            where: {sellerId: id}
+            where: { sellerId: id }
         })
     },
 
     async updateUserProfile(userData, genreIds, languageIds) {
-    
-    const user = await Users.findByPk(userData.id);
-    
-    if (!user) throw new Error('Korisnik nije pronađen');
 
-    
-    await user.update({
-        status: userData.status,
-        role: userData.role,
-        bio: userData.bio
-    });
+        const user = await Users.findByPk(userData.id);
 
-    
-    await user.setGenres(genreIds || []);
-    await user.setLanguages(languageIds || []);
+        if (!user) throw new Error('Korisnik nije pronađen');
 
-    return user;
-}
-    
+
+        await user.update({
+            status: userData.status,
+            role: userData.role,
+            bio: userData.bio
+        });
+
+
+        await user.setGenres(genreIds || []);
+        await user.setLanguages(languageIds || []);
+
+        return user;
+    },
+
+    async updateUserRole(userId) {
+        const user = await Users.findByPk(userId);
+
+        return await user.update({
+            role: "Prodavač"
+        })
+    }
+
 };

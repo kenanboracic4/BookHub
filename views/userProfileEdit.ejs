@@ -1,111 +1,107 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel='stylesheet' href='/stylesheets/header.css' />
     <link rel="stylesheet" href="/stylesheets/userProfileEdit.css" />
 </head>
-
 <body>
 
     <% include partials/header %>
 
-    <div class="profile-container">
+    <div class="up-main-wrapper">
         <form id="user-update-form">
             
-            <div class="profile-header">
-                <div class="user-meta">
-                    <div class="avatar-wrapper">
-                        <img src="<%= user.profileImage || '/images/noProfileImage.png' %>" alt="Profile">
+            <div class="up-profile-card">
+                <div class="up-header-row">
+                    <div class="up-user-info">
+                        <img src="<%= user.profileImage || '/images/noProfileImage.png' %>" alt="Profile" class="up-avatar">
+                        <div class="up-user-details">
+                            <h1><%= user.firstName %> <%= user.lastName %></h1>
+                            <p><i class="fa-solid fa-envelope"></i> <%= user.email %></p>
+                        </div>
                     </div>
-                    <div class="user-basics">
-                        <h1><%= user.firstName %> <%= user.lastName %></h1>
-                        <p><i class="fa-solid fa-envelope"></i> <%= user.email %></p>
+                    <div class="up-button-group">
+                        <a href="/user/profile/<%= user.id %>" class="up-btn up-btn-back">
+                            <i class="fa-solid fa-arrow-left"></i> Nazad
+                        </a>
+                        <button type="submit" class="up-btn up-btn-save">
+                            <i class="fa-solid fa-floppy-disk"></i> Sačuvaj
+                        </button>
                     </div>
                 </div>
-                <div class="buttons">
-                <a href="/user/profile/<%= user.id %> " class="btn-edit-left"><i class="fa-solid fa-arrow-left"></i> Napusti</a>
-                <button type="submit" class="btn-edit">
-                    <i class="fa-solid fa-floppy-disk"></i> Sačuvaj
-                </button>
-                </div>
-            </div>
 
-            <div class="profile-grid">
-                <div class="input-group">
-                    <label>Status:</label>
-                    <select id="status" name="status" disabled>
-                        <option value="Aktivan" <%= user.status === 'Aktivan' ? 'selected' : '' %>>Aktivan</option>
-                        <option value="Neaktivan" <%= user.status === 'Neaktivan' ? 'selected' : '' %>>Neaktivan</option>
-                    </select>
-                </div>
+                <div class="up-data-grid">
+                    <div class="up-input-group">
+                        <label>Status</label>
+                        <select id="status" name="status" class="up-select-field" disabled>
+                            <option value="Aktivan" <%= user.status === 'Aktivan' ? 'selected' : '' %>>Aktivan</option>
+                            <option value="Neaktivan" <%= user.status === 'Neaktivan' ? 'selected' : '' %>>Neaktivan</option>
+                        </select>
+                    </div>
 
-                <div class="input-group">
-                    <label>Uloga:</label>
-                    <select id="role" name="role" disabled>
-                        <option value="Kupac" <%= user.role === 'Kupac' ? 'selected' : '' %>>Kupac</option>
-                        <option value="Prodavač" <%= user.role === 'Prodavač' ? 'selected' : '' %>>Prodavač</option>
-                    </select>
-                </div>
+                    <div class="up-input-group">
+                        <label>Uloga</label>
+                        <select id="role" name="role" class="up-select-field" disabled>
+                            <option value="Kupac" <%= user.role === 'Kupac' ? 'selected' : '' %>>Kupac</option>
+                            <option value="Prodavač" <%= user.role === 'Prodavač' ? 'selected' : '' %>>Prodavač</option>
+                        </select>
+                    </div>
 
-                <div class="input-group">
-                    <label><i class="fa-solid fa-tags"></i> Žanrovi (CTRL + klik):</label>
-                    <select name="genreIds[]" multiple class="multiple-select  big-dropdown">
-                        <% genres.forEach(function(genre) { %>
-                            <option value="<%= genre.id %>" 
-                                <%= user.Genres && user.Genres.some(g => g.id === genre.id) ? 'selected' : '' %>>
-                                <%= genre.name %>
-                            </option>
-                        <% }); %>
-                    </select>
-                </div>
+                    <div class="up-input-group">
+                        <label><i class="fa-solid fa-tags"></i> Žanrovi (CTRL + klik)</label>
+                        <select name="genreIds[]" multiple class="up-select-field up-select-multiple">
+                            <% genres.forEach(function(genre) { %>
+                                <option value="<%= genre.id %>" 
+                                    <%= user.Genres && user.Genres.some(g => g.id === genre.id) ? 'selected' : '' %>>
+                                    <%= genre.name %>
+                                </option>
+                            <% }); %>
+                        </select>
+                    </div>
 
-                <div class="input-group">
-                    <label><i class="fa-solid fa-language"></i> Jezici (CTRL + klik):</label>
-                    <select name="languageIds[]" multiple class="multiple-select">
-                        <% languages.forEach(function(lang) { %>
-                            <option value="<%= lang.id %>"
-                                <%= user.Languages && user.Languages.some(l => l.id === lang.id) ? 'selected' : '' %>>
-                                <%= lang.name %>
-                            </option>
-                        <% }); %>
-                    </select>
-                </div>
+                    <div class="up-input-group">
+                        <label><i class="fa-solid fa-language"></i> Jezici (CTRL + klik)</label>
+                        <select name="languageIds[]" multiple class="up-select-field up-select-multiple">
+                            <% languages.forEach(function(lang) { %>
+                                <option value="<%= lang.id %>"
+                                    <%= user.Languages && user.Languages.some(l => l.id === lang.id) ? 'selected' : '' %>>
+                                    <%= lang.name %>
+                                </option>
+                            <% }); %>
+                        </select>
+                    </div>
 
-                <div class="profile-bio">
-                    <label>Biografija:</label>
-                    <textarea name="bio" rows="5" placeholder="Unesite podatke o sebi..."><%= user.bio %></textarea>
+                    <div class="up-input-group up-bio-full">
+                        <label>Biografija</label>
+                        <textarea name="bio" rows="5" class="up-textarea-field" placeholder="Recite nešto o sebi..."><%= user.bio %></textarea>
+                    </div>
                 </div>
             </div>
         </form>
-
-        <div class="user-books-section">
-            <h2 class="section-title">Moji oglasi</h2>
+         <% if(user.role === 'Prodavač') { %>
+        <div class="up-books-section">
+            <h2 class="up-section-title">Moji oglasi</h2>
 
             <% if (userBooks && userBooks.length > 0) { %>
-                <div class="books-list">
+                <div class="up-books-list">
                     <% userBooks.forEach(book => { %>
-                        <div class="book-horizontal-card">
-                            <div class="book-main-content">
-                                <div class="book-img-mini">
+                        <div class="up-book-row">
+                            <div class="up-book-info">
+                                <div class="up-book-img-wrapper">
                                     <img src="<%= book.imageUrl || '/images/default-book.png' %>" alt="Book cover">
                                 </div>
-                                <div class="book-details-mini">
+                                <div class="up-book-text">
                                     <h3><%= book.title %></h3>
-                                    <p class="book-date">
-                                        <i class="fa fa-calendar-alt"></i>
-                                        Objavljeno: <%= new Date(book.createdAt).toLocaleDateString('bs-BA') %>
-                                    </p>
-                                    <p class="book-price-mini"><%= parseFloat(book.price).toFixed(2) %> KM</p>
+                                    <p class="up-book-price"><%= parseFloat(book.price).toFixed(2) %> KM</p>
                                 </div>
                             </div>
 
-                            <div class="book-actions">
-                                <a href="/books/edit/<%= book.id %>" class="btn-action btn-edit-book">
+                            <div class="up-book-actions">
+                                <a href="/books/edit/<%= book.id %>" class="up-action-btn up-btn-modify">
                                     <i class="fa fa-edit"></i> Uredi
                                 </a>
-                                <button onclick="deleteBook('<%= book.id %>')" class="btn-action btn-delete-book">
+                                <button onclick="deleteBook('<%= book.id %>')" class="up-action-btn up-btn-delete">
                                     <i class="fa fa-trash"></i> Obriši
                                 </button>
                             </div>
@@ -113,13 +109,13 @@
                     <% }) %>
                 </div>
             <% } else { %>
-                <p class="no-data">Još niste objavili nijednu knjigu.</p>
+                <p class="up-no-data" style="color: var(--up-secondary); font-style: italic;">Niste objavili nijednu knjigu.</p>
             <% } %>
         </div>
+       
     </div>
+     <% } %>
 
-
-    
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="/javascripts/user.js"></script>
 </body>

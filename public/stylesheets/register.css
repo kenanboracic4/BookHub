@@ -6,7 +6,7 @@
 }
 
 body {
-    background: radial-gradient(circle, rgba(41, 31, 105, 1) 0%, rgba(35, 25, 99, 1) 57%, rgba(28, 16, 107, 1) 100%);
+    background: #090d15;
     display: flex;
     justify-content: center; 
     align-items: center;     
@@ -17,10 +17,9 @@ body {
 .container {
     width: 90%;
     max-width: 500px;
-    background: rgba(255, 255, 255, 0.03);
     backdrop-filter: blur(10px);
     border-radius: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.08);
     display: flex; 
     flex-direction: column;
     align-items: center;
@@ -56,7 +55,11 @@ body {
     width: 100%;
 }
 
-h2 { color: white; margin-bottom: 0.5rem; text-align: center; }
+h2 { 
+    color: white; 
+    margin-bottom: 0.5rem; 
+    text-align: center; 
+}
 h5 { color: rgba(255,255,255,0.7); margin-bottom: 2rem; text-align: center; font-weight: normal; }
 
 .form-group {
@@ -71,7 +74,7 @@ h5 { color: rgba(255,255,255,0.7); margin-bottom: 2rem; text-align: center; font
     left: 15px;         
     top: 50%;
     transform: translateY(-50%);
-    color: #ffffff;
+    color: #ffffff8e;
     font-size: 1rem;
     z-index: 2;
     pointer-events: none;
@@ -82,7 +85,7 @@ h5 { color: rgba(255,255,255,0.7); margin-bottom: 2rem; text-align: center; font
     background-color: transparent;
     width: 100%;
     padding: 0.8rem 0.8rem 0.8rem 45px; 
-    border: 1px solid rgba(255, 255, 255, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 12px;
     font-size: 1rem;
     color: #ffffff;
@@ -113,7 +116,7 @@ h5 { color: rgba(255,255,255,0.7); margin-bottom: 2rem; text-align: center; font
 }
 
 .instruction-badge {
-    background: rgba(0, 212, 255, 0.15);
+    
     color: #00d4ff;
     padding: 3px 10px;
     border-radius: 8px;
@@ -167,8 +170,8 @@ select[multiple] option {
     margin-top: 1.5rem;
     border: none;
     border-radius: 12px;
-    background-color: #00d4ff;
-    color: #1c106b;
+    background-color: #13103d;
+    color: #ffffff;
     font-size: 1.1rem;
     font-weight: bold;
     cursor: pointer;
@@ -176,9 +179,9 @@ select[multiple] option {
 }
 
 #register-button:hover {
-    background-color: #ffffff;
+    background-color: #1e0b55;
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0, 212, 255, 0.3);
+    box-shadow: 0 5px 15px rgba(0, 26, 255, 0.3);
 }
 
 .form-container-register p {

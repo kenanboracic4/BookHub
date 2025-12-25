@@ -87,9 +87,9 @@
  
 
    <div class="action-buttons">
-  <a href="/cart/add/<%= book.id %>" class="btn-link btn-buy">
+<button class="btn-link btn-buy btn-buy-book" data-id="<%= book.id %>">
     <i class="fa fa-shopping-cart"></i> Dodaj u korpu
-  </a>
+</button>
   <a href="/messages/user/<%= book.sellerId %>" class="btn-link btn-msg">
     <i class="fa fa-envelope"></i> Kontaktiraj prodavača
   </a>

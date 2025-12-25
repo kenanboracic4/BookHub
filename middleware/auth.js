@@ -1,4 +1,6 @@
 const jwt = require('jsonwebtoken');
+const cartService = require('../services/cartService');
+
 
 const verifyToken = async (req, res, next) => { // verifikacija tokena
     const token = req.cookies.token;
@@ -10,7 +12,9 @@ const verifyToken = async (req, res, next) => { // verifikacija tokena
 
     try{
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        
         req.user = decoded;
+       
         next();
     }catch(error){
         res.clearCookie('token');
@@ -18,23 +22,29 @@ const verifyToken = async (req, res, next) => { // verifikacija tokena
     }
     
 }
-
-const setUserContext = (req, res, next) =>{ // dodavanje korisnika u res.locals
-
+const setUserContext = async (req, res, next) => {
     const token = req.cookies.token;
 
-    if(!token){
+    if (!token) {
         res.locals.user = null;
         return next();
     }
 
-    try{
+    try {
+        // 1. PRVO verifikuj token da dobiješ 'decoded' objekt
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        res.locals.user = decoded; // za ejs fajlove
-        req.user = decoded; // za kontrollere 
-        next();
-    }catch(error){
 
+        // 2. TEK SAD možeš koristiti decoded.id jer je definisan iznad
+        const cartCount = await cartService.getCartCount(decoded.id);
+
+        // 3. Dodaj count u objekt
+        decoded.cartCount = cartCount;
+
+        res.locals.user = decoded; // za ejs fajlove
+        req.user = decoded;        // za kontrollere 
+
+        next();
+    } catch (error) {
         res.clearCookie('token');
         res.locals.user = null;
         next();

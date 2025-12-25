@@ -162,6 +162,7 @@
 
 
 .btn-buy {
+    border: none;
     background-color: var(--primary); 
     color: #ffffff;
     flex: 2; 
@@ -170,6 +171,7 @@
 }
 
 .btn-buy:hover {
+    cursor: pointer;
     background-color: #ffffff;
     transform: translateY(-1px);
     color: var(--primary);

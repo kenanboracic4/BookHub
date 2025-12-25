@@ -1,323 +1,287 @@
+:root {
+    --up-primary: #0f172a;
+    --up-secondary: #64748b;
+}
+
 body {
-    padding: 20px;
-    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-    background: #ffffffd4;
+    background-color: #f8fafc;
+    font-family: 'Inter', sans-serif;
 }
 
-.profile-container {
-    max-width: 70%;
-    margin: 60px auto;
-    padding: 2rem;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f7f2f257;
-    border-radius: 13px;
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+/* --- GLAVNI KONTEJNER --- */
+.up-main-wrapper {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 0 20px;
 }
 
-.profile-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+/* --- KARTICA PROFILA (GORNJI DIO) --- */
+.up-profile-card {
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e2e8f0;
+    padding: 30px;
     margin-bottom: 40px;
 }
 
-.user-meta {
+.up-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.up-user-info {
     display: flex;
     align-items: center;
     gap: 20px;
 }
 
-.avatar-wrapper img {
-    width: 80px;
-    height: 80px;
+.up-avatar {
+    width: 90px;
+    height: 90px;
     border-radius: 50%;
     object-fit: cover;
+    border: 4px solid #f1f5f9;
 }
 
-.user-basics h1 {
-    font-size: 1.5rem;
+.up-user-details h1 {
     margin: 0;
-    color: #333;
+    font-size: 1.8rem;
+    color: var(--up-primary);
+    font-weight: 800;
 }
 
-.user-basics p {
-    color: #888;
-    margin: 5px 0 0;
-}
-
-.btn-edit {
-    background-color: #183b5e;
-    color: white;
-    border: none;
-    padding: 10px 30px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: bold;
-    text-decoration: none;
-    display: flex;
-    gap: 5px;
-
-}
-
-.profile-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 30px;
-    margin-bottom: 50px;
-}
-
-.input-group {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.input-group label {
-    font-weight: 500;
-    color: #444;
-}
-
-.input-group input {
-    padding: 15px;
-    border: 1px solid #f0f0f0;
-    border-radius: 10px;
-    background-color: #f9f9f9;
-    color: #666;
-    font-size: 14px;
-    outline: none;
-}
-
-.profile-bio {
-    grid-column: 1 / -1;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.profile-bio label {
-    font-weight: 500;
-    color: #444;
-}
-
-.profile-bio textarea {
-    padding: 15px;
-    border: 1px solid #f0f0f0;
-    border-radius: 10px;
-    background-color: #f9f9f9;
-    color: #666;
-    font-size: 14px;
-    outline: none;
-    resize: none;
-    font-family: inherit;
-}
-
-.profile-bio textarea:focus {
-    border-color: #4A86F7;
-    background-color: #fff;
-}
-
-.preferences-section {
-    margin-top: 30px;
-    display: flex;
-    flex-direction: column;
-    gap: 25px;
-    grid-column: 1 / -1;
-}
-
-.pref-group label {
-    display: block;
-    font-weight: 600;
-    color: #444;
-    margin-bottom: 12px;
+.up-user-details p {
+    margin: 5px 0 0 0;
+    color: var(--up-secondary);
     font-size: 0.95rem;
 }
 
-.pref-group label i {
-    margin-right: 8px;
-    color: #4A86F7;
+.up-btn-edit {
+    background-color: var(--up-primary);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s;
 }
 
-.tags-container {
+.up-btn-edit:hover {
+    background-color: #1e293b;
+    transform: translateY(-2px);
+}
+
+/* --- GRID ZA PODATKE --- */
+.up-data-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+}
+
+.up-input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.up-input-group label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--up-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.up-input-field, .up-textarea-field {
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 12px 15px;
+    color: var(--up-secondary);
+    font-size: 0.95rem;
+    outline: none;
+    font-family: inherit;
+}
+
+.up-bio-full {
+    grid-column: 1 / -1;
+}
+
+/* --- PREFERENCES (TAGOVI) --- */
+.up-preferences {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.up-tags-wrapper {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
+    margin-top: 8px;
 }
 
-.tag {
-    padding: 8px 16px;
-    border-radius: 10px;
-    font-size: 13px;
-    font-weight: 500;
-    transition: all 0.3s ease;
-    cursor:default;
+.up-tag {
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
 }
 
-.genre-tag {
-    background-color: #eef4ff65;
-    color: #4A86F7;
-    border: 1px solid #dce7ffcf;
+.up-tag-genre {
+    background-color: #eff6ff;
+    color: #2563eb;
 }
 
-.lang-tag {
+.up-tag-lang {
     background-color: #f0fdf4;
     color: #16a34a;
-    border: 1px solid #dcfce7;
 }
 
-.tag:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
-}
-
-.no-data {
-    color: #aaa;
-    font-style: italic;
-    font-size: 13px;
-}
-
-@media (max-width: 992px) {
-    .profile-container {
-        max-width: 90%;
-    }
-}
-
-@media (max-width: 768px) {
-    .profile-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 20px;
-    }
-    
-    .profile-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .profile-container {
-        max-width: 100%;
-        margin: 20px auto;
-        padding: 1.5rem;
-    }
-
-    .btn-edit {
-        width: 100%;
-    }
-}
-
-
-/* Sekcija sa knjigama */
-.user-books-section {
-    margin-top: 50px;
-    border-top: 1px solid #eee;
-    padding-top: 30px;
-}
-
-.section-title {
-    font-size: 1.3rem;
-    color: #333;
+/* --- SEKCIJA ZA KNJIGE (LISTA) --- */
+.up-section-title {
+    font-size: 1.5rem;
+    color: var(--up-primary);
+    font-weight: 800;
     margin-bottom: 25px;
+    padding-left: 5px;
+    border-left: 5px solid var(--up-primary);
+    line-height: 1;
 }
 
-.books-list {
+.up-books-list {
     display: flex;
     flex-direction: column;
     gap: 15px;
 }
 
-.book-horizontal-card {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: #fff;
-    padding: 15px;
+.up-book-row {
+    background: #ffffff;
     border-radius: 12px;
-    border: 1px solid #f0f0f0;
-    transition: box-shadow 0.3s ease;
+    padding: 15px;
+    border: 1px solid #e2e8f0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all 0.3s ease;
 }
 
-.book-horizontal-card:hover {
-    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+.up-book-row:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    border-color: #cbd5e1;
 }
 
-.book-main-content {
+.up-book-info {
     display: flex;
     align-items: center;
     gap: 20px;
 }
 
-.book-img-mini {
-    width: 60px;
-    height: 90px; /* Visoka a uska knjiga */
+.up-book-img-wrapper {
+    width: 70px;
+    height: 105px;
     flex-shrink: 0;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: #f1f5f9;
 }
 
-.book-img-mini img {
+.up-book-img-wrapper img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    border-radius: 4px;
-    box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+    object-position: center top;
 }
 
-.book-details-mini h3 {
-    margin: 0;
+.up-book-text h3 {
+    margin: 0 0 5px 0;
     font-size: 1.1rem;
-    color: #183b5e;
-}
-
-.book-date {
-    font-size: 0.85rem;
-    color: #888;
-    margin: 5px 0;
-}
-
-.book-price-mini {
+    color: var(--up-primary);
     font-weight: 700;
-    color: #16a34a;
-    margin: 0;
 }
 
-/* Akcije (Dugmad desno) */
-.book-actions {
+.up-book-date {
+    font-size: 0.8rem;
+    color: #94a3b8;
+    margin-bottom: 5px;
+}
+
+.up-book-price {
+    font-weight: 800;
+    color: var(--up-primary);
+    font-size: 1rem;
+}
+
+/* GUMBI AKCIJE */
+.up-book-actions {
     display: flex;
     gap: 10px;
 }
 
-.btn-action {
-    padding: 8px 15px;
-    border-radius: 6px;
+.up-action-btn {
+    padding: 8px 16px;
+    border-radius: 8px;
     font-size: 0.85rem;
     font-weight: 600;
-    cursor: pointer;
     text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: opacity 0.2s;
     display: flex;
     align-items: center;
-    gap: 5px;
-    border: none;
+    gap: 6px;
 }
 
-.btn-edit-book {
-    background-color: #eef4ff;
-    color: #4A86F7;
+.up-btn-modify {
+    background-color: #f1f5f9;
+    color: var(--up-primary);
 }
 
-.btn-delete-book {
+.up-btn-delete {
     background-color: #fee2e2;
-    color: #dc2626;
+    color: #ef4444;
 }
 
-.btn-action:hover {
+.up-action-btn:hover {
     opacity: 0.8;
 }
 
-/* Responsive za male ekrane */
-@media (max-width: 600px) {
-    .book-horizontal-card {
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .up-header-row {
+        flex-direction: column;
+        gap: 20px;
+        align-items: center;
+        text-align: center;
+    }
+    .up-user-info {
+        flex-direction: column;
+    }
+    .up-data-grid {
+        grid-template-columns: 1fr;
+    }
+    .up-book-row {
         flex-direction: column;
         align-items: flex-start;
         gap: 15px;
     }
-    .book-actions {
+    .up-book-actions {
         width: 100%;
         justify-content: space-between;
+    }
+    .up-action-btn {
+        flex: 1;
+        justify-content: center;
     }
 }
