@@ -70,15 +70,14 @@
             <div class="header-right">
     <% if (user) { %>
         <div class="user-actions">
-            <a href="#" class="icon-btn cart-trigger">
-                <i class="fa-solid fa-bag-shopping"></i>
-                
-                <% if (user && user.cartCount > 0) { %>
-                    <span class="cart-badge-count">
-                        <%= user.cartCount %>
-                    </span>
-                <% } %>
-            </a>
+           <a href="#" class="icon-btn cart-trigger">
+    <i class="fa-solid fa-bag-shopping"></i>
+    
+    <span class="cart-badge-count" 
+          style="display: <%= (user && user.cartCount > 0) ? 'flex' : 'none' %>;">
+        <%= (user && user.cartCount) ? user.cartCount : 0 %>
+    </span>
+</a>
             
             <a href="/user/profile/<%= user.id %>" class="user-pill">
                 <div class="avatar-circle">

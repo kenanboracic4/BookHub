@@ -39,5 +39,15 @@ module.exports = {
                 
             ]
         })
+    },
+
+    async deleteCartItem(userId, bookId){
+    
+        return await Cart.destroy({
+            where:{
+                userId: userId,
+                bookId: bookId
+            }
+        })
     }
 }

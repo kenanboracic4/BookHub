@@ -136,7 +136,7 @@ module.exports ={
     async renderUserProfileEditPage(req,res){
     
 
-    
+       
        const id = req.params.id;
 
         const user = await userService.findUserDataById(parseInt(id));
@@ -153,7 +153,8 @@ module.exports ={
             user: user,
             userBooks: userBooks,
             genres: genres,
-            languages: languages
+            languages: languages,
+            cartCount: cartCount
         });
     },
 

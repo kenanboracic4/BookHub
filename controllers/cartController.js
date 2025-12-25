@@ -1,3 +1,4 @@
+const { deleteCartItem } = require('../dao/cartDao');
 const cartService = require('../services/cartService');
 
 module.exports = {
@@ -59,6 +60,28 @@ module.exports = {
                 error: error
             })
         }   
+    },
+
+    async deleteCartItem(req,res){
+
+        try{
+            const userId = req.user.id;
+            const bookId = req.params.bookId;
+
+            const cartCount = await cartService.deleteCartItem(userId, bookId);
+            console.log("CART COUNT:",cartCount);
+            res.status(200).json({
+                success: true,
+                cartCount: cartCount
+            })
+
+        }catch(error){
+            res.status(500).json({
+                success: false,
+                message: 'Došlo je do greške!',
+                error: error
+            })
+        }
     }
 
 

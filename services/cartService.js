@@ -17,5 +17,12 @@ module.exports = {
 
     async getCartItems(userId){
         return await cartDao.getCartItems(userId);
+    },
+    async deleteCartItem(userId, bookId){
+        
+        await cartDao.deleteCartItem(userId, bookId);
+        console.log("CART ITEMS:",await cartDao.getCartItems(userId));
+        return await cartDao.getCartCount(userId);
+
     }
 }
