@@ -99,7 +99,7 @@ function deleteItem(id) {
                     title: 'Uklonjeno!',
                     timer: 1000,
                     toast: true,
-                    position: 'top-end',
+                    position: 'bottom-end',
                     showConfirmButton: false
                 });
             }

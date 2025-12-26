@@ -127,6 +127,7 @@ body {
     outline: none;
     font-family: inherit;
     transition: border-color 0.2s;
+    appearance: none;
 }
 
 .up-input-field:focus, .up-select-field:focus, .up-textarea-field:focus {
@@ -219,4 +220,68 @@ body {
     .up-user-info { flex-direction: column; }
     .up-data-grid { grid-template-columns: 1fr; }
     .up-book-row { flex-direction: column; gap: 15px; align-items: flex-start; }
+}
+
+
+.up-avatar-wrapper {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+
+#profileImageInput {
+    display: none;
+}
+
+
+.up-avatar-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(15, 23, 42, 0.6);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 1.5rem;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    cursor: pointer;
+}
+
+.up-avatar-wrapper:hover .up-avatar-overlay {
+    opacity: 1;
+}
+
+
+.up-avatar {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #f1f5f9;
+    display: block;
+}
+
+
+.up-separator {
+    display: flex;
+    align-items: center;
+    margin: 20px 0 10px 0;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 10px;
+}
+
+.up-separator span {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: var(--up-primary);
+    padding-right: 10px;
+    background: #fff; 
 }

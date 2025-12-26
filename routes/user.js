@@ -3,6 +3,7 @@ var router = express.Router();
 
 const userController = require('../controllers/userController');
 const verifyToken = require('../middleware/auth').verifyToken;
+const upload = require('../middleware/multer');
 
 router.get('/', function(req, res, next) {
     res.render('userProfile');
@@ -17,7 +18,7 @@ router.get('/profile/:id/edit',verifyToken, userController.renderUserProfileEdit
 router.post('/register-new-user', userController.registerUser);
 router.post('/login',userController.loginUser);
 
-router.put('/profile/:id/update', verifyToken, userController.updateUserProfile);
+router.put('/profile/:id/update', verifyToken, upload.single('profileImage'), userController.updateUserProfile);
 
 
 

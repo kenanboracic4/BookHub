@@ -77,9 +77,32 @@ module.exports = {
         return userDao.getAllLanguages();
     },
 
-    async updateUserProfile(userData, genreIds, languageIds){
-        return await userDao.updateUserProfile(userData, genreIds, languageIds);
-    },
+async updateUserProfile(userData, genreIds, languageIds, file) {
+   
+    const user = await userDao.findUserDataById(userData.id); 
+    if (!user) throw new Error('Korisnik nije pronađen');
+
+    let dataToUpdate = {};
+
+    
+    if (userData.role) dataToUpdate.role = userData.role;
+    if (userData.status) dataToUpdate.status = userData.status;
+    if (userData.bio !== undefined) dataToUpdate.bio = userData.bio;
+
+    if (file) {
+        dataToUpdate.profileImage = '/uploads/' + file.filename;
+    }
+
+    if (userData.newPassword && userData.newPassword.trim() !== "") {
+        const salt = await bcrypt.genSalt(10);
+        dataToUpdate.password = await bcrypt.hash(userData.newPassword, salt);
+    }
+
+    const finalGenres = (genreIds !== undefined) ? genreIds : user.Genres.map(g => g.id);
+    const finalLanguages = (languageIds !== undefined) ? languageIds : user.Languages.map(l => l.id);
+
+    return await userDao.updateUser(userData.id, dataToUpdate, finalGenres, finalLanguages);
+},
     async updateUserRole(userId){
         return await userDao.updateUserRole(userId);
     }

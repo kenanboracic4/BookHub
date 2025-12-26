@@ -56,25 +56,19 @@ module.exports = {
         })
     },
 
-    async updateUserProfile(userData, genreIds, languageIds) {
+ async updateUser(userId, updateData, genreIds, languageIds) {
+    const user = await Users.findByPk(userId);
+    if (!user) throw new Error('Korisnik nije pronađen');
 
-        const user = await Users.findByPk(userData.id);
+    // Update osnovnih polja
+    await user.update(updateData);
 
-        if (!user) throw new Error('Korisnik nije pronađen');
+    // Update tabela povezivanja (asocijacije)
+    if (genreIds) await user.setGenres(genreIds);
+    if (languageIds) await user.setLanguages(languageIds);
 
-
-        await user.update({
-            status: userData.status,
-            role: userData.role,
-            bio: userData.bio
-        });
-
-
-        await user.setGenres(genreIds || []);
-        await user.setLanguages(languageIds || []);
-
-        return user;
-    },
+    return user;
+},
 
     async updateUserRole(userId) {
         const user = await Users.findByPk(userId);

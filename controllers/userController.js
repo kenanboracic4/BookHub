@@ -133,58 +133,49 @@ module.exports ={
         });
     },
 
-    async renderUserProfileEditPage(req,res){
-    
-
-       
-       const id = req.params.id;
-
+   async renderUserProfileEditPage(req, res) {
+    try {
+        const id = req.params.id;
         const user = await userService.findUserDataById(parseInt(id));
         const userBooks = await userService.getUserBooks(id);
         const genres = await userService.getAllGenres();
         const languages = await userService.getAllLanguages();
 
-        if(!user){
-            res.status(404).send('Korisnik nije pronađen.');
-            return;
-        }
-
-        res.render('userProfileEdit',{
-            user: user,
-            userBooks: userBooks,
-            genres: genres,
-            languages: languages,
-            
-        });
-    },
-
-    async updateUserProfile(req,res){
-        try{
-
-            const { genreIds, languageIds, status, role, bio} = req.body;
-            const id = req.params.id;
-
-          const updatedUser = await userService.updateUserProfile({
-            id,
-            status,
-            role,
-            bio
-        }, genreIds, languageIds);
-
-       
-        if (!updatedUser) {
+        if (!user) {
             return res.status(404).send('Korisnik nije pronađen.');
         }
-           
 
-            res.status(200).send('Uspešno ste ažurirali profil.');
-            
-            }catch(error){
-                console.error(error);
-                res.status(500).send('Došlo je do greške.');
-            }   
-        }
-    
+        res.render('userProfileEdit', {
+            user: user, // PROMENJENO: EJS traži 'user', ne 'profileUser'
+            userBooks: userBooks,
+            genres: genres,
+            languages: languages
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Greška pri učitavanju stranice.');
+    }
+},
+
+async updateUserProfile(req, res) {
+    try {
+        const { genreIds, languageIds, status, role, bio, newPassword } = req.body;
+        const id = req.params.id;
+        const file = req.file;
+
+        await userService.updateUserProfile(
+            { id, status, role, bio, newPassword },
+            genreIds,
+            languageIds,
+            file
+        );
+
+        res.status(200).send('Uspešno ste ažurirali profil.');
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Došlo je do greške: ' + error.message);
+    }
+}
 
 
 }

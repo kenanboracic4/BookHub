@@ -10,75 +10,96 @@
     <% include partials/header %>
 
     <div class="up-main-wrapper">
-        <form id="user-update-form">
-            
-            <div class="up-profile-card">
-                <div class="up-header-row">
-                    <div class="up-user-info">
-                        <img src="<%= user.profileImage || '/images/noProfileImage.png' %>" alt="Profile" class="up-avatar">
-                        <div class="up-user-details">
-                            <h1><%= user.firstName %> <%= user.lastName %></h1>
-                            <p><i class="fa-solid fa-envelope"></i> <%= user.email %></p>
-                        </div>
-                    </div>
-                    <div class="up-button-group">
-                        <a href="/user/profile/<%= user.id %>" class="up-btn up-btn-back">
-                            <i class="fa-solid fa-arrow-left"></i> Nazad
-                        </a>
-                        <button type="submit" class="up-btn up-btn-save">
-                            <i class="fa-solid fa-floppy-disk"></i> Sačuvaj
-                        </button>
-                    </div>
+    <form id="user-update-form" enctype="multipart/form-data"> <div class="up-profile-card">
+        <div class="up-header-row">
+            <div class="up-user-info">
+                <div class="up-avatar-wrapper">
+                    <img src="<%= user.profileImage || '/images/noProfileImage.png' %>" alt="Profile" class="up-avatar" id="avatar-preview">
+                    <label for="profileImageInput" class="up-avatar-overlay">
+                        <i class="fa-solid fa-camera"></i>
+                    </label>
+                    <input type="file" id="profileImageInput" name="profileImage" accept="image/*">
                 </div>
 
-                <div class="up-data-grid">
-                    <div class="up-input-group">
-                        <label>Status</label>
-                        <select id="status" name="status" class="up-select-field" disabled>
-                            <option value="Aktivan" <%= user.status === 'Aktivan' ? 'selected' : '' %>>Aktivan</option>
-                            <option value="Neaktivan" <%= user.status === 'Neaktivan' ? 'selected' : '' %>>Neaktivan</option>
-                        </select>
-                    </div>
-
-                    <div class="up-input-group">
-                        <label>Uloga</label>
-                        <select id="role" name="role" class="up-select-field" disabled>
-                            <option value="Kupac" <%= user.role === 'Kupac' ? 'selected' : '' %>>Kupac</option>
-                            <option value="Prodavač" <%= user.role === 'Prodavač' ? 'selected' : '' %>>Prodavač</option>
-                        </select>
-                    </div>
-
-                    <div class="up-input-group">
-                        <label><i class="fa-solid fa-tags"></i> Žanrovi (CTRL + klik)</label>
-                        <select name="genreIds[]" multiple class="up-select-field up-select-multiple">
-                            <% genres.forEach(function(genre) { %>
-                                <option value="<%= genre.id %>" 
-                                    <%= user.Genres && user.Genres.some(g => g.id === genre.id) ? 'selected' : '' %>>
-                                    <%= genre.name %>
-                                </option>
-                            <% }); %>
-                        </select>
-                    </div>
-
-                    <div class="up-input-group">
-                        <label><i class="fa-solid fa-language"></i> Jezici (CTRL + klik)</label>
-                        <select name="languageIds[]" multiple class="up-select-field up-select-multiple">
-                            <% languages.forEach(function(lang) { %>
-                                <option value="<%= lang.id %>"
-                                    <%= user.Languages && user.Languages.some(l => l.id === lang.id) ? 'selected' : '' %>>
-                                    <%= lang.name %>
-                                </option>
-                            <% }); %>
-                        </select>
-                    </div>
-
-                    <div class="up-input-group up-bio-full">
-                        <label>Biografija</label>
-                        <textarea name="bio" rows="5" class="up-textarea-field" placeholder="Recite nešto o sebi..."><%= user.bio %></textarea>
-                    </div>
+                <div class="up-user-details">
+                    <h1><%= user.firstName %> <%= user.lastName %></h1>
+                    <p><i class="fa-solid fa-envelope"></i> <%= user.email %></p>
+                    <p style="font-size: 0.8rem; margin-top: 5px; color: #94a3b8;">Kliknite na sliku za promjenu</p>
                 </div>
             </div>
-        </form>
+            <div class="up-button-group">
+                <a href="/user/profile/<%= user.id %>" class="up-btn up-btn-back">
+                    <i class="fa-solid fa-arrow-left"></i> Nazad
+                </a>
+                <button type="submit" class="up-btn up-btn-save">
+                    <i class="fa-solid fa-floppy-disk"></i> Sačuvaj
+                </button>
+            </div>
+        </div>
+
+        <div class="up-data-grid">
+           <div class="up-input-group">
+        <label>Status</label>
+        <select id="status" name="status" class="up-select-field" >
+            <option value="Aktivan" <%= user.status === 'Aktivan' ? 'selected' : '' %>>Aktivan</option>
+            <option value="Neaktivan" <%= user.status === 'Neaktivan' ? 'selected' : '' %>>Neaktivan</option>
+        </select>
+    </div>
+
+    <div class="up-input-group">
+        <label>Uloga</label>
+        <select id="role" name="role" class="up-select-field" disabled>
+            <option value="Kupac" <%= user.role === 'Kupac' ? 'selected' : '' %>>Kupac</option>
+            <option value="Prodavač" <%= user.role === 'Prodavač' ? 'selected' : '' %>>Prodavač</option>
+        </select>
+    </div>
+
+    <div class="up-input-group">
+        <label><i class="fa-solid fa-tags"></i> Žanrovi (CTRL + klik)</label>
+        <select name="genreIds[]" multiple class="up-select-field up-select-multiple">
+            <% genres.forEach(function(genre) { %>
+                <option value="<%= genre.id %>" 
+                    <%= (user.Genres && user.Genres.some(g => g.id === genre.id)) ? 'selected' : '' %>>
+                    <%= genre.name %>
+                </option>
+            <% }); %>
+        </select>
+    </div>
+
+    <div class="up-input-group">
+        <label><i class="fa-solid fa-language"></i> Jezici (CTRL + klik)</label>
+        <select name="languageIds[]" multiple class="up-select-field up-select-multiple">
+            <% languages.forEach(function(lang) { %>
+                <option value="<%= lang.id %>"
+                    <%= (user.Languages && user.Languages.some(l => l.id === lang.id)) ? 'selected' : '' %>>
+                    <%= lang.name %>
+                </option>
+            <% }); %>
+        </select>
+    </div>
+
+    <div class="up-input-group up-bio-full">
+        <label>Biografija</label>
+        <textarea name="bio" rows="5" class="up-textarea-field"><%= user.bio %></textarea>
+    </div>
+
+            <div class="up-separator up-bio-full">
+                <span>Sigurnost</span>
+            </div>
+
+            <div class="up-input-group">
+                <label>Nova šifra</label>
+                <input type="password" name="newPassword" class="up-input-field" placeholder="Ostavite prazno ako ne mijenjate">
+            </div>
+
+            <div class="up-input-group">
+                <label>Potvrdi novu šifru</label>
+                <input type="password" name="confirmPassword" class="up-input-field" placeholder="Potvrdite novu šifru">
+            </div>
+
+        </div>
+    </div>
+</form>
          <% if(user.role === 'Prodavač') { %>
         <div class="up-books-section">
             <h2 class="up-section-title">Moji oglasi</h2>
@@ -115,7 +136,7 @@
        
     </div>
      <% } %>
-
+    
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="/javascripts/user.js"></script>
 </body>
