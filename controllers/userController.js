@@ -154,7 +154,7 @@ module.exports ={
             userBooks: userBooks,
             genres: genres,
             languages: languages,
-            cartCount: cartCount
+            
         });
     },
 
@@ -171,7 +171,7 @@ module.exports ={
             bio
         }, genreIds, languageIds);
 
-        // Ovdje provjeravamo 'updatedUser', a ne 'user'
+       
         if (!updatedUser) {
             return res.status(404).send('Korisnik nije pronađen.');
         }

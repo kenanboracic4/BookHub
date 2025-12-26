@@ -35,9 +35,10 @@ module.exports = {
                 cartCount: cartCount
             })
         } catch (error) {
+            
             res.status(500).json({
                 success: false,
-                message: 'Došlo je do greške!',
+                message: error.message,
                 error: error
             })
         }
@@ -48,7 +49,7 @@ module.exports = {
         try{
             const userId = req.user.id;
             const cartItems = await cartService.getCartItems(parseInt(userId));
-            console.log("CART ITEMS:",cartItems);
+           
            res.status(200).json({
                success: true,
                items: cartItems

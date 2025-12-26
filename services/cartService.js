@@ -1,5 +1,5 @@
 const cartDao = require('../dao/cartDao');
-
+const bookDao = require('../dao/bookDao');
 module.exports = {
 
 
@@ -8,6 +8,11 @@ module.exports = {
     },
 
     async addToCart(bookId, userId){
+         const book = await bookDao.findBookById(bookId);
+        if(book.sellerId == userId){
+            throw new Error('Ne možete kupiti svoju knjigu!')
+        }
+
         return await cartDao.addToCart(bookId, userId);
     },
 
@@ -21,7 +26,7 @@ module.exports = {
     async deleteCartItem(userId, bookId){
         
         await cartDao.deleteCartItem(userId, bookId);
-        console.log("CART ITEMS:",await cartDao.getCartItems(userId));
+      
         return await cartDao.getCartCount(userId);
 
     }

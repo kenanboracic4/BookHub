@@ -1,15 +1,16 @@
 $(document).on('click', '.btn-buy-book', function (e) {
     e.preventDefault();
 
-    // Uzmi ID iz data-id atributa dugmeta koje je kliknuto
+   
     const bookId = $(this).data('id');
+    $('#cart-message').hide();
 
     $.ajax({
         url: '/cart/add/' + bookId,
         method: 'POST',
         success: function (data) {
             if (data.success) {
-                // Ažuriraj broj u krugu koristeći ID koji smo stavili
+              
                 $('.cart-count-bubble, .cart-badge-count').text(data.cartCount).show();
 
                 Swal.fire({
@@ -22,12 +23,24 @@ $(document).on('click', '.btn-buy-book', function (e) {
                     position: 'top-end'
                 });
 
-                // Otvori meni
+                
                 $('#cartNav').css('width', '460px');
                 $('#overlay').show();
 
                 osvjeziSadrzajKorpe();
             }
+        },
+        error: function(xhr){
+          const errorMsg = xhr.responseJSON ? xhr.responseJSON.message : 'Došlo je do greške';
+        
+        Swal.fire({
+                    icon: 'error',
+                    title: errorMsg,
+                    timer: 1000,
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false
+                });
         }
     });
 });
@@ -36,7 +49,7 @@ function osvjeziSadrzajKorpe() {
     $.get('/cart/items', function(data) {
         if (data.success) {
             const container = $('#cartContent');
-            container.empty(); // Očisti stari sadržaj
+            container.empty();
 
             if (data.items.length === 0) {
                 container.append('<p class="empty-cart-msg">Vaša korpa je prazna.</p>');
@@ -49,7 +62,7 @@ function osvjeziSadrzajKorpe() {
                 const knjiga = item.Book;
                 ukupno += parseFloat(knjiga.price);
 
-                // Generišemo HTML za svaku stavku
+               
                 const itemHtml = `
                     <div class="cart-item">
                         <img src="${knjiga.imageUrl || '/images/default-book.png'}" alt="${knjiga.title}">
@@ -75,10 +88,10 @@ function deleteItem(id) {
         method: 'DELETE',
         success: function (data) {
             if (data.success) {
-                // AŽURIRAMO OBA BROJAČA KOJA IMAŠ U HEADERU
+              
                 $('.cart-count-bubble, .cart-badge-count').text(data.cartCount);
                 
-                // Ponovo učitavamo stavke da se ukloni obrisana
+                
                 osvjeziSadrzajKorpe();
                 
                 Swal.fire({
