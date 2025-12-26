@@ -9,9 +9,10 @@ const verifyToken = require('../middleware/auth').verifyToken;
 
 
 router.get('/add-book',verifyToken,  bookController.renderAddBookPage);
-router.get('/',  homeController.renderHomePage);
+router.get('/',  bookController.renderHomePage);
 router.get('/details/:id',  bookController.renderBooksPage);
 router.get('/edit/:id', bookController.renderEditBookPage);
+router.get('/search', bookController.renderSearchPage);
 
 router.post('/add-book', verifyToken, upload.single('image'), bookController.handleAddBook);
 

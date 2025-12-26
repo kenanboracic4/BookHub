@@ -9,8 +9,8 @@ $('#edit-book-form').on('submit', function (e) {
             url: '/books/edit/' + bookId,
             method: 'PUT',
             data: formData,
-            processData: false, // Obavezno za FormData
-            contentType: false, // Obavezno za FormData
+            processData: false, 
+            contentType: false, 
             success: function () {
                 window.location.href = '/books/details/' + bookId + '?success=true';
             },

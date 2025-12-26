@@ -1,7 +1,6 @@
 :root {
     --primary-dark: #0f172a;
     --primary: #1e293b;
-    --accent: #3b82f6;
     --text-muted: #64748b;
     --bg-light: #f8fafc;
     --border: #e2e8f0;
@@ -205,22 +204,41 @@ body {
     position: absolute;
     left: 16px;
     color: var(--text-muted);
-    pointer-events: none;
+    z-index: 5;
 }
 
 .search-input-group input {
     width: 100%;
-    padding: 14px 14px 14px 48px;
+    padding: 14px 50px 14px 48px; /* Povećan desni padding za dugme */
     border: 2px solid transparent;
     background-color: #f1f5f9;
     border-radius: 12px;
     font-size: 16px;
-    color: var(--primary);
-    transition: all 0.2s ease;
+    transition: all 0.2s;
     outline: none;
-    box-sizing: border-box; /* Bitno */
 }
 
+/* NOVO: Dugme unutar inputa */
+.inner-search-btn {
+    position: absolute;
+    right: 8px;
+    background-color: var(--primary-dark);
+    color: white;
+    border: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.inner-search-btn:hover {
+    background-color: var(--primary-dark);
+    transform: scale(1.05);
+}
 .search-input-group input:focus {
     background-color: #ffffff;
     border-color: var(--primary);
@@ -658,32 +676,43 @@ body {
     .action-bar-wrapper {
         flex-direction: column;
         gap: 12px;
-    }
-    
-    .btn-action {
-        width: 100%;
-        justify-content: center;
+        padding: 0 16px;
     }
 
-    .desktop-only {
-        display: none;
-    }
-    
-    .side-nav-right {
+    .search-row {
         width: 100%;
-        right: -100%;
-    }
-    
-    .cart-item {
-        margin-bottom: 12px;
-    }
-
-    
-    .filter-grid {
-        grid-template-columns: 1fr;
+        display: flex;
+        gap: 8px;
     }
 
     .btn-filter-toggle {
-        padding: 0 16px;
+        padding: 0 14px; /* Smanjeno na mobilnom */
+        height: 52px; /* Ista visina kao input */
+    }
+
+    .btn-filter-toggle i {
+        font-size: 18px;
+        margin: 0;
+    }
+
+    .btn-action {
+        width: 100%;
+        justify-content: center;
+        order: 3; /* Pomjera "Objavi" na dno u mobilnom */
+    }
+
+    .filter-dropdown {
+        width: calc(100vw - 32px); /* Da ne izlazi iz ekrana */
+        left: 0;
+        position: fixed; /* Bolje za mobilni */
+        top: auto;
+        bottom: 0;
+        border-radius: 20px 20px 0 0;
+        padding-bottom: 30px;
+    }
+    
+    .filter-grid {
+        grid-template-columns: 1fr; /* Jedna kolona na mobilnom */
+        gap: 15px;
     }
 }

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/header.css' />
+    <link rel='stylesheet' href='/stylesheets/card.css' />
+  </head>
+  <body>
+    <%- include('partials/header') %>
+      
+    <div class="randomBooks">
+      <% if (isSuccess === true) { %>
+      <div class="section-title">Knjige</div>
+      <div class="containerBooks">
+        <% if (books && books.length > 0) { %>
+          <% books.forEach((book) => { %>
+            <%- include('partials/card', {book: book}) %>
+          <% }) %>
+        <% } else { %>
+          <p>Nema dostupnih knjiga.</p>
+        <% } %>
+      </div> <% } else { %>
+        <div class="section-title">Nema rezultata za vašu pretragu</div>
+        <% } %>
+    </div>
+     
+
+  </body>
+</html>

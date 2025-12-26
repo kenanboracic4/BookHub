@@ -6,19 +6,21 @@ const BookConditionsLK = require('../models/associations').BookConditionsLK;
 const LanguagesLK = require('../models/associations').LanguagesLK;
 const Users = require('../models/associations').User;
 
+const { Op } = require('sequelize');
+
 module.exports = {
 
-    getRandomBooks(){
+    getRandomBooks() {
         return Book.findAll({
             order: Book.sequelize.random(),
-              limit: 6,
-             include: [{
+            limit: 6,
+            include: [{
                 model: GenresLK,
                 as: 'genre'
             }],
             raw: true,
-        nest: true
-            }
+            nest: true
+        }
         );
     },
     findBookById(id) {
@@ -38,11 +40,11 @@ module.exports = {
             {
                 model: LanguagesLK,
                 as: 'language'
-            },{
+            }, {
                 model: Users,
                 as: 'seller'
             }
-        ],
+            ],
         }
         );
     },
@@ -76,38 +78,45 @@ module.exports = {
         });
     },
 
-    async incrementBookViewCount(bookId){
-       
-        return await Book.increment('viewCount',{
+    async incrementBookViewCount(bookId) {
+
+        return await Book.increment('viewCount', {
             by: 1,
-            where: {id: bookId}
+            where: { id: bookId }
         });
     },
 
     async updateBook(bookId, bookData) {
-    const book = await Book.findByPk(bookId);
-    if (!book) {
-        throw new Error('Knjiga nije pronađena.');
+        const book = await Book.findByPk(bookId);
+        if (!book) {
+            throw new Error('Knjiga nije pronađena.');
+        }
+
+
+        const updateFields = {
+            title: bookData.title,
+            author: bookData.author,
+            description: bookData.description,
+            price: bookData.price,
+            genreId: bookData.genreId,
+            locationId: bookData.locationId,
+            conditionId: bookData.conditionId,
+            languageId: bookData.languageId
+        };
+
+
+        if (bookData.imageUrl) {
+            updateFields.imageUrl = bookData.imageUrl;
+        }
+
+        return await book.update(updateFields);
+    },
+    
+    async getBooks(whereClause, orderClause) {
+        return await Book.findAll({
+            where: whereClause,
+            order: orderClause,
+            include: [{all: true}]
+        });
     }
-
-    // Kreiramo objekt za update
-    const updateFields = {
-        title: bookData.title,
-        author: bookData.author,
-        description: bookData.description,
-        price: bookData.price,
-        genreId: bookData.genreId,
-        locationId: bookData.locationId,
-        conditionId: bookData.conditionId,
-        languageId: bookData.languageId
-    };
-
-    // Ako u bookData postoji nova slika, dodaj je u polja za update
-    if (bookData.imageUrl) {
-        updateFields.imageUrl = bookData.imageUrl;
-    }
-
-    return await book.update(updateFields);
-}
-
 };

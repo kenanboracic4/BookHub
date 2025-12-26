@@ -9,17 +9,13 @@
             <span class="nav-title">Meni</span>
             <a href="javascript:void(0)" class="closebtn" id="closeBtn"><i class="fa-solid fa-xmark"></i></a>
         </div>
-        
         <div class="side-nav-content">
             <a href="/" class="nav-link"><i class="fa-solid fa-house"></i> Početna</a>
-            
             <% if (user) { %>
                 <a href="/user/profile/<%= user.id %>" class="nav-link"><i class="fa-solid fa-user"></i> Moj Profil</a>
             <% } %>
-
             <a href="/books" class="nav-link"><i class="fa-solid fa-book-open"></i> Oglasi</a>
             <a href="/books/add-book" class="nav-link highlight"><i class="fa-solid fa-circle-plus"></i> Objavi oglas</a>
-
             <% if (user) { %>
                 <div class="nav-divider"></div>
                 <a href="/user/logout" class="nav-link logout"><i class="fa-solid fa-arrow-right-from-bracket"></i> Odjavi se</a>
@@ -35,19 +31,15 @@
             </div>
             <p class="cart-subtitle">Pregled odabranih knjiga</p>
         </div>
-
         <div id="cartContent" class="cart-content-area">
             <p class="empty-cart-msg">Vaša korpa je trenutno prazna.</p>
         </div>
-
         <div class="cart-footer">
             <div class="cart-summary">
                 <span class="label">Ukupno za plaćanje:</span>
                 <span class="amount" id="cartTotalSum">0.00 KM</span>
             </div>
-            <a href="/cart" class="btn-checkout">
-                Završi kupovinu <i class="fa-solid fa-arrow-right"></i>
-            </a>
+            <a href="/cart" class="btn-checkout">Završi kupovinu <i class="fa-solid fa-arrow-right"></i></a>
         </div>
     </div>
 
@@ -55,34 +47,27 @@
 
     <div class="main-header">
         <div class="header-container">
-            
             <div class="header-left">
                 <button class="menu-toggle" id="menuBtn" aria-label="Open Menu">
                     <i class="fa-solid fa-bars-staggered"></i>
                 </button>
             </div>
-
             <div class="header-center">
                 <a href="/" class="logo">
                     <img src="/images/logo.png" alt="BookHub">
                 </a>
             </div>
-
             <div class="header-right">
                 <% if (user) { %>
                     <div class="user-actions">
                         <a href="#" class="icon-btn cart-trigger">
                             <i class="fa-solid fa-bag-shopping"></i>
-                            <span class="cart-badge-count" 
-                                  style="display: <%= (user && user.cartCount > 0) ? 'flex' : 'none' %>;">
-                                <%= (user && user.cartCount) ? user.cartCount : 0 %>
+                            <span class="cart-badge-count" style="display: <%= (user && user.cartCount > 0) ? 'flex' : 'none' %>;">
+                                <%= user.cartCount %>
                             </span>
                         </a>
-                        
                         <a href="/user/profile/<%= user.id %>" class="user-pill">
-                            <div class="avatar-circle">
-                                <%= user.firstName.charAt(0) %>
-                            </div>
+                            <div class="avatar-circle"><%= user.firstName.charAt(0) %></div>
                             <span class="desktop-only"><%= user.firstName %></span>
                         </a>
                     </div>
@@ -98,23 +83,24 @@
 
     <div class="action-bar-container">
         <div class="action-bar-wrapper">
-            
-            <form action="/search" method="GET" class="search-filter-form" id="searchForm">
-                
+            <form action="/books/search" method="GET" class="search-filter-form" id="searchForm">
                 <div class="search-row">
                     <div class="search-input-group">
                         <i class="fa-solid fa-magnifying-glass search-icon"></i>
-                        <input type="text" name="q" placeholder="Pronađi knjigu, autora..." autocomplete="off">
+                        <input type="text" name="q" id="mainSearchInput" placeholder="Pronađi knjigu, autora..." autocomplete="off">
+                        <button type="submit" class="inner-search-btn">
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
                     </div>
                     
                     <button type="button" class="btn-filter-toggle" id="filterToggleBtn">
-                        <i class="fa-solid fa-sliders"></i> <span class="desktop-only">Filteri</span>
+                        <i class="fa-solid fa-sliders"></i> 
+                        <span class="desktop-only">Filteri</span>
                     </button>
                 </div>
 
                 <div class="filter-dropdown" id="filterPanel">
                     <div class="filter-grid">
-                        
                         <div class="filter-group">
                             <label>Cijena (KM)</label>
                             <div class="price-inputs">
@@ -138,22 +124,23 @@
                             <label>Lokacija</label>
                             <select name="location">
                                 <option value="">Svi gradovi</option>
-                                <option value="Sarajevo">Sarajevo</option>
-                                <option value="Banja Luka">Banja Luka</option>
-                                <option value="Tuzla">Tuzla</option>
-                                <option value="Zenica">Zenica</option>
-                                <option value="Mostar">Mostar</option>
-                                </select>
+                                <% if (typeof locations !== 'undefined') { %>
+                                    <% locations.forEach(loc => { %>
+                                        <option value="<%= loc.id %>"><%= loc.name %></option>
+                                    <% }) %>
+                                <% } %>
+                            </select>
                         </div>
 
                         <div class="filter-group">
                             <label>Žanr</label>
                             <select name="genre">
                                 <option value="">Svi žanrovi</option>
-                                <option value="Roman">Roman</option>
-                                <option value="Triler">Triler</option>
-                                <option value="Naučna fantastika">Naučna fantastika</option>
-                                <option value="Edukacija">Edukacija</option>
+                                <% if (typeof genres !== 'undefined') { %>
+                                    <% genres.forEach(g => { %>
+                                        <option value="<%= g.id %>"><%= g.name %></option>
+                                    <% }) %>
+                                <% } %>
                             </select>
                         </div>
 
@@ -161,10 +148,23 @@
                             <label>Stanje knjige</label>
                             <select name="condition">
                                 <option value="">Sva stanja</option>
-                                <option value="Novo">Novo</option>
-                                <option value="Kao novo">Kao novo</option>
-                                <option value="Korišteno">Korišteno</option>
-                                <option value="Oštećeno">Oštećeno</option>
+                                <% if (typeof conditions !== 'undefined') { %>
+                                    <% conditions.forEach(c => { %>
+                                        <option value="<%= c.id %>"><%= c.name %></option>
+                                    <% }) %>
+                                <% } %>
+                            </select>
+                        </div>
+
+                        <div class="filter-group">
+                            <label>Jezik</label>
+                            <select name="language">
+                                <option value="">Svi jezici</option>
+                                <% if (typeof languages !== 'undefined') { %>
+                                    <% languages.forEach(l => { %>
+                                        <option value="<%= l.id %>"><%= l.name %></option>
+                                    <% }) %>
+                                <% } %>
                             </select>
                         </div>
 
@@ -173,7 +173,6 @@
                         </div>
                     </div>
                 </div>
-
             </form>
             
             <a href="/books/add-book" class="btn-action">
@@ -186,6 +185,7 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="/javascripts/cart.js"></script> 
+
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {

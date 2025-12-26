@@ -1,6 +1,8 @@
 const bookDao = require('../dao/bookDao');
 const userDao = require('../dao/userDao');
 
+const { Op } = require('sequelize');
+
 module.exports = {
 
     async getHomePageBooks() {
@@ -14,12 +16,14 @@ module.exports = {
     },
 
     async getAllLookupData() {
+
         const [genres, locations, conditions, languages] = await Promise.all([
             bookDao.getAllGenres(),
             bookDao.getAllLocations(),
             bookDao.getAllConditions(),
             bookDao.getAllLanguages()
         ]);
+        console.log(locations);
         return { genres, locations, conditions, languages };
     },
 
@@ -74,5 +78,40 @@ module.exports = {
         return await bookDao.updateBook(bookId, bookData);
 
 
+    },
+   
+async filteredBooks(query) {
+    const { q, price_min, price_max, sort, location, genre, condition, language } = query;
+    
+    let whereClause = {};
+    let orderClause = [['createdAt', 'DESC']]; 
+
+    
+    if (q) {
+        whereClause.title = { [Op.iLike]: `%${q}%` };
     }
+
+ 
+    if (price_min || price_max) {
+        whereClause.price = {};
+        if (price_min) whereClause.price[Op.gte] = price_min;
+        if (price_max) whereClause.price[Op.lte] = price_max;
+    }
+
+
+    if (location) whereClause.locationId = location;
+    if (genre) whereClause.genreId = genre;
+    if (condition) whereClause.conditionId = condition;
+    if (language) whereClause.languageId = language;
+
+  
+    if (sort) {
+        if (sort === 'price_asc') orderClause = [['price', 'ASC']];
+        if (sort === 'price_desc') orderClause = [['price', 'DESC']];
+        if (sort === 'oldest') orderClause = [['createdAt', 'ASC']];
+    }
+
+    
+    return await bookDao.getBooks(whereClause, orderClause);
+}
 };

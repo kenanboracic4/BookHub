@@ -2,6 +2,26 @@ const bookService = require('../services/bookService');
 const userService = require('../services/userService');
 
 module.exports = {
+       async renderHomePage(req, res) {
+              try {
+
+                     const [books, lookupData] = await Promise.all([
+                            bookService.getHomePageBooks(),
+
+                     ]);
+
+
+                     console.log("GRAD 1:", lookupData.locations[0].toJSON());
+                     res.render('index', {
+                            books: books,
+
+                     });
+
+              } catch (error) {
+                     console.error('Greška pri učitavanju početne stranice:', error);
+                     res.status(500).send('Došlo je do greške na serveru.');
+              }
+       },
 
        async renderBooksPage(req, res) {
               const id = req.params.id;
@@ -49,7 +69,7 @@ module.exports = {
                             languageId: req.body.languageId || null,
                             sellerId: req.user.id
                      };
-              
+
                      const userId = req.user.id;
                      await userService.updateUserRole(userId);
                      await bookService.addBook(bookData);
@@ -115,8 +135,27 @@ module.exports = {
                      res.status(200).send('Uspješno ažurirana knjiga');
 
               } catch (error) {
-                    
+
                      res.status(400).send(error.message);
               }
+       },
+
+       async renderSearchPage(req, res) {
+
+              try {
+
+
+                     const books = await bookService.filteredBooks(req.query);
+                     const LKData = await bookService.getAllLookupData();
+
+                     res.render('books', {
+                            books: books,
+                            ...LKData,
+                            isSuccess: books.length > 0
+                     });
+              } catch (error) {
+                     res.status(500).send('Došlo je do greške.');
+              }
+
        }
 };
