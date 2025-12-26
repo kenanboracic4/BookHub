@@ -8,6 +8,7 @@ require('dotenv').config();
 const jwt = require('jsonwebtoken');
 const { User, Book, Cart, Order, OrderItem, UserGenres, Users, UserLanguages, GenresLK, LanguagesLK, BookConditionsLK, LocationsLK } = require('./models/associations');
 const {setUserContext} = require('./middleware/auth');
+const lkdata = require('./middleware/lkdata');
 
 
 
@@ -26,6 +27,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(setUserContext);
+app.use(lkdata);
 
 app.use(express.static(path.join(__dirname, 'public')));
 
