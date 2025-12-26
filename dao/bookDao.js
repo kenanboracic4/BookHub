@@ -13,7 +13,7 @@ module.exports = {
     getRandomBooks() {
         return Book.findAll({
             order: Book.sequelize.random(),
-            limit: 6,
+            limit: 12,
             include: [{
                 model: GenresLK,
                 as: 'genre'
@@ -23,6 +23,61 @@ module.exports = {
         }
         );
     },
+    getRandomBooksForBooksPage(){
+          return Book.findAll({
+            order: Book.sequelize.random(),
+            limit: 32,
+            include: [{
+                model: GenresLK,
+                as: 'genre'
+            }],
+            raw: true,
+            nest: true
+        });
+    },
+    getPopularBooks() {
+        return Book.findAll({
+            order: [["viewCount", 'DESC']],
+            limit: 12,
+            include: [{
+                model: GenresLK,
+                as: 'genre'
+            }],
+            raw: true,
+            nest: true
+        });
+    },
+ async getUserInterests(userId) {
+    // 1. Nađi korisnika i njegove odabrane žanrove
+    const user = await Users.findByPk(userId, {
+        include: [{
+            model: GenresLK,
+            as: 'Genres', // Mora biti isti alias kao u associations.js
+            attributes: ['id'],
+            through: { attributes: [] } // Da ne vuče podatke iz UserGenres tabele
+        }]
+    });
+
+    // Ako user ne postoji ili nema interesa, vrati prazan niz
+    if (!user || !user.Genres || user.Genres.length === 0) {
+        return [];
+    }
+
+    // 2. Mapiraj ID-ove žanrova: [1, 3, 5...]
+    const preferredGenreIds = user.Genres.map(g => g.id);
+
+    // 3. Pronađi knjige koje pripadaju tim žanrovima
+    return await Book.findAll({
+        where: {
+            genreId: {
+                [Op.in]: preferredGenreIds
+            }
+        },
+        include: ['genre', 'location'], // Da bi imao nazive na karticama
+        limit: 10 // Opciono, da ne zagušiš stranicu
+    });
+},
+    
     findBookById(id) {
         return Book.findByPk(id, {
             include: [{

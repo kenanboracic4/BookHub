@@ -1,0 +1,19 @@
+<footer class="up-footer">
+    <div class="up-footer-content">
+      
+        
+        <nav class="up-footer-links">
+            <a href="/">Početna</a>
+            <a href="/books">Knjige</a>
+            <% if (user) { %>
+                <a href="/user/profile/<%= user.id %>">Moj profil</a>
+            <% } %>
+          
+            
+        </nav>
+    </div>
+    
+    <div class="up-footer-bottom">
+        &copy; 2026 BookHub.
+    </div>
+</footer>

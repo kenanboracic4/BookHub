@@ -3,14 +3,13 @@ var router = express.Router();
 
 
 const bookController = require('../controllers/bookController');
-const homeController = require('../controllers/homeController');
 const upload = require('../middleware/multer');
 const verifyToken = require('../middleware/auth').verifyToken;  
 
 
 router.get('/add-book',verifyToken,  bookController.renderAddBookPage);
-router.get('/',  bookController.renderHomePage);
-router.get('/details/:id',  bookController.renderBooksPage);
+router.get('/',  bookController.renderBooksPage);
+router.get('/details/:id',  bookController.renderBookDetailsPage);
 router.get('/edit/:id', bookController.renderEditBookPage);
 router.get('/search', bookController.renderSearchPage);
 

@@ -4,12 +4,16 @@ module.exports = {
     async renderHomePage(req, res) {
         try {
            
-           const books = await bookService.getHomePageBooks();
+           const randomBooks = await bookService.getHomePageBooks();
+            const popularBooks = await bookService.getPopularBooks();
 
+            const userInterests = req.user ? await bookService.getUserInterests(req.user.id): [];
             
       
             res.render('index', {
-                books: books,
+                books: randomBooks,
+                popularBooks : popularBooks,
+                userInterests : userInterests
                 
             });
            

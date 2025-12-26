@@ -4,6 +4,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel='stylesheet' href='/stylesheets/header.css' />
     <link rel="stylesheet" href="/stylesheets/bookDetail.css" />
+    <link rel="stylesheet" href="/stylesheets/footer.css" />
 </head>
 <body>
 
@@ -72,7 +73,7 @@
                         <div class="bd-input-group bd-full-width-mobile">
                             <label>Moguća zamjena</label>
                             <div class="bd-value-field bd-exchange-field">
-                                <% if (book.exchange === true || book.exchange === 'true' || book.exchange === 'Da') { %>
+                                <% if (book.isForExchange) { %>
                                     <i class="fa-solid fa-check-circle" style="color: #16a34a;"></i> Da
                                 <% } else { %>
                                     <i class="fa-solid fa-circle-xmark" style="color: #ef4444;"></i> Ne
@@ -115,7 +116,7 @@
             </div>
         </div>
     </div>
-
+    <% include partials/footer %>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         const urlParams = new URLSearchParams(window.location.search);

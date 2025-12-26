@@ -70,7 +70,7 @@ module.exports = {
             const bookId = req.params.bookId;
 
             const cartCount = await cartService.deleteCartItem(userId, bookId);
-            console.log("CART COUNT:",cartCount);
+            
             res.status(200).json({
                 success: true,
                 cartCount: cartCount

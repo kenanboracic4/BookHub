@@ -9,6 +9,17 @@ module.exports = {
         const books = await bookDao.getRandomBooks();
         return books;
     },
+    async getBooksForBooksPage() {
+        const books = await bookDao.getRandomBooksForBooksPage();
+        return books;
+    },
+    async getPopularBooks() {
+        return await bookDao.getPopularBooks();
+    },
+    async getUserInterests(userId) {
+        return await bookDao.getUserInterests(userId);
+    },
+
 
     async getBookById(id) {
         const book = await bookDao.findBookById(id);
@@ -23,7 +34,7 @@ module.exports = {
             bookDao.getAllConditions(),
             bookDao.getAllLanguages()
         ]);
-        console.log(locations);
+        
         return { genres, locations, conditions, languages };
     },
 

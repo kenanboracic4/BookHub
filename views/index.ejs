@@ -5,6 +5,7 @@
     <link rel='stylesheet' href='/stylesheets/style.css' />
     <link rel='stylesheet' href='/stylesheets/header.css' />
     <link rel='stylesheet' href='/stylesheets/card.css' />
+    <link rel="stylesheet" href="/stylesheets/footer.css">
   
   </head>
   <body>
@@ -21,9 +22,9 @@
       </div>
 
         <div class=" randomBooks">
-    <div class="section-title">Popularne   knjige: </div>
+    <div class="section-title">Popularne knjige: </div>
     <div class="containerBooks">
-    <% books.forEach((book)=>{ %>
+    <% popularBooks.forEach((book)=>{ %>
      <%- include('partials/card', {book: book}) %>
     <% }) %>
     </div>
@@ -31,15 +32,20 @@
 
         <div class=" randomBooks">
     <div class="section-title">Preporuceno za vas: </div>
+    <% if(userInterests.length > 0) { %>
     <div class="containerBooks">
-    <% books.forEach((book)=>{ %>
+    <% userInterests.forEach((book)=>{ %>
      <%- include('partials/card', {book: book}) %>
     <% }) %>
     </div>
+    <% } else { %>
+    <p>Ne postoje knjige koje su u okviru vaših interesa.</p>
+    <% } %>
       </div>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+<% include partials/footer %>
 <script>
     const urlParams = new URLSearchParams(window.location.search);
     
