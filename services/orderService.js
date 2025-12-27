@@ -1,6 +1,7 @@
 const cartDao = require('../dao/cartDao');
 const orderDao = require('../dao/orderDao');
 const sequelize = require('../config/db');
+const bookDao = require('../dao/bookDao');
 
 module.exports = {
 
@@ -74,7 +75,14 @@ module.exports = {
     },
 
     async acceptOrder(orderId, userId){
-        return await orderDao.acceptOrder(orderId, userId);
+        const result = await orderDao.acceptOrder(orderId, userId);
+
+        const orderItems = await orderDao.getOrderItems(orderId);
+
+        for(const item of orderItems){
+            await bookDao.updateBookStatus(item.bookId, 'Prodano');
+        }
+        
     },
 
     async rejectOrder(orderId, userId){

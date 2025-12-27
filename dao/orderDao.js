@@ -17,6 +17,12 @@ module.exports = {
         });
     },
 
+    async getOrderItems(orderId){
+        return await OrderItem.findAll({
+            where: { orderId: orderId }
+        })
+    },
+
     async getPurchasesWithItems(userId) {
     return await Order.findAll({
         where: { buyerId: userId },

@@ -173,5 +173,12 @@ module.exports = {
             order: orderClause,
             include: [{all: true}]
         });
+    },
+    async updateBookStatus(bookId, status){
+        return await Book.update({
+            status: status
+        }, {
+            where: { id: bookId }
+        });
     }
 };
