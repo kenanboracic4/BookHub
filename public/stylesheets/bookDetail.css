@@ -39,6 +39,26 @@ body {
     top: 20px;
 }
 
+
+
+
+
+.book-status {
+    position: absolute;
+    left: 2px;
+    top: 2px;
+    z-index: 10; 
+    background-color: var(--primary); 
+    color: white;
+    padding: 8px 19px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    pointer-events: none; /
+}
 .bd-image-wrapper {
     width: 100%;
     border-radius: 12px;
@@ -204,6 +224,11 @@ body {
 .bd-seller-name {
     font-weight: 700;
     color: var(--up-primary);
+    text-decoration: none;
+}
+.bd-seller-name:hover {
+    color: rgb(43, 43, 132);
+    
 }
 
 .bd-post-date {

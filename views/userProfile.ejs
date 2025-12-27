@@ -1,146 +1,180 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel='stylesheet' href='/stylesheets/header.css' />
     <link rel="stylesheet" href="/stylesheets/userProfile.css" />
     <link rel="stylesheet" href="/stylesheets/footer.css" />
 </head>
+
 <body>
 
     <% include partials/header %>
 
-    <div class="up-main-wrapper">
-        
-        <div class="up-profile-card">
-            <div class="up-header-row">
-                <div class="up-user-info">
-                    <img src="<%= profileUser.profileImage || '/images/noProfileImage.png' %>" alt="Profile" class="up-avatar">
-                    <div class="up-user-details">
-                        <h1><%= profileUser.firstName %> <%= profileUser.lastName %></h1>
-                        <p><i class="fa-solid fa-envelope"></i> <%= profileUser.email %></p>
+        <div class="up-main-wrapper">
+
+            <div class="up-profile-card">
+                <div class="up-header-row">
+                    <div class="up-user-info">
+                        <img src="<%= (profileUser.profileImage && profileUser.profileImage !== '') ? profileUser.profileImage : '/images/noProfileImage.png' %>"
+                            alt="Profile" class="up-avatar" id="avatar-preview">
+                        <div class="up-user-details">
+                            <h1>
+                                <%= profileUser.firstName %>
+                                    <%= profileUser.lastName %>
+                            </h1>
+                            <p><i class="fa-solid fa-envelope"></i>
+                                <%= profileUser.email %>
+                            </p>
+                        </div>
                     </div>
+                    <% if(profileUser.id===user.id) { %>
+                        <a href="/user/profile/<%= profileUser.id %>/edit" class="up-btn-edit">
+                            <i class="fa fa-pen-to-square"></i> Uredi profil
+                        </a>
+                        <% } %>
                 </div>
-                <a href="/user/profile/<%= profileUser.id %>/edit" class="up-btn-edit">
-                    <i class="fa fa-pen-to-square"></i> Uredi profil
-                </a>
-            </div>
 
-            <div class="up-data-grid">
-                <div class="up-input-group">
-                    <label>Status</label>
-                    <div class="up-input-field"><%= profileUser.status %></div>
-                </div>
-                <div class="up-input-group">
-                    <label>Uloga</label>
-                    <div class="up-input-field"><%= profileUser.role %></div>
-                </div>
-                <div class="up-input-group up-bio-full">
-                    <label>O meni</label>
-                    <textarea class="up-textarea-field" rows="4" readonly disabled><%= profileUser.bio || 'Korisnik nije upisao biografiju.' %></textarea>
-                </div>
-            </div>
-
-            <div class="up-preferences">
-                <div class="up-pref-group">
+                <div class="up-data-grid">
                     <div class="up-input-group">
-                        <label><i class="fa-solid fa-book-open"></i> Omiljeni žanrovi</label>
-                        <div class="up-tags-wrapper">
-                            <% if (profileUser.Genres && profileUser.Genres.length > 0) { %>
-                                <% profileUser.Genres.forEach(genre => { %>
-                                    <span class="up-tag up-tag-genre"><%= genre.name %></span>
-                                <% }) %>
-                            <% } else { %>
-                                <span class="no-data">Nema odabranih žanrova</span>
-                            <% } %>
+                        <label>Status</label>
+                        <div class="up-input-field">
+                            <%= profileUser.status %>
                         </div>
+                    </div>
+                    <div class="up-input-group">
+                        <label>Uloga</label>
+                        <div class="up-input-field">
+                            <%= profileUser.role %>
+                        </div>
+                    </div>
+                    <div class="up-input-group up-bio-full">
+                        <label>O meni</label>
+                        <textarea class="up-textarea-field" rows="4" readonly
+                            disabled><%= profileUser.bio || 'Korisnik nije upisao biografiju.' %></textarea>
                     </div>
                 </div>
 
-                <div class="up-pref-group">
-                     <div class="up-input-group">
-                        <label><i class="fa-solid fa-language"></i> Jezici</label>
-                        <div class="up-tags-wrapper">
-                            <% if (profileUser.Languages && profileUser.Languages.length > 0) { %>
-                                <% profileUser.Languages.forEach(lang => { %>
-                                    <span class="up-tag up-tag-lang"><%= lang.name %></span>
-                                <% }) %>
-                            <% } else { %>
-                                <span class="no-data">Nema odabranih jezika</span>
-                            <% } %>
+                <div class="up-preferences">
+                    <div class="up-pref-group">
+                        <div class="up-input-group">
+                            <label><i class="fa-solid fa-book-open"></i> Omiljeni žanrovi</label>
+                            <div class="up-tags-wrapper">
+                                <% if (profileUser.Genres && profileUser.Genres.length> 0) { %>
+                                    <% profileUser.Genres.forEach(genre=> { %>
+                                        <span class="up-tag up-tag-genre">
+                                            <%= genre.name %>
+                                        </span>
+                                        <% }) %>
+                                            <% } else { %>
+                                                <span class="no-data">Nema odabranih žanrova</span>
+                                                <% } %>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="up-pref-group">
+                        <div class="up-input-group">
+                            <label><i class="fa-solid fa-language"></i> Jezici</label>
+                            <div class="up-tags-wrapper">
+                                <% if (profileUser.Languages && profileUser.Languages.length> 0) { %>
+                                    <% profileUser.Languages.forEach(lang=> { %>
+                                        <span class="up-tag up-tag-lang">
+                                            <%= lang.name %>
+                                        </span>
+                                        <% }) %>
+                                            <% } else { %>
+                                                <span class="no-data">Nema odabranih jezika</span>
+                                                <% } %>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <% if(profileUser.role === 'Prodavač') { %>
-        <div class="up-books-section">
-            <h2 class="up-section-title">Moji oglasi (<%= profileUserBooks ? profileUserBooks.length : 0 %>)</h2>
+            <% if(profileUser.role==='Prodavač' ) { %>
+                <div class="up-books-section">
+                    <h2 class="up-section-title">
+                        <% if(profileUser.id===user.id) { %>
+                            Moji oglasi
+                            <% } else { %>
+                                Oglasi <%= profileUser.firstName %>a
+                                    <% } %>
+                                        (<%= profileUserBooks ? profileUserBooks.length : 0 %>)
+                    </h2>
 
-            <% if (profileUserBooks && profileUserBooks.length > 0) { %>
-                <div class="up-books-list">
-                    <% profileUserBooks.forEach(book => { %>
-                        
-                        <div class="up-book-row">
-                            <div class="up-book-info">
-                                <div class="up-book-img-wrapper">
-                                    <img src="<%= book.imageUrl || '/images/default-book.png' %>" alt="<%= book.title %>">
-                                </div>
-                                
-                                <div class="up-book-text">
-                                    <h3><%= book.title %></h3>
-                                    <p class="up-book-date">
-                                        <i class="fa-regular fa-calendar"></i> <%= new Date(book.createdAt).toLocaleDateString('bs-BA') %>
-                                    </p>
-                                    <p class="up-book-price"><%= parseFloat(book.price).toFixed(2) %> KM</p>
-                                </div>
-                            </div>
+                    <% if (profileUserBooks && profileUserBooks.length> 0) { %>
+                        <div class="up-books-list">
+                            <% profileUserBooks.forEach(book=> { %>
 
-                            <div class="up-book-actions">
-                                <a href="/books/edit/<%= book.id %>" class="up-action-btn up-btn-modify">
-                                    <i class="fa fa-pen"></i> Uredi
-                                </a>
-                                <button onclick="deleteBook('<%= book.id %>')" class="up-action-btn up-btn-delete">
-                                    <i class="fa fa-trash"></i> Obriši
-                                </button>
-                            </div>
+                                <div class="up-book-row">
+                                    <div class="up-book-info">
+                                        <div class="up-book-img-wrapper">
+                                            <img src="<%= book.imageUrl || '/images/default-book.png' %>"
+                                                alt="<%= book.title %>">
+                                        </div>
+
+                                        <div class="up-book-text">
+                                            <h3>
+                                                <%= book.title %>
+                                            </h3>
+                                            <p class="up-book-date">
+                                                <i class="fa-regular fa-calendar"></i>
+                                                <%= new Date(book.createdAt).toLocaleDateString('bs-BA') %>
+                                            </p>
+                                            <p class="up-book-price">
+                                                <%= parseFloat(book.price).toFixed(2) %> KM
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="up-book-actions">
+                                        <a href="/books/edit/<%= book.id %>" class="up-action-btn up-btn-modify">
+                                            <i class="fa fa-pen"></i> Uredi
+                                        </a>
+                                        <button onclick="deleteBook('<%= book.id %>')"
+                                            class="up-action-btn up-btn-delete">
+                                            <i class="fa fa-trash"></i> Obriši
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <% }) %>
                         </div>
+                        <% } else { %>
+                            <div class="up-profile-card" style="text-align: center; padding: 40px;">
+                                <p style="color: var(--up-secondary);">Trenutno nemate objavljenih knjiga.</p>
+                            </div>
+                            <% } %>
+                </div>
+                <% } %>
 
-                    <% }) %>
-                </div>
-            <% } else { %>
-                <div class="up-profile-card" style="text-align: center; padding: 40px;">
-                    <p style="color: var(--up-secondary);">Trenutno nemate objavljenih knjiga.</p>
-                </div>
-            <% } %>
         </div>
-        <% } %>
 
-    </div>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script>
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('success') === 'true') {
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                    }
+                });
+                Toast.fire({
+                    icon: 'success',
+                    title: 'Profil uspješno ažuriran!'
+                });
+                window.history.replaceState({}, document.title, window.location.pathname);
+            }
+        </script>
 
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
-        const urlParams = new URLSearchParams(window.location.search);
-        if (urlParams.get('success') === 'true') {
-            const Toast = Swal.mixin({
-                toast: true,
-                position: 'top-end', 
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                    toast.addEventListener('mouseenter', Swal.stopTimer)
-                    toast.addEventListener('mouseleave', Swal.resumeTimer)
-                }
-            });
-            Toast.fire({
-                icon: 'success',
-                title: 'Profil uspješno ažuriran!'
-            });
-            window.history.replaceState({}, document.title, window.location.pathname);
-        }
-    </script>
-
-    <% include partials/footer %>
+        <% include partials/footer %>
 </body>
+
 </html>

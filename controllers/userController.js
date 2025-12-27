@@ -116,7 +116,10 @@ module.exports ={
     async renderUserProfilePage(req,res){
 
         const id = req.params.id;
-
+        if(isNaN(id) || !id){
+            res.status(404).send('Korisnik nije pronađen.');
+            return;
+        }
         const user = await userService.findUserDataById(parseInt(id));
         const userBooks = await userService.getUserBooks(id);
 

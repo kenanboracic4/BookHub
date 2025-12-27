@@ -1,139 +1,160 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel='stylesheet' href='/stylesheets/header.css' />
     <link rel="stylesheet" href="/stylesheets/bookDetail.css" />
     <link rel="stylesheet" href="/stylesheets/footer.css" />
 </head>
+
 <body>
 
     <% include partials/header %>
 
-    <div class="bd-main-wrapper">
-        
-        <div class="bd-card">
-            
-            <div class="bd-layout">
-                <div class="bd-image-col">
-                    <div class="bd-image-wrapper">
-                        <img src="<%= book.imageUrl %>" alt="<%= book.title %>">
-                    </div>
-                </div>
+        <div class="bd-main-wrapper">
 
-                <div class="bd-info-col">
-                    
-                    <div class="bd-header">
-                        <h1 class="bd-title"><%= book.title %></h1>
-                        <p class="bd-author">Autor: <span><%= book.author %></span></p>
-                        
-                        <div class="bd-meta-row">
-                            <div class="bd-rating">
-                                <i class="fa-solid fa-star"></i> <%= book.averageRating %> / 5
+            <div class="bd-card">
+
+                <div class="bd-layout">
+                    <div class="bd-image-col">
+                        <div class="bd-image-wrapper">
+                            <div class="book-status">
+                                <%= book.status %>
                             </div>
-                            <div class="bd-views">
-                                <i class="fa fa-eye"></i> <%= book.viewCount %> pregleda
-                            </div>
+                            <img src="<%= book.imageUrl %>" alt="<%= book.title %>">
+
                         </div>
-                        
-                        <div class="bd-price">
-                            <%= parseFloat(book.price).toFixed(2) %> KM
-                        </div>
+ 
                     </div>
 
-                    <div class="bd-data-grid">
-                        <div class="bd-input-group">
-                            <label>Žanr</label>
-                            <div class="bd-value-field">
-                                <%= (book.genre && book.genre.name) ? book.genre.name : 'Nema žanra' %>
+                    <div class="bd-info-col">
+
+                        <div class="bd-header">
+                            <h1 class="bd-title">
+                                <%= book.title %>
+                            </h1>
+                            <p class="bd-author">Autor: <span>
+                                    <%= book.author %>
+                                </span></p>
+
+                            <div class="bd-meta-row">
+                                <div class="bd-rating">
+                                    <i class="fa-solid fa-star"></i>
+                                    <%= book.averageRating %> / 5
+                                </div>
+                                <div class="bd-views">
+                                    <i class="fa fa-eye"></i>
+                                    <%= book.viewCount %> pregleda
+                                </div>
                             </div>
-                        </div>
-                        
-                        <div class="bd-input-group">
-                            <label>Stanje</label>
-                            <div class="bd-value-field">
-                                <%= (book.condition && book.condition.name) ? book.condition.name : 'Nije navedeno' %>
+
+                            <div class="bd-price">
+                                <%= parseFloat(book.price).toFixed(2) %> KM
                             </div>
                         </div>
 
-                        <div class="bd-input-group">
-                            <label>Lokacija</label>
-                            <div class="bd-value-field">
-                                <%= (book.location && book.location.name) ? book.location.name : 'Nije navedeno' %>
+                        <div class="bd-data-grid">
+                            <div class="bd-input-group">
+                                <label>Žanr</label>
+                                <div class="bd-value-field">
+                                    <%= (book.genre && book.genre.name) ? book.genre.name : 'Nema žanra' %>
+                                </div>
+                            </div>
+
+                            <div class="bd-input-group">
+                                <label>Stanje</label>
+                                <div class="bd-value-field">
+                                    <%= (book.condition && book.condition.name) ? book.condition.name : 'Nije navedeno'
+                                        %>
+                                </div>
+                            </div>
+
+                            <div class="bd-input-group">
+                                <label>Lokacija</label>
+                                <div class="bd-value-field">
+                                    <%= (book.location && book.location.name) ? book.location.name : 'Nije navedeno' %>
+                                </div>
+                            </div>
+
+                            <div class="bd-input-group">
+                                <label>Jezik</label>
+                                <div class="bd-value-field">
+                                    <%= (book.language && book.language.name) ? book.language.name : 'Nije navedeno' %>
+                                </div>
+                            </div>
+
+                            <div class="bd-input-group bd-full-width-mobile">
+                                <label>Moguća zamjena</label>
+                                <div class="bd-value-field bd-exchange-field">
+                                    <% if (book.isForExchange) { %>
+                                        <i class="fa-solid fa-check-circle" style="color: #16a34a;"></i> Da
+                                        <% } else { %>
+                                            <i class="fa-solid fa-circle-xmark" style="color: #ef4444;"></i> Ne
+                                            <% } %>
+                                </div>
                             </div>
                         </div>
 
-                        <div class="bd-input-group">
-                            <label>Jezik</label>
-                            <div class="bd-value-field">
-                                <%= (book.language && book.language.name) ? book.language.name : 'Nije navedeno' %>
+                        <div class="bd-description">
+                            <h3>O knjizi</h3>
+                            <p>
+                                <%= book.description %>
+                            </p>
+                        </div>
+
+                        <div class="bd-seller-box">
+                            <div class="bd-seller-avatar">
+                                <i class="fa fa-user"></i>
+                            </div>
+                            <div class="bd-seller-info">
+                                <span class="bd-seller-label">Prodavač</span>
+                                <a href="/user/profile/<%= book.sellerId  %>"class="bd-seller-name">
+                                    <%= (book.seller) ? book.seller.firstName + ' ' + book.seller.lastName : 'Nepoznato'
+                                        %> 
+                                </a>
+                            </div>
+                            <div class="bd-post-date">
+                                
+                                <i class="fa-regular fa-calendar"></i>
+                                <%= new Date(book.createdAt).toLocaleDateString('bs-BA') %>
                             </div>
                         </div>
 
-                        <div class="bd-input-group bd-full-width-mobile">
-                            <label>Moguća zamjena</label>
-                            <div class="bd-value-field bd-exchange-field">
-                                <% if (book.isForExchange) { %>
-                                    <i class="fa-solid fa-check-circle" style="color: #16a34a;"></i> Da
-                                <% } else { %>
-                                    <i class="fa-solid fa-circle-xmark" style="color: #ef4444;"></i> Ne
-                                <% } %>
+                        <% if(user && user.role=='Kupac' ) { %>
+                            <div class="bd-actions">
+                                <button class="bd-btn bd-btn-primary btn-buy-book" data-id="<%= book.id %>">
+                                    <i class="fa fa-shopping-cart"></i> Dodaj u korpu
+                                </button>
+                                <a href="/messages/user/<%= book.sellerId %>" class="bd-btn bd-btn-outline">
+                                    <i class="fa fa-envelope"></i> Kontakt
+                                </a>
                             </div>
-                        </div>
+                            <% } %>
+
                     </div>
-
-                    <div class="bd-description">
-                        <h3>O knjizi</h3>
-                        <p><%= book.description %></p>
-                    </div>
-
-                    <div class="bd-seller-box">
-                        <div class="bd-seller-avatar">
-                            <i class="fa fa-user"></i>
-                        </div>
-                        <div class="bd-seller-info">
-                            <span class="bd-seller-label">Prodavač</span>
-                            <span class="bd-seller-name">
-                                <%= (book.seller) ? book.seller.firstName + ' ' + book.seller.lastName : 'Nepoznato' %>
-                            </span>
-                        </div>
-                        <div class="bd-post-date">
-                            <i class="fa-regular fa-calendar"></i>
-                            <%= new Date(book.createdAt).toLocaleDateString('bs-BA') %>
-                        </div>
-                    </div>
-
-                    <div class="bd-actions">
-                        <button class="bd-btn bd-btn-primary btn-buy-book" data-id="<%= book.id %>">
-                            <i class="fa fa-shopping-cart"></i> Dodaj u korpu
-                        </button>
-                        <a href="/messages/user/<%= book.sellerId %>" class="bd-btn bd-btn-outline">
-                            <i class="fa fa-envelope"></i> Kontakt
-                        </a>
-                    </div>
-
                 </div>
             </div>
         </div>
-    </div>
-    <% include partials/footer %>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
-        const urlParams = new URLSearchParams(window.location.search);
-        if (urlParams.get('success') === 'true') {
-            const Toast = Swal.mixin({
-                toast: true,
-                position: 'top-end', 
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
-            });
-            Toast.fire({
-                icon: 'success',
-                title: 'Akcija uspješna!'
-            });
-            window.history.replaceState({}, document.title, window.location.pathname);
-        }
-    </script>
+        <% include partials/footer %>
+            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+            <script>
+                const urlParams = new URLSearchParams(window.location.search);
+                if (urlParams.get('success') === 'true') {
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                    });
+                    Toast.fire({
+                        icon: 'success',
+                        title: 'Akcija uspješna!'
+                    });
+                    window.history.replaceState({}, document.title, window.location.pathname);
+                }
+            </script>
 </body>
+
 </html>

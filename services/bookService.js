@@ -23,6 +23,7 @@ module.exports = {
 
     async getBookById(id) {
         const book = await bookDao.findBookById(id);
+        console.log("book:", JSON.stringify(book));
         return book;
     },
 

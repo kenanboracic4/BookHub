@@ -28,7 +28,7 @@ module.exports = {
                      return;
 
               }
-              console.log("BOOK:", book);
+              
               await bookService.incrementBookViewCount(parseInt(id));
               res.render('bookDetail', {
                      book: book
