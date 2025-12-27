@@ -105,7 +105,7 @@
 
                         <div class="bd-seller-box">
                             <div class="bd-seller-avatar">
-                                <img class="avatar-circle-profile" src="<%=(user &&  book.seller.profileImage && book.seller.profileImage.length > 0) ? book.seller.profileImage : '/images/noProfileImage.png' %>" alt="<%= book.seller.firstName %> <%= book.seller.lastName %>">
+                                <img class="avatar-circle-profile" src="<%=(book.seller.profileImage && book.seller.profileImage.length > 0) ? book.seller.profileImage : '/images/noProfileImage.png' %>" alt="<%= book.seller.firstName %> <%= book.seller.lastName %>">
                             </div>
                             <div class="bd-seller-info">
                                 <span class="bd-seller-label">Prodavač</span>
