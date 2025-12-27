@@ -197,8 +197,8 @@ body {
 }
 
 .bd-seller-avatar {
-    width: 45px;
-    height: 45px;
+    width: 55px;
+    height: 55px;
     background: #e2e8f0;
     border-radius: 50%;
     display: flex;
@@ -229,6 +229,18 @@ body {
 .bd-seller-name:hover {
     color: rgb(43, 43, 132);
     
+}
+
+.avatar-circle-profile {
+    width: 53px;
+    height: 53px;
+    background: var(--primary-dark);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
 }
 
 .bd-post-date {

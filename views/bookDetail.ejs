@@ -105,11 +105,11 @@
 
                         <div class="bd-seller-box">
                             <div class="bd-seller-avatar">
-                                <i class="fa fa-user"></i>
+                                <img class="avatar-circle-profile" src="<%=(user &&  book.seller.profileImage && book.seller.profileImage.length > 0) ? book.seller.profileImage : '/images/noProfileImage.png' %>" alt="<%= book.seller.firstName %> <%= book.seller.lastName %>">
                             </div>
                             <div class="bd-seller-info">
                                 <span class="bd-seller-label">Prodavač</span>
-                                <a href="/user/profile/<%= book.sellerId  %>"class="bd-seller-name">
+                                <a href="/user/profile/<%= book.sellerId  %>"class="bd-seller-name"></a>
                                     <%= (book.seller) ? book.seller.firstName + ' ' + book.seller.lastName : 'Nepoznato'
                                         %> 
                                 </a>
