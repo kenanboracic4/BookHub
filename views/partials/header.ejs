@@ -16,6 +16,12 @@
             <% } %>
             <a href="/books" class="nav-link"><i class="fa-solid fa-book-open"></i> Oglasi</a>
             <a href="/books/add-book" class="nav-link highlight"><i class="fa-solid fa-circle-plus"></i> Objavi oglas</a>
+            <% if (user && user.role == 'Prodavač') { %>
+                <a href="/orders/sales" class="nav-link"><i class="fa-solid fa-box-open"></i> Moje prodaje</a>
+            <% } %>
+            <% if (user && user.role == 'Kupac') { %>
+                <a href="/orders" class="nav-link"><i class="fa-solid fa-bag-shopping"></i> Moje narudžbe</a>
+            <% } %>
             <% if (user) { %>
                 <div class="nav-divider"></div>
                 <a href="/user/logout" class="nav-link logout"><i class="fa-solid fa-arrow-right-from-bracket"></i> Odjavi se</a>
@@ -39,7 +45,7 @@
                 <span class="label">Ukupno za plaćanje:</span>
                 <span class="amount" id="cartTotalSum">0.00 KM</span>
             </div>
-            <a href="/cart" class="btn-checkout">Završi kupovinu <i class="fa-solid fa-arrow-right"></i></a>
+            <a href="/orders" id ="checkoutBtn" class="btn-checkout">Završi kupovinu <i class="fa-solid fa-arrow-right"></i></a>
         </div>
     </div>
 
@@ -79,6 +85,7 @@
                 <% } %>
             </div>
         </div>
+      
     </div>
 
     <div class="action-bar-container">
@@ -185,6 +192,7 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="/javascripts/cart.js"></script> 
+<script src="/javascripts/order.js"></script>
 
 
 <script>

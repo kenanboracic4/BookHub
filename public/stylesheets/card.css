@@ -4,23 +4,23 @@
     --card-bg: #ffffff;
 }
 
-/* Osigurava da su sve kartice u redu iste visine */
+
 .books-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); /* Automatski raspored */
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 25px;
     padding: 20px;
 }
 
 .card {
     background: var(--card-bg);
-    border-radius: 12px; /* Malo manji radius za moderniji "sharp" izgled */
+    border-radius: 12px; 
     overflow: hidden;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
     transition: all 0.3s ease;
     border: 1px solid #e2e8f0;
     
-    /* OVO JE BITNO: Flex osigurava da footer (gumb) ide na dno */
+    
     display: flex;
     flex-direction: column; 
     height: 100%; 
@@ -32,36 +32,36 @@
     border-color: var(--primary-dark);
 }
 
-/* --- OVDJE JE RJEŠENJE ZA SLIKE --- */
+
 
 .card-image-wrapper {
     width: 100%;
-    height: 350px; /* FIKSNA VISINA: Ovo diktira veličinu slike. Povećaj/smanji po želji */
+    height: 350px;  
     position: relative;
-    background-color: #f1f5f9; /* Siva pozadina dok se slika učitava */
+    background-color: #f1f5f9;
 }
 
 .card img {
     width: 100%;
     height: 100%;
-    /* KLJUČNO: 'cover' rasteže sliku da popuni sve, nema bijelih rupa! */
+   
     object-fit: cover; 
-    /* Fokusira vrh slike (naslov knjige) ako mora rezati dno */
+    
     object-position: center top; 
     transition: transform 0.4s ease;
 }
 
 .card:hover img {
-    transform: scale(1.05); /* Moderni zoom efekt */
+    transform: scale(1.05); 
 }
 
-/* --- SADRŽAJ --- */
+
 
 .card-content {
     padding: 20px;
     display: flex;
     flex-direction: column;
-    flex-grow: 1; /* Popunjava preostali prostor */
+    flex-grow: 1; 
 }
 
 .card-meta {
@@ -72,7 +72,7 @@
     font-size: 0.7rem;
     font-weight: 700;
     text-transform: uppercase;
-    color: #3b82f6; /* Plava za žanr, moderni touch */
+    color: #3b82f6;
     letter-spacing: 0.05em;
     background: #eff6ff;
     padding: 4px 8px;
@@ -86,9 +86,8 @@
     font-weight: 800;
     line-height: 1.3;
     
-    /* Ograničava naslov na max 2 reda da ne razbije visinu */
+    
     display: -webkit-box;
-    -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
@@ -100,10 +99,9 @@
     font-weight: 500;
 }
 
-/* --- FOOTER (CIJENA I GUMB) --- */
 
 .card-footer {
-    margin-top: auto; /* Gura footer skroz na dno kartice */
+    margin-top: auto; 
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -129,5 +127,5 @@
 }
 
 .btn-details:hover {
-    background-color: #1e293b; /* Malo svjetlija nijansa na hover */
+    background-color: #1e293b;
 }

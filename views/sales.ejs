@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ba">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moje Prodaje</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel='stylesheet' href='/stylesheets/header.css' />
+    <link rel="stylesheet" href="/stylesheets/orders.css" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
+<body>
+
+    <% include partials/header %>
+
+        <div class="ord-main-wrapper">
+            <div class="ord-container">
+                <div class="ord-header">
+                    <h1><i class="fa-solid fa-bag-shopping"></i> Moje Prodaje</h1>
+                    <p>Upravljajte narudžbama koje su kupci poslali za vaše knjige.</p>
+                </div>
+
+                <div class="ord-list">
+                    <% if (orders && orders.length> 0) { %>
+                        <% orders.forEach(order=> { %>
+                            <div class="ord-card">
+                                <div class="ord-card-header">
+                                    <span class="ord-id">ID: #ORD-<%= order.id %></span>
+                                    <span class="ord-date">
+                                        <%= new Date(order.createdAt).toLocaleDateString('en-US') %>
+                                    </span>
+
+                                    <% let statusClass='status-pending' ; if(order.status==='prihvaćeno' )
+                                        statusClass='status-completed' ; if(order.status==='odbijeno' ||
+                                        order.status==='otkazano' ) statusClass='status-cancelled' ; %>
+                                        <span class="ord-status <%= statusClass %>">
+                                            <%= order.status %>
+                                        </span>
+                                </div>
+
+                                <div class="ord-body">
+                                    <% order.items.forEach(item=> { %>
+                                        <div class="ord-item">
+                                            <img src="<%= item.book.imageUrl || '/images/default-book.png' %>"
+                                                alt="Knjiga">
+                                            <div class="ord-item-info">
+                                                <h3>
+                                                    <%= item.book.title %>
+                                                </h3>
+                                                <p>Kupac: <strong>
+                                                        <%= order.buyer ? order.buyer.firstName + ' ' +
+                                                            order.buyer.lastName : 'Nepoznat korisnik' %>
+                                                    </strong></p>
+                                                <span class="ord-price">
+                                                    <%= item.priceAtPurchase %> KM
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <% }) %>
+
+                                            <div class="ord-summary"
+                                                style="padding: 15px; border-top: 1px solid #eee; text-align: right;">
+                                                <strong>Ukupna zarada: <span style="color: #27ae60; font-size: 1.2rem;">
+                                                        <%= order.totalPrice %> KM
+                                                    </span></strong>
+                                            </div>
+
+                                            <div class="ord-actions">
+                                                <% if(order.status==='Na čekanju' ) { %>
+                                                    <button class="ord-btn ord-accept-btn" data-id="<%= order.id %>"
+                                                        style="background-color: #27ae60; color: white;">
+                                                        <i class="fa-solid fa-check"></i> Prihvati
+                                                    </button>
+
+                                                    <button class="ord-btn ord-reject-btn" data-id="<%= order.id %>"
+                                                        style="background-color: #e74c3c; color: white;">
+                                                        <i class="fa-solid fa-xmark"></i> Odbij
+                                                    </button>
+                                                    <% } else if(order.status==='prihvaćeno' ) { %>
+                                                        <button class="ord-btn ord-btn-contact">Kontaktiraj
+                                                            kupca</button>
+                                                        <% } %>
+                                            </div>
+                                </div>
+                            </div>
+                            <% }) %>
+                                <% } else { %>
+                                    <div class="no-orders" style="text-align: center; padding: 50px;">
+                                        <i class="fa-solid fa-hand-holding-dollar"
+                                            style="font-size: 4rem; color: #ccc;"></i>
+                                        <p style="margin-top: 20px; font-size: 1.2rem; color: #666;">Još uvijek nemate
+                                            nijednu prodaju.</p>
+                                    </div>
+                                    <% } %>
+                </div>
+            </div>
+        </div>
+
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="/javascripts/order.js"></script>
+</body>
+
+</html>

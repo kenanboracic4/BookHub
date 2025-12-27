@@ -68,12 +68,14 @@ module.exports ={
             }
 
             const user = await userService.loginUser(email, password);
-
+            console.log(user);
+            console.log("user role: ",user.role);
            const token = jwt.sign(
             {
             id: user.id ,
             email: user.email,
-            firstName: user.firstName
+            firstName: user.firstName,
+            role: user.role
             },
             JWT_SECRET,
             {expiresIn: '1h'}

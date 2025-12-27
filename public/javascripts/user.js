@@ -114,7 +114,7 @@ $('#user-update-form').on('submit', function(event) {
         },
         error: function(xhr) {
             const errorMessage = xhr.responseText || 'Greška prilikom ažuriranja.';
-            alert(errorMessage); 
+            alert(errorMessage);
         }
     });
 });

@@ -34,7 +34,7 @@ body {
 
 
 .bd-image-col {
-    flex: 0 0 35%; /* Slika uzima 35% širine */
+    flex: 0 0 35%; 
     position: sticky;
     top: 20px;
 }
@@ -260,7 +260,7 @@ body {
     background-color: #f1f5f9;
 }
 
-/* --- RESPONSIVE --- */
+
 @media (max-width: 768px) {
     .bd-layout {
         flex-direction: column;

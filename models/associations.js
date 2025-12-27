@@ -11,6 +11,7 @@ const GenresLK = require("./Lookups/GenresLK");
 const LanguagesLK = require("./Lookups/LanguageLK");
 const LocationsLK = require("./Lookups/LocationsLK");
 const BookConditionsLK = require("./Lookups/BookConditionsLK");
+const { Sequelize } = require("sequelize");
 
 
  //RELACIJE ZA KORISNIKE I KNJIGE
@@ -80,10 +81,11 @@ Order.belongsTo(User, { foreignKey: 'sellerId', as: 'seller' });
 Order.hasMany(OrderItem, { foreignKey: 'orderId', as: 'items' });
 OrderItem.belongsTo(Order, { foreignKey: 'orderId' });
 
-Book.hasMany(OrderItem, { foreignKey: 'bookId' });
-OrderItem.belongsTo(Book, { foreignKey: 'bookId' });
+Book.hasMany(OrderItem, { foreignKey: 'bookId', as: 'orderItems' });
+OrderItem.belongsTo(Book, { foreignKey: 'bookId' , as: 'book' });
 
 module.exports = {
+    Sequelize,
     User,
     Book,
     Order,
