@@ -214,6 +214,9 @@ body {
     flex-direction: column;
     flex: 1;
 }
+#bd-rating-i{
+    color: #9be31bab;
+}
 .bd-rating-field{
     background-color: #f8fafc;
    border:none;

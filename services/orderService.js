@@ -103,6 +103,7 @@ module.exports = {
         await userRatingDao.rateUser(parseInt(sellerId), parseInt(userRating), parseInt(userId));
 
         await bookDao.updateBookAvgRating(bookId);
+        await userDao.updateUserRating(userId);
 
         return true;
     }

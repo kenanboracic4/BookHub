@@ -45,6 +45,10 @@ const User = sequelize.define("Users", {
     profileImage: {
         type: DataTypes.STRING,
         allowNull: true 
+    },
+    averageRating: {
+        type: DataTypes.FLOAT,
+        allowNull: true
     }
 }, {
     tableName: "Users",

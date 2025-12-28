@@ -1,10 +1,12 @@
+const { where } = require('sequelize');
 
 
 const languageLK = require('../models/associations').LanguagesLK;
 const genresLK = require('../models/associations').GenresLK;
 const Users = require('../models/associations').User;
 const Book = require('../models/associations').Book;
-
+const UserRating = require('../models/associations').UserRating;
+const { Op, Sequelize} = require('sequelize');
 module.exports = {
 
     getAllGenres() {
@@ -56,25 +58,43 @@ module.exports = {
         })
     },
 
- async updateUser(userId, updateData, genreIds, languageIds) {
-    const user = await Users.findByPk(userId);
-    if (!user) throw new Error('Korisnik nije pronađen');
+    async updateUser(userId, updateData, genreIds, languageIds) {
+        const user = await Users.findByPk(userId);
+        if (!user) throw new Error('Korisnik nije pronađen');
 
-    // Update osnovnih polja
-    await user.update(updateData);
+        // Update osnovnih polja
+        await user.update(updateData);
 
-    // Update tabela povezivanja (asocijacije)
-    if (genreIds) await user.setGenres(genreIds);
-    if (languageIds) await user.setLanguages(languageIds);
+        // Update tabela povezivanja (asocijacije)
+        if (genreIds) await user.setGenres(genreIds);
+        if (languageIds) await user.setLanguages(languageIds);
 
-    return user;
-},
+        return user;
+    },
 
     async updateUserRole(userId) {
         const user = await Users.findByPk(userId);
 
         return await user.update({
             role: "Prodavač"
+        })
+    },
+
+    async updateUserRating(userId) {
+        const result = await UserRating.findOne({
+            where: { userId: userId },
+            attributes: [
+                [Sequelize.fn('AVG', Sequelize.col('stars')), 'avgScore']
+            ],
+            raw: true
+        });
+
+        const newAvgRating = result && result.avgScore ? parseFloat(result.avgScore).toFixed(1) : 0;
+
+        return await Users.update({
+            averageRating: newAvgRating
+        }, {
+            where: { id: userId }
         })
     }
 
