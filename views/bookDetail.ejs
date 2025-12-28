@@ -40,7 +40,7 @@
 
                             <div class="bd-meta-row">
                                 <div class="bd-rating">
-                                    <i class="fa-solid fa-star"></i>
+                                    <i id="bd-rating-i" class="fa-solid fa-star"></i>
                                     <%= book.averageRating %> / 5
                                 </div>
                                 <div class="bd-views">
@@ -94,6 +94,7 @@
                                             <% } %>
                                 </div>
                             </div>
+                             
                         </div>
 
                         <div class="bd-description">
@@ -138,7 +139,8 @@
         </div>
         <% include partials/footer %>
             <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-            <script>
+            <script src="/javascripts/book.js"></script>
+           <script>
                 const urlParams = new URLSearchParams(window.location.search);
                 if (urlParams.get('success') === 'true') {
                     const Toast = Swal.mixin({

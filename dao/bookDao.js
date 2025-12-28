@@ -5,8 +5,12 @@ const LocationsLK = require('../models/associations').LocationsLK;
 const BookConditionsLK = require('../models/associations').BookConditionsLK;
 const LanguagesLK = require('../models/associations').LanguagesLK;
 const Users = require('../models/associations').User;
+const BookRating = require('../models/associations').BookRating;
 
-const { Op } = require('sequelize');
+
+
+
+const { Op, Sequelize} = require('sequelize');
 
 module.exports = {
 
@@ -180,5 +184,31 @@ module.exports = {
         }, {
             where: { id: bookId }
         });
-    }
+    },
+  
+
+
+
+
+
+async updateBookAvgRating(bookId) {
+    
+    const result = await BookRating.findOne({
+        where: { bookId: bookId },
+        attributes: [
+            [Sequelize.fn('AVG', Sequelize.col('value')), 'avgScore']
+        ],
+        raw: true
+    });
+
+    
+    const newAvgRating = result && result.avgScore ? parseFloat(result.avgScore).toFixed(1) : 0;
+
+    // 3. Ažuriraj tabelu Book
+    return await Book.update({
+        averageRating: newAvgRating 
+    }, {
+        where: { id: bookId }
+    });
+}
 };

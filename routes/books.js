@@ -15,5 +15,6 @@ router.get('/search', bookController.renderSearchPage);
 
 router.post('/add-book', verifyToken, upload.single('image'), bookController.handleAddBook);
 
+
 router.put('/edit/:id', verifyToken, upload.single('image'), bookController.handleEditBook);
 module.exports = router;

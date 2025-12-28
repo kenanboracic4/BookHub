@@ -125,5 +125,16 @@ async filteredBooks(query) {
 
     
     return await bookDao.getBooks(whereClause, orderClause);
+},
+async rateBook(bookId, rating, userId) {
+    
+},
+
+async getAverageRating(bookId) {
+    console.log(bookId);
+    return await bookDao.getAverageRating(bookId);
+},
+async updateBookRating(bookId, averageRating) {
+    return await bookDao.updateBookRating(bookId, averageRating);
 }
 };

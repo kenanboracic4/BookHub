@@ -6,6 +6,8 @@ const OrderItem = require("./tables/OrderItem");
 const Cart = require("./tables/Cart");
 const UserLanguages = require("./tables/UserLanguages");
 const UserGenres = require("./tables/UserGenres");
+const BookRating = require("./tables/BookRating");
+const UserRating = require("./tables/UserRating");
 
 const GenresLK = require("./Lookups/GenresLK");
 const LanguagesLK = require("./Lookups/LanguageLK");
@@ -84,10 +86,46 @@ OrderItem.belongsTo(Order, { foreignKey: 'orderId' });
 Book.hasMany(OrderItem, { foreignKey: 'bookId', as: 'orderItems' });
 OrderItem.belongsTo(Book, { foreignKey: 'bookId' , as: 'book' });
 
+// --- OCJENJIVANJE KORISNIKA (User to User) ---
+
+// Korisnik koji daje ocjenu (Rater)
+User.hasMany(UserRating, { foreignKey: 'raterId', as: 'givenUserRatings' });
+UserRating.belongsTo(User, { foreignKey: 'raterId', as: 'rater' });
+
+// Korisnik koji prima ocjenu (Target User)
+User.hasMany(UserRating, { foreignKey: 'userId', as: 'receivedRatings' });
+UserRating.belongsTo(User, { foreignKey: 'userId', as: 'user' });
+
+// OCJENJIVANJE KNJIGA (Many-to-Many preko BookRating)
+
+// Korisnik može dati mnogo ocjena
+User.hasMany(BookRating, { foreignKey: 'userId', as: 'ratings' });
+BookRating.belongsTo(User, { foreignKey: 'userId', as: 'user' });
+
+// Knjiga može imati mnogo ocjena
+Book.hasMany(BookRating, { foreignKey: 'bookId', as: 'ratings' });
+BookRating.belongsTo(Book, { foreignKey: 'bookId', as: 'book' });
+
+// Opcionalno: Direktna veza ako želiš pisati user.getRatedBooks()
+User.belongsToMany(Book, { 
+    through: BookRating, 
+    foreignKey: 'userId', 
+    otherKey: 'bookId', 
+    as: 'ratedBooks' 
+});
+Book.belongsToMany(User, { 
+    through: BookRating, 
+    foreignKey: 'bookId', 
+    otherKey: 'userId', 
+    as: 'ratedByUsers' 
+});
+
 module.exports = {
     Sequelize,
     User,
+    UserRating,
     Book,
+    BookRating,
     Order,
     OrderItem,
     Cart,

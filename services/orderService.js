@@ -2,6 +2,9 @@ const cartDao = require('../dao/cartDao');
 const orderDao = require('../dao/orderDao');
 const sequelize = require('../config/db');
 const bookDao = require('../dao/bookDao');
+const userDao = require('../dao/userDao');
+const bookRatingDao = require('../dao/bookRating');
+const userRatingDao = require('../dao/userRating');
 
 module.exports = {
 
@@ -92,5 +95,16 @@ module.exports = {
     async cancelOrder(orderId, userId){
         return await orderDao.cancelOrder(orderId, userId);
     },
+
+   
+    async RateBookAndUser(bookId, bookRating, userRating, userId, comment,sellerId) {
+        
+        await bookRatingDao.rateBook(parseInt(bookId), parseInt(bookRating), parseInt(userId), comment);
+        await userRatingDao.rateUser(parseInt(sellerId), parseInt(userRating), parseInt(userId));
+
+        await bookDao.updateBookAvgRating(bookId);
+
+        return true;
+    }
     
 }

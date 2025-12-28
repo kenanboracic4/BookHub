@@ -49,16 +49,22 @@
                                     </div>
                                 <% }) %>
 
-                                <div class="ord-summary" style="padding: 15px; border-top: 1px solid #eee; text-align: right;">
-                                    <strong>Ukupno za narudžbu: <span style="color: #27ae60; font-size: 1.2rem;"><%= order.totalPrice %> KM</span></strong>
+                                <div class="ord-summary">
+                                    <strong>Ukupno: <span style="color: #27ae60;"><%= order.totalPrice %> KM</span></strong>
                                 </div>
 
                                 <div class="ord-actions">
-                                    
-                                    <% if(order.status === 'Na čekanju') { %>
-                                        <button class="ord-btn ord-btn-cancel" data-id = "<%= order.id %>">Otkaži</button>
-                                    <% } else { %>
-                                        <button class="ord-btn ord-btn-contact">Kontaktiraj prodavca</button>
+                                    <% if(order.status === 'NA ČEKANJU') { %>
+                                        <button class="ord-btn ord-btn-cancel" data-id="<%= order.id %>">Otkaži</button>
+                                    <% } else if(order.status === 'PRIHVAĆENO' || order.status === 'ODBIJENO') { %>
+                                        <button class="ord-btn ord-btn-rate" 
+                                            onclick="openRatingModal('<%= order.items[0].book.id %>', '<%= order.items[0].book.title %>', '<%= order.items[0].book.sellerId %>')">
+                                            <i class="fa-regular fa-star"></i> Ocijeni
+                                        </button>
+                                      
+                                        <button class="ord-btn ord-btn-contact">
+                                            <i class="fa-regular fa-envelope"></i> Kontaktiraj
+                                        </button>
                                     <% } %>
                                 </div>
                             </div>
@@ -75,9 +81,64 @@
         </div>
     </div>
 
+    <div id="ratingOverlay" class="rating-overlay">
+        <div class="rating-modal">
+            <div class="rating-header">
+                <h3>Ocijeni kupovinu</h3>
+               
+            </div>
+            
+            <form id="ratingForm">
+                <input type="hidden" name="bookId" id="modalBookId">
+                <input type="hidden" name="sellerId" id="modalSellerId">
+
+                <div class="rating-content">
+                    <p class="rating-subtitle">Podijelite svoje iskustvo za knjigu: <br> <strong id="modalBookTitle">Naslov Knjige</strong></p>
+
+                    <div class="form-group">
+                        <label><i class="fa-solid fa-user-tag"></i> Ocjena za prodavača</label>
+                        <select name="sellerRating"id="userRating" required>
+                            <option value="" disabled selected>Odaberite ocjenu...</option>
+                            <option value="5">⭐⭐⭐⭐⭐ </option>
+                            <option value="4">⭐⭐⭐⭐ </option>
+                            <option value="3">⭐⭐⭐</option>
+                            <option value="2">⭐⭐</option>
+                            <option value="1">⭐</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        
+                        <label><i class="fa-solid fa-book"></i> Ocjena za knjigu</label>
+                        <select name="bookRating" id="bookRating" required>
+                            <option value="" disabled selected>Odaberite ocjenu...</option>
+                            <option value="5">⭐⭐⭐⭐⭐</option>
+                            <option value="4">⭐⭐⭐⭐</option>
+                            <option value="3">⭐⭐⭐</option>
+                            <option value="2">⭐⭐</option>
+                            <option value="1">⭐</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label><i class="fa-solid fa-comment"></i> Komentar na knjigu: </label>
+                        <textarea id="comment" name="comment" rows="3" placeholder="Napišite kratak dojam..."></textarea>
+                    </div>
+                </div>
+
+                <div class="rating-footer">
+                    <button type="button" onclick="closeRatingModal()" class="btn-cancel-rate">Odustani</button>
+                    <button type="submit" class="btn-submit-rate">Potvrdi ocjenu</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="/javascripts/order.js"></script>
+
+   
 
 </body>
 </html>

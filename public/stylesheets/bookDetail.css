@@ -214,6 +214,16 @@ body {
     flex-direction: column;
     flex: 1;
 }
+.bd-rating-field{
+    background-color: #f8fafc;
+   border:none;
+    width: 100%;
+    
+    color: var(--up-primary);
+    font-weight: 600;
+    font-size: 0.95rem;
+    font-family: 'Inter', sans-serif;
+}
 
 .bd-seller-label {
     font-size: 0.75rem;
