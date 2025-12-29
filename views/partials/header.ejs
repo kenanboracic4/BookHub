@@ -13,26 +13,31 @@
             <a href="/" class="nav-link"><i class="fa-solid fa-house"></i> Početna</a>
             <% if (user) { %>
                 <a href="/user/profile/<%= user.id %>" class="nav-link"><i class="fa-solid fa-user"></i> Moj Profil</a>
-            <% } %>
-            <a href="/books" class="nav-link"><i class="fa-solid fa-book-open"></i> Oglasi</a>
-            <a href="/books/add-book" class="nav-link highlight"><i class="fa-solid fa-circle-plus"></i> Objavi oglas</a>
-            <% if (user && user.role == 'Prodavač') { %>
-                <a href="/orders/sales" class="nav-link"><i class="fa-solid fa-box-open"></i> Moje prodaje</a>
-            <% } %>
-            <% if (user && user.role == 'Kupac') { %>
-                <a href="/orders" class="nav-link"><i class="fa-solid fa-bag-shopping"></i> Moje narudžbe</a>
-            <% } %>
-            <% if (user) { %>
-                <div class="nav-divider"></div>
-                <a href="/user/logout" class="nav-link logout"><i class="fa-solid fa-arrow-right-from-bracket"></i> Odjavi se</a>
-            <% } %>
+                <% } %>
+                    <a href="/books" class="nav-link"><i class="fa-solid fa-book-open"></i> Oglasi</a>
+                    <a href="/books/add-book" class="nav-link highlight"><i class="fa-solid fa-circle-plus"></i> Objavi
+                        oglas</a>
+                    <% if (user && user.role=='Prodavač' ) { %>
+                        <a href="/orders/sales" class="nav-link"><i class="fa-solid fa-box-open"></i> Moje prodaje</a>
+                        <% } %>
+                            <% if (user && user.role=='Kupac' ) { %>
+                                <a href="/orders" class="nav-link"><i class="fa-solid fa-bag-shopping"></i> Moje
+                                    narudžbe</a>
+                                <% } %>
+                                    <% if (user) { %>
+                                        <div class="nav-divider"></div>
+                                        <a href="/user/logout" class="nav-link logout"><i
+                                                class="fa-solid fa-arrow-right-from-bracket"></i> Odjavi se</a>
+                                        <% } %>
         </div>
     </div>
 
     <div id="cartNav" class="side-nav-right">
         <div class="side-nav-header cart-header-bg">
             <div class="cart-header-top">
-                <h3>Vaša Korpa <span class="cart-count-bubble"><%= (user && user.cartCount) ? user.cartCount : 0 %></span></h3>
+                <h3>Vaša Korpa <span class="cart-count-bubble">
+                        <%= (user && user.cartCount) ? user.cartCount : 0 %>
+                    </span></h3>
                 <a href="javascript:void(0)" class="closebtn" id="closeCartBtn"><i class="fa-solid fa-xmark"></i></a>
             </div>
             <p class="cart-subtitle">Pregled odabranih knjiga</p>
@@ -45,7 +50,8 @@
                 <span class="label">Ukupno za plaćanje:</span>
                 <span class="amount" id="cartTotalSum">0.00 KM</span>
             </div>
-            <a href="/orders" id ="checkoutBtn" class="btn-checkout">Završi kupovinu <i class="fa-solid fa-arrow-right"></i></a>
+            <a href="/orders" id="checkoutBtn" class="btn-checkout">Završi kupovinu <i
+                    class="fa-solid fa-arrow-right"></i></a>
         </div>
     </div>
 
@@ -64,28 +70,83 @@
                 </a>
             </div>
             <div class="header-right">
-                <% if (user) { %>
-                    <div class="user-actions">
-                        <a href="#" class="icon-btn cart-trigger">
-                            <i class="fa-solid fa-bag-shopping"></i>
-                            <span class="cart-badge-count" style="display: <%= (user && user.cartCount > 0) ? 'flex' : 'none' %>;">
-                                <%= user.cartCount %>
+
+                <% if(user && user.role=='Prodavač' ){ %>
+                    <div class="notification-wrapper"> <!-- Notifications -->
+                        <a href="#" class="icon-btn" id="notifBtn">
+                            <i class="fa-solid fa-bell"></i>
+                            <span class="notification-count">
+                                <%= notificationsCount %>
                             </span>
                         </a>
-                        <a href="/user/profile/<%= user.id %>" class="user-pill">
-                            <div class="avatar-circle"><%= user.firstName.charAt(0) %></div>
-                            <span class="desktop-only"><%= user.firstName %></span>
-                        </a>
+
+                        <div class="notification-dropdown" id="notifDropdown">
+                            <div class="notif-header">
+                                <span>Obavijesti</span>
+
+
+                            </div>
+                            <% if(notifications.length> 0) { %>
+                                <div class="notif-list">
+
+                                    <% notifications.forEach(notif=> { %>
+                                        <a class="notif-item-link" style="text-decoration: none;"
+                                            href="<%= notif.link %>" data-id="<%= notif.id %>">
+
+                                           <div class="notif-item <%= notif.isRead ? 'read' : 'unread' %>">
+                                                <div class="notif-icon">
+                                                    <% if(notif.type==='order' || notif.type==='Narudžba' ){ %>
+                                                        <i class="fa-solid fa-box"></i>
+                                                        <% } else if(notif.type==='Ocjena' ){ %>
+                                                            <i class="fa-solid fa-star"></i>
+                                                            <% } else { %>
+                                                                <i class="fa-solid fa-bell"></i>
+                                                                <% } %>
+                                                </div>
+                                                <div class="notif-info">
+                                                    <p class="notif-text">
+                                                        <%= notif.content %>
+                                                    </p>
+                                                    <span class="notif-time text-muted">
+                                                        <%= new Date(notif.createdAt).toLocaleString() %>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <% }) %>
+                                </div>
+                                <% } %>
+
+                        </div>
                     </div>
-                <% } else { %>
-                    <div class="auth-buttons">
-                        <a href="/user/login" class="btn-ghost">Prijava</a>
-                        <a href="/user/register" class="btn-primary-sm">Registracija</a>
-                    </div>
-                <% } %>
+                    <% } %>
+                        <% if (user) { %>
+                            <div class="user-actions">
+                                <a href="#" class="icon-btn cart-trigger">
+                                    <i class="fa-solid fa-bag-shopping"></i>
+                                    <span class="cart-badge-count"
+                                        style="display: <%= (user && user.cartCount > 0) ? 'flex' : 'none' %>;">
+                                        <%= user.cartCount %>
+                                    </span>
+                                </a>
+                                <a href="/user/profile/<%= user.id %>" class="user-pill">
+                                    <div class="avatar-circle">
+                                        <%= user.firstName.charAt(0) %>
+                                    </div>
+                                    <span class="desktop-only">
+                                        <%= user.firstName %>
+                                    </span>
+                                </a>
+                            </div>
+                            <% } else { %>
+                                <div class="auth-buttons">
+                                    <a href="/user/login" class="btn-ghost">Prijava</a>
+                                    <a href="/user/register" class="btn-primary-sm">Registracija</a>
+                                </div>
+                                <% } %>
             </div>
         </div>
-      
+
     </div>
 
     <div class="action-bar-container">
@@ -94,14 +155,15 @@
                 <div class="search-row">
                     <div class="search-input-group">
                         <i class="fa-solid fa-magnifying-glass search-icon"></i>
-                        <input type="text" name="q" id="mainSearchInput" placeholder="Pronađi knjigu, autora..." autocomplete="off">
+                        <input type="text" name="q" id="mainSearchInput" placeholder="Pronađi knjigu, autora..."
+                            autocomplete="off">
                         <button type="submit" class="inner-search-btn">
                             <i class="fa-solid fa-arrow-right"></i>
                         </button>
                     </div>
-                    
+
                     <button type="button" class="btn-filter-toggle" id="filterToggleBtn">
-                        <i class="fa-solid fa-sliders"></i> 
+                        <i class="fa-solid fa-sliders"></i>
                         <span class="desktop-only">Filteri</span>
                     </button>
                 </div>
@@ -131,11 +193,13 @@
                             <label>Lokacija</label>
                             <select name="location">
                                 <option value="">Svi gradovi</option>
-                                <% if (typeof locations !== 'undefined') { %>
-                                    <% locations.forEach(loc => { %>
-                                        <option value="<%= loc.id %>"><%= loc.name %></option>
-                                    <% }) %>
-                                <% } %>
+                                <% if (typeof locations !=='undefined' ) { %>
+                                    <% locations.forEach(loc=> { %>
+                                        <option value="<%= loc.id %>">
+                                            <%= loc.name %>
+                                        </option>
+                                        <% }) %>
+                                            <% } %>
                             </select>
                         </div>
 
@@ -143,11 +207,13 @@
                             <label>Žanr</label>
                             <select name="genre">
                                 <option value="">Svi žanrovi</option>
-                                <% if (typeof genres !== 'undefined') { %>
-                                    <% genres.forEach(g => { %>
-                                        <option value="<%= g.id %>"><%= g.name %></option>
-                                    <% }) %>
-                                <% } %>
+                                <% if (typeof genres !=='undefined' ) { %>
+                                    <% genres.forEach(g=> { %>
+                                        <option value="<%= g.id %>">
+                                            <%= g.name %>
+                                        </option>
+                                        <% }) %>
+                                            <% } %>
                             </select>
                         </div>
 
@@ -155,11 +221,13 @@
                             <label>Stanje knjige</label>
                             <select name="condition">
                                 <option value="">Sva stanja</option>
-                                <% if (typeof conditions !== 'undefined') { %>
-                                    <% conditions.forEach(c => { %>
-                                        <option value="<%= c.id %>"><%= c.name %></option>
-                                    <% }) %>
-                                <% } %>
+                                <% if (typeof conditions !=='undefined' ) { %>
+                                    <% conditions.forEach(c=> { %>
+                                        <option value="<%= c.id %>">
+                                            <%= c.name %>
+                                        </option>
+                                        <% }) %>
+                                            <% } %>
                             </select>
                         </div>
 
@@ -167,11 +235,13 @@
                             <label>Jezik</label>
                             <select name="language">
                                 <option value="">Svi jezici</option>
-                                <% if (typeof languages !== 'undefined') { %>
-                                    <% languages.forEach(l => { %>
-                                        <option value="<%= l.id %>"><%= l.name %></option>
-                                    <% }) %>
-                                <% } %>
+                                <% if (typeof languages !=='undefined' ) { %>
+                                    <% languages.forEach(l=> { %>
+                                        <option value="<%= l.id %>">
+                                            <%= l.name %>
+                                        </option>
+                                        <% }) %>
+                                            <% } %>
                             </select>
                         </div>
 
@@ -181,7 +251,7 @@
                     </div>
                 </div>
             </form>
-            
+
             <a href="/books/add-book" class="btn-action">
                 <i class="fa-solid fa-plus"></i>
                 <span>Objavi knjigu</span>
@@ -191,8 +261,9 @@
 </header>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="/javascripts/cart.js"></script> 
+<script src="/javascripts/cart.js"></script>
 <script src="/javascripts/order.js"></script>
+<script src="/javascripts/notifications.js"></script>
 
 
 <script>
@@ -200,7 +271,7 @@
         const menuBtn = document.getElementById('menuBtn');
         const closeBtn = document.getElementById('closeBtn');
         const sideNav = document.getElementById('sideNav');
-        
+
         // Cart elements
         const cartTriggers = document.querySelectorAll('.cart-trigger');
         const cartNav = document.getElementById('cartNav');
@@ -215,8 +286,8 @@
             sideNav.classList.remove('open');
             cartNav.classList.remove('open');
             overlay.classList.remove('active');
-           
-            if(filterPanel.classList.contains('active')) {
+
+            if (filterPanel.classList.contains('active')) {
                 filterPanel.classList.remove('active');
                 filterToggleBtn.classList.remove('active');
             }
@@ -237,14 +308,14 @@
                 cartNav.classList.add('open');
                 overlay.classList.add('active');
                 document.body.style.overflow = 'hidden';
-                
+
                 if (typeof osvjeziSadrzajKorpe === 'function') {
                     osvjeziSadrzajKorpe();
                 }
             });
         });
 
-       
+
         filterToggleBtn.addEventListener('click', (e) => {
             e.preventDefault();
             filterPanel.classList.toggle('active');
@@ -254,9 +325,36 @@
         closeBtn.addEventListener('click', closeAll);
         closeCartBtn.addEventListener('click', closeAll);
         overlay.addEventListener('click', closeAll);
-        
+
         document.addEventListener('keydown', (e) => {
             if (e.key === "Escape") closeAll();
         });
+    });
+
+    // Selektovanje elemenata
+    document.addEventListener('DOMContentLoaded', () => {
+        const notifBtn = document.getElementById('notifBtn');
+        const notifDropdown = document.getElementById('notifDropdown');
+
+        // 1. Klik na zvonce (Toggle)
+        if (notifBtn && notifDropdown) {
+            notifBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation(); // Sprečava window click event da odmah zatvori meni
+                notifDropdown.classList.toggle('active');
+            });
+        }
+
+        // 2. Zatvaranje na klik sa strane
+        window.addEventListener('click', (e) => {
+            // Provjeravamo da li dropdown uopšte postoji i da li je aktivan
+            if (notifDropdown && notifDropdown.classList.contains('active')) {
+                // Ako klik NIJE na dugme i NIJE unutar samog dropdown-a, zatvori ga
+                if (!notifBtn?.contains(e.target) && !notifDropdown?.contains(e.target)) {
+                    notifDropdown.classList.remove('active');
+                }
+            }
+        });
+
     });
 </script>

@@ -5,7 +5,7 @@ module.exports = {
        async renderBooksPage(req, res) {
 
 
-              const books =await bookService.getBooksForBooksPage();
+              const books = await bookService.getBooksForBooksPage();
 
               res.render('books', {
                      books: books,
@@ -19,7 +19,7 @@ module.exports = {
               const id = req.params.id;
               const book = await bookService.getBookById(parseInt(id));
 
-             
+
 
 
 
@@ -28,7 +28,7 @@ module.exports = {
                      return;
 
               }
-              
+
               await bookService.incrementBookViewCount(parseInt(id));
               res.render('bookDetail', {
                      book: book
@@ -104,7 +104,7 @@ module.exports = {
 
        async handleEditBook(req, res) {
 
-              
+
 
               try {
                      const bookId = req.params.id;
@@ -148,5 +148,5 @@ module.exports = {
               }
 
        }
-           
+
 };

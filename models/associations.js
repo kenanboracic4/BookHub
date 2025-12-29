@@ -8,6 +8,7 @@ const UserLanguages = require("./tables/UserLanguages");
 const UserGenres = require("./tables/UserGenres");
 const BookRating = require("./tables/BookRating");
 const UserRating = require("./tables/UserRating");
+const Notification = require("./tables/Notification");
 
 const GenresLK = require("./Lookups/GenresLK");
 const LanguagesLK = require("./Lookups/LanguageLK");
@@ -15,45 +16,39 @@ const LocationsLK = require("./Lookups/LocationsLK");
 const BookConditionsLK = require("./Lookups/BookConditionsLK");
 const { Sequelize } = require("sequelize");
 
-
- //RELACIJE ZA KORISNIKE I KNJIGE
-
-// Jedan korisnik može objaviti mnogo knjiga 
+// ==========================================
+// 1. KORISNICI I KNJIGE
+// ==========================================
 User.hasMany(Book, { foreignKey: 'sellerId', as: 'ownedBooks' });
 Book.belongsTo(User, { foreignKey: 'sellerId', as: 'seller' });
 
-// LOOKUP TABELE
-// Povezujemo knjige sa njihovim karakteristikama iz LK tabela 
-
-// Žanrovi 
+// ==========================================
+// 2. LOOKUP TABELE (Karakteristike knjiga)
+// ==========================================
 GenresLK.hasMany(Book, { foreignKey: 'genreId' });
 Book.belongsTo(GenresLK, { foreignKey: 'genreId', as: 'genre' }); 
 
-// Jezici 
 LanguagesLK.hasMany(Book, { foreignKey: 'languageId' });
 Book.belongsTo(LanguagesLK, { foreignKey: 'languageId', as: 'language' });
 
-// Stanje knjige 
 BookConditionsLK.hasMany(Book, { foreignKey: 'conditionId' });
 Book.belongsTo(BookConditionsLK, { foreignKey: 'conditionId', as: 'condition' });
 
-// Lokacije 
 LocationsLK.hasMany(Book, { foreignKey: 'locationId' });
 Book.belongsTo(LocationsLK, { foreignKey: 'locationId', as: 'location' });
 
-// Povezivanje korisnika sa gradom
-// Napomena: Proveri da li User model ima kolonu 'locationId'. 
-// Ako u User modelu imaš kolonu 'locationId', koristi nju ovde:
+// Korisnik i njegova lokacija
 LocationsLK.hasMany(User, { foreignKey: 'locationId' });
 User.belongsTo(LocationsLK, { foreignKey: 'locationId', as: 'location' });
 
- // INTERESI KORISNIKA (Many-to-Many)
- // Kupci pri registraciji biraju žanrove i jezike koji ih zanimaju 
+// ==========================================
+// 3. INTERESI KORISNIKA (Many-to-Many)
+// ==========================================
 User.belongsToMany(GenresLK, { 
     through: UserGenres, 
     foreignKey: 'userId', 
-    otherKey: 'genreId', // Dobra praksa je dodati i otherKey
-    as: 'Genres' // Ovo stvara metodu setGenres
+    otherKey: 'genreId', 
+    as: 'Genres' 
 });
 GenresLK.belongsToMany(User, { through: UserGenres, foreignKey: 'genreId' });
 
@@ -61,52 +56,51 @@ User.belongsToMany(LanguagesLK, {
     through: UserLanguages, 
     foreignKey: 'userId', 
     otherKey: 'languageId',
-    as: 'Languages' // Ovo stvara metodu setLanguages
+    as: 'Languages' 
 });
 LanguagesLK.belongsToMany(User, { through: UserLanguages, foreignKey: 'languageId' });
-// NARUDŽBE, STAVKE I KORPA
 
-// Korpa povezuje kupca sa knjigama koje planira naručiti 
+// ==========================================
+// 4. KORPA I NARUDŽBE
+// ==========================================
 User.hasMany(Cart, { foreignKey: 'userId' });
 Cart.belongsTo(User, { foreignKey: 'userId' });
 Book.hasMany(Cart, { foreignKey: 'bookId' });
 Cart.belongsTo(Book, { foreignKey: 'bookId' });
 
-// Narudžba povezuje kupca  i prodavača  
+// Narudžbe (Kupovina i Prodaja)
 User.hasMany(Order, { foreignKey: 'buyerId', as: 'purchases' });
 Order.belongsTo(User, { foreignKey: 'buyerId', as: 'buyer' });
 
 User.hasMany(Order, { foreignKey: 'sellerId', as: 'sales' });
 Order.belongsTo(User, { foreignKey: 'sellerId', as: 'seller' });
 
-// Stavke narudžbe - omogućavaju narudžbu više knjiga odjednom 
+// Stavke narudžbe
 Order.hasMany(OrderItem, { foreignKey: 'orderId', as: 'items' });
 OrderItem.belongsTo(Order, { foreignKey: 'orderId' });
 
 Book.hasMany(OrderItem, { foreignKey: 'bookId', as: 'orderItems' });
 OrderItem.belongsTo(Book, { foreignKey: 'bookId' , as: 'book' });
 
-// --- OCJENJIVANJE KORISNIKA (User to User) ---
+// ==========================================
+// 5. OCJENJIVANJE (Ratings)
+// ==========================================
 
-// Korisnik koji daje ocjenu (Rater)
+// --- Ocjenjivanje Korisnika (User to User) ---
 User.hasMany(UserRating, { foreignKey: 'raterId', as: 'givenUserRatings' });
 UserRating.belongsTo(User, { foreignKey: 'raterId', as: 'rater' });
 
-// Korisnik koji prima ocjenu (Target User)
-User.hasMany(UserRating, { foreignKey: 'userId', as: 'receivedRatings' });
+User.hasMany(UserRating, { foreignKey: 'userId', as: 'receivedUserRatings' });
 UserRating.belongsTo(User, { foreignKey: 'userId', as: 'user' });
 
-// OCJENJIVANJE KNJIGA (Many-to-Many preko BookRating)
+// --- Ocjenjivanje Knjiga (Book Ratings) ---
+User.hasMany(BookRating, { foreignKey: 'userId', as: 'bookRatings' });
+BookRating.belongsTo(User, { foreignKey: 'userId', as: 'reviewer' });
 
-// Korisnik može dati mnogo ocjena
-User.hasMany(BookRating, { foreignKey: 'userId', as: 'ratings' });
-BookRating.belongsTo(User, { foreignKey: 'userId', as: 'user' });
-
-// Knjiga može imati mnogo ocjena
-Book.hasMany(BookRating, { foreignKey: 'bookId', as: 'ratings' });
+Book.hasMany(BookRating, { foreignKey: 'bookId', as: 'bookReviews' });
 BookRating.belongsTo(Book, { foreignKey: 'bookId', as: 'book' });
 
-// Opcionalno: Direktna veza ako želiš pisati user.getRatedBooks()
+// Opcionalno: Direktna Many-to-Many veza za knjige
 User.belongsToMany(Book, { 
     through: BookRating, 
     foreignKey: 'userId', 
@@ -119,6 +113,15 @@ Book.belongsToMany(User, {
     otherKey: 'userId', 
     as: 'ratedByUsers' 
 });
+
+// ==========================================
+// 6. NOTIFIKACIJE
+// ==========================================
+User.hasMany(Notification, { foreignKey: 'userId', as: 'notifications' });
+Notification.belongsTo(User, { foreignKey: 'userId', as: 'recipient' });
+
+User.hasMany(Notification, { foreignKey: 'senderId', as: 'sentNotifications' });
+Notification.belongsTo(User, { foreignKey: 'senderId', as: 'sender' });
 
 module.exports = {
     Sequelize,
@@ -134,5 +137,6 @@ module.exports = {
     BookConditionsLK,
     LocationsLK,
     UserGenres,
-    UserLanguages
+    UserLanguages,
+    Notification
 };

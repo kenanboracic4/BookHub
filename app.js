@@ -8,6 +8,7 @@ require('dotenv').config();
 const jwt = require('jsonwebtoken');
 const { User, Book, Cart, Order, OrderItem, UserGenres, Users, UserLanguages, GenresLK, LanguagesLK, BookConditionsLK, LocationsLK } = require('./models/associations');
 const {setUserContext} = require('./middleware/auth');
+const notificationsCount = require('./middleware/notifications');
 const lkdata = require('./middleware/lkdata');
 
 
@@ -17,6 +18,7 @@ var booksRouter = require('./routes/books');
 var userRouter = require('./routes/user');
 var cartRouter = require('./routes/cart');
 var orderRouter = require('./routes/order');
+var notificationsRouter = require('./routes/notifications');
 var app = express();
 
 // view engine setup
@@ -29,6 +31,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(setUserContext);
 app.use(lkdata);
+app.use(notificationsCount);
 
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -37,6 +40,7 @@ app.use('/books', booksRouter);
 app.use('/user', userRouter);
 app.use('/cart', cartRouter);
 app.use('/orders', orderRouter);
+app.use('/notifications', notificationsRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
