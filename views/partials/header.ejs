@@ -121,6 +121,7 @@
                     </div>
                     <% } %>
                         <% if (user) { %>
+                            <% if (user.role == 'Kupac') { %>
                             <div class="user-actions">
                                 <a href="#" class="icon-btn cart-trigger">
                                     <i class="fa-solid fa-bag-shopping"></i>
@@ -129,6 +130,7 @@
                                         <%= user.cartCount %>
                                     </span>
                                 </a>
+                                <% } %>
                                 <a href="/user/profile/<%= user.id %>" class="user-pill">
                                     <div class="avatar-circle">
                                         <%= user.firstName.charAt(0) %>

@@ -66,7 +66,7 @@
                                             </div>
 
                                             <div class="ord-actions">
-                                                <% if(order.status==='NA ČEKANJU' ) { %>
+                                                <% if(order.status==='NA ČEKANJU' || order.status === 'Na čekanju' ) { %>
                                                     <button class="ord-btn ord-btn-cancel"
                                                         data-id="<%= order.id %>">Otkaži narudžbu</button>
                                                     <% } %>
