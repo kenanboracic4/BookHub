@@ -63,46 +63,53 @@ $('#user-update-form').on('submit', function(event) {
     event.preventDefault(); 
     event.stopPropagation();
 
-    // 1. Provjera šifri na klijentskoj strani
+    
     const newPassword = $('input[name="newPassword"]').val();
     const confirmPassword = $('input[name="confirmPassword"]').val();
 
     if (newPassword && newPassword !== confirmPassword) {
-        alert("Nove šifre se ne podudaraju!");
-        return;
+        
+         Swal.fire({
+                    icon: 'error',
+                    title: 'Šifre se ne podudaraju!',
+                    timer: 2000,
+                    toast: true,
+                    position: 'bottom-end',
+                    showConfirmButton: false
+                });;
+                return;
     }
 
     const pathArray = window.location.pathname.split('/'); 
     const userId = pathArray[3]; 
 
-    // 2. Kreiranje FormData objekta
+   
     const formData = new FormData();
 
-    // Dodajemo obična polja
+    
     formData.append('status', $('#status').val());
     formData.append('role', $('#role').val());
     formData.append('bio', $('textarea[name="bio"]').val());
+    formData.append('location', $('#location').val());
     
-    // Dodajemo novu šifru samo ako je unesena
+    
     if (newPassword) {
         formData.append('newPassword', newPassword);
     }
 
-    // Dodajemo nizove (Žanrovi i Jezici)
-    // Moramo ih dodati pojedinačno da bi ih backend (multer) prepoznao kao niz
     const genreIds = $('select[name="genreIds[]"]').val() || [];
     const languageIds = $('select[name="languageIds[]"]').val() || [];
 
     genreIds.forEach(id => formData.append('genreIds[]', id));
     languageIds.forEach(id => formData.append('languageIds[]', id));
 
-    // 3. Dodajemo sliku ako je odabrana
-    const fileInput = document.getElementById('profileImageInput'); // ID iz prethodnog HTML-a
+   
+    const fileInput = document.getElementById('profileImageInput'); 
     if (fileInput.files.length > 0) {
         formData.append('profileImage', fileInput.files[0]);
     }
 
-    // 4. AJAX poziv
+    
     $.ajax({
         url: '/user/profile/' + userId + '/update',
         method: 'PUT',

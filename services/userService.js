@@ -76,8 +76,11 @@ module.exports = {
     async getAllLanguages() {
         return userDao.getAllLanguages();
     },
+    async getAllLocations(){
+        return userDao.getAllLocations();
+    },
 
-    async updateUserProfile(userData, genreIds, languageIds, file) {
+    async updateUserProfile(userData, genreIds, languageIds, file, location) {
 
         const user = await userDao.findUserDataById(userData.id);
         if (!user) throw new Error('Korisnik nije pronađen');
@@ -91,6 +94,9 @@ module.exports = {
 
         if (file) {
             dataToUpdate.profileImage = '/uploads/' + file.filename;
+        }
+        if(location){
+            dataToUpdate.locationId = location;
         }
 
         if (userData.newPassword && userData.newPassword.trim() !== "") {

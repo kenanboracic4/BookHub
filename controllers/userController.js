@@ -151,6 +151,7 @@ module.exports = {
             const userBooks = await userService.getUserBooks(id);
             const genres = await userService.getAllGenres();
             const languages = await userService.getAllLanguages();
+            const locations = await userService.getAllLocations();
 
             if (!user) {
                 return res.status(404).send('Korisnik nije pronađen.');
@@ -160,7 +161,8 @@ module.exports = {
                 user: user,
                 userBooks: userBooks,
                 genres: genres,
-                languages: languages
+                languages: languages,
+                locations: locations
             });
         } catch (error) {
             console.error(error);
@@ -170,15 +172,17 @@ module.exports = {
 
     async updateUserProfile(req, res) {
         try {
-            const { genreIds, languageIds, status, role, bio, newPassword } = req.body;
+            const { genreIds, languageIds, location, status, role, bio, newPassword } = req.body;
             const id = req.params.id;
             const file = req.file;
 
+            
             await userService.updateUserProfile(
                 { id, status, role, bio, newPassword },
                 genreIds,
                 languageIds,
-                file
+                file,
+                location
             );
 
             res.status(200).send('Uspešno ste ažurirali profil.');

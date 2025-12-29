@@ -6,6 +6,8 @@ const genresLK = require('../models/associations').GenresLK;
 const Users = require('../models/associations').User;
 const Book = require('../models/associations').Book;
 const UserRating = require('../models/associations').UserRating;
+const locationsLK = require('../models/associations').LocationsLK;
+
 const { Op, Sequelize } = require('sequelize');
 module.exports = {
 
@@ -14,6 +16,9 @@ module.exports = {
     },
     getAllLanguages() {
         return languageLK.findAll();
+    },
+    getAllLocations() {
+        return locationsLK.findAll();
     },
 
     async findUserByEmail(email) {
@@ -25,7 +30,9 @@ module.exports = {
             where: { id },
             include: [
                 { model: genresLK, as: 'Genres', through: { attributes: [] } },
-                { model: languageLK, as: 'Languages', through: { attributes: [] } }
+                { model: languageLK, as: 'Languages', through: { attributes: [] } },
+                { model: locationsLK, as: 'location' }
+
             ]
         })
     },

@@ -47,17 +47,26 @@
                             <%= profileUser.status %>
                         </div>
                     </div>
-                    <div class="up-input-group">
+                      <div class="up-input-group">
                         <label>Uloga</label>
                         <div class="up-input-field">
                             <%= profileUser.role %>
                         </div>
+                        
+                    </div>
+                    <div class="up-input-group">
+                        <label>Lokacija</label>
+                        <div class="up-input-field">
+                            <%= profileUser.location ? profileUser.location.name : 'Nije navedeno' %>
+                        </div>
+                        
                     </div>
                     <div class="up-input-group up-bio-full">
                         <label>O meni</label>
                         <textarea class="up-textarea-field" rows="4" readonly
                             disabled><%= profileUser.bio || 'Korisnik nije upisao biografiju.' %></textarea>
                     </div>
+                 
                 </div>
 
                 <div class="up-preferences">
