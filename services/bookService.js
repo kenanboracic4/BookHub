@@ -84,7 +84,7 @@ module.exports = {
 
         if (!bookData.title || !bookData.title.trim() ||
             !bookData.author || !bookData.author.trim() ||
-            !bookData.description || !bookData.description.trim()) {
+            !bookData.description || !bookData.description.trim() || !bookData.status) {
             throw new Error('Nedostaju obavezna polja za ažuriranje knjige.');
         }
         return await bookDao.updateBook(bookId, bookData);

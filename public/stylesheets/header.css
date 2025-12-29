@@ -678,6 +678,7 @@ body {
 
 @media (max-width: 820px) {
     .action-bar-wrapper {
+        max-width: 100%;
         flex-direction: column;
         gap: 12px;
         padding: 0 16px;
@@ -690,8 +691,8 @@ body {
     }
 
     .btn-filter-toggle {
-        padding: 0 14px; /* Smanjeno na mobilnom */
-        height: 52px; /* Ista visina kao input */
+        padding: 0 14px;  
+        height: 52px; 
     }
 
     .btn-filter-toggle i {
@@ -702,21 +703,21 @@ body {
     .btn-action {
         width: 100%;
         justify-content: center;
-        order: 3; /* Pomjera "Objavi" na dno u mobilnom */
+        order: 3; 
     }
 
     .filter-dropdown {
-        width: calc(100vw - 32px); /* Da ne izlazi iz ekrana */
+        width: 100vw;
         left: 0;
-        position: fixed; /* Bolje za mobilni */
-        top: auto;
+        position: fixed; 
+        top: 25vw;
         bottom: 0;
         border-radius: 20px 20px 0 0;
         padding-bottom: 30px;
     }
     
     .filter-grid {
-        grid-template-columns: 1fr; /* Jedna kolona na mobilnom */
+        grid-template-columns: 1fr;
         gap: 15px;
     }
 }

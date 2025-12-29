@@ -4,6 +4,7 @@ $('#edit-book-form').on('submit', function (e) {
         
        
         const formData = new FormData(this);
+        
 
         $.ajax({
             url: '/books/edit/' + bookId,

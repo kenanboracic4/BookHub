@@ -81,6 +81,7 @@ module.exports = {
               const conditions = await bookService.getAllConditions();
               const locations = await bookService.getAllLocations();
 
+              console.log(JSON.stringify(book));
 
 
 
@@ -103,7 +104,7 @@ module.exports = {
 
        async handleEditBook(req, res) {
 
-
+              
 
               try {
                      const bookId = req.params.id;

@@ -23,7 +23,7 @@ body {
     margin-bottom: 40px;
 }
 
-/* --- HEADER ROW --- */
+
 .up-header-row {
     display: flex;
     justify-content: space-between;
@@ -60,7 +60,7 @@ body {
     font-size: 0.9rem;
 }
 
-/* --- BUTTONS --- */
+
 .up-button-group {
     display: flex;
     gap: 12px;
@@ -95,7 +95,7 @@ body {
     opacity: 0.9;
 }
 
-/* --- FORM GRID --- */
+
 .up-data-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -116,7 +116,7 @@ body {
     letter-spacing: 0.05em;
 }
 
-/* STYLING SELECT & TEXTAREA */
+
 .up-input-field, .up-select-field, .up-textarea-field {
     background-color: #f8fafc;
     border: 1px solid #e2e8f0;
@@ -135,7 +135,7 @@ body {
     background-color: #fff;
 }
 
-/* MULTIPLE SELECT SPECIFICS */
+
 .up-select-multiple {
     height: 120px;
     padding: 10px;
@@ -145,7 +145,7 @@ body {
     grid-column: 1 / -1;
 }
 
-/* --- LISTA KNJIGA --- */
+
 .up-section-title {
     font-size: 1.4rem;
     color: var(--up-primary);

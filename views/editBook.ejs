@@ -5,8 +5,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel='stylesheet' href='/stylesheets/header.css' />
     <link rel='stylesheet' href='/stylesheets/editBook.css' />
-    <link rel="stylesheet" href="/stylesheets/style.css">
-    <link rel="stylesheet" href="/stylesheets/footer.css">
+    <link rel="stylesheet" href="/stylesheets/style.css"> <link rel="stylesheet" href="/stylesheets/footer.css">
 </head>
 
 <body>
@@ -15,95 +14,111 @@
 
         <div class="book-detail-container">
             <div class="book-image">
-                <img src="<%= book.imageUrl %>" alt="<%= book.title %> cover">
-               
+                <div class="image-wrapper">
+                     <div class="book-status">
+                                <%= book.status %>
+                            </div>
+                    <img src="<%= book.imageUrl %>" alt="<%= book.title %> cover">
+                </div>
             </div>
 
             <form id="edit-book-form" class="book-info">
                 
-                <div class="info-header">
+                <div class="input-group">
                     <label class="input-label">Naslov knjige</label>
                     <input type="text" id="title" name="title" class="edit-input title-input" value="<%= book.title %>">
+                </div>
 
+                <div class="input-group">
                     <label class="input-label">Autor</label>
-                    <input type="text" id="author" name="author" class="edit-input author-input"
-                        value="<%= book.author %>">
+                    <input type="text" id="author" name="author" class="edit-input" value="<%= book.author %>">
                 </div>
 
                 <hr class="divider">
 
-                <div class="price-section">
+                <div class="input-group">
                     <label class="input-label">Cijena (KM)</label>
                     <input type="number" id="price" step="0.01" name="price" class="edit-input price-input"
                         value="<%=parseFloat(book.price).toFixed(2) %>">
-                </div>
+                   
+                    </div>
 
-                <div class="description-box">
+                <div class="input-group">
                     <label class="input-label">Opis knjige</label>
                     <textarea name="description" id="bio" class="edit-textarea"><%= book.description %></textarea>
+                </div>
+                <div class="input-group">
+                    <label class="input-label">Status knjige: </label>
+                     <select name="status" id="bookStatus" class="edit-select">
+                        <option value="Aktivan" >Aktivan</option>
+                        <option value="Prodano" >Prodano</option>
+                        <option value="Rezervisano" >Rezervisano</option>
+
+                    </select>
                 </div>
 
                 <hr class="divider">
 
                 <div class="details-grid">
-                    <div class="detail-item">
-                        <span class="label">Žanr</span>
+                    <div class="input-group">
+                        <label class="input-label">Žanr</label>
                         <select name="genreId" class="edit-select">
                             <% genres.forEach(genre=> { %>
-                                <option value="<%= genre.id %>" <%=book.genreId===genre.id ? 'selected' : '' %>><%=
-                                        genre.name %>
-                                </option>
-                                <% }) %>
+                                <option value="<%= genre.id %>" <%=book.genreId===genre.id ? 'selected' : '' %>><%= genre.name %></option>
+                            <% }) %>
                         </select>
                     </div>
-                    <div class="detail-item">
-                        <span class="label">Stanje</span>
+
+                    <div class="input-group">
+                        <label class="input-label">Stanje</label>
                         <select name="conditionId" class="edit-select">
                             <% conditions.forEach(cond=> { %>
-                                <option value="<%= cond.id %>" <%=book.conditionId===cond.id ? 'selected' : '' %>><%=
-                                        cond.name %>
-                                </option>
-                                <% }) %>
+                                <option value="<%= cond.id %>" <%=book.conditionId===cond.id ? 'selected' : '' %>><%= cond.name %></option>
+                            <% }) %>
                         </select>
                     </div>
-                    <div class="detail-item">
-                        <span class="label">Lokacija</span>
+
+                    <div class="input-group">
+                        <label class="input-label">Lokacija</label>
                         <select name="locationId" class="edit-select">
                             <% locations.forEach(loc=> { %>
-                                <option value="<%= loc.id %>" <%=book.locationId===loc.id ? 'selected' : '' %>><%=
-                                        loc.name %>
-                                </option>
-                                <% }) %>
+                                <option value="<%= loc.id %>" <%=book.locationId===loc.id ? 'selected' : '' %>><%= loc.name %></option>
+                            <% }) %>
                         </select>
                     </div>
-                    <div class="detail-item">
-                        <span class="label">Jezik</span>
+
+                    <div class="input-group">
+                        <label class="input-label">Jezik</label>
                         <select name="languageId" class="edit-select">
                             <% languages.forEach(lang=> { %>
-                                <option value="<%= lang.id %>" <%=book.languageId===lang.id ? 'selected' : '' %>><%=
-                                        lang.name %>
-                                </option>
-                                <% }) %>
+                                <option value="<%= lang.id %>" <%=book.languageId===lang.id ? 'selected' : '' %>><%= lang.name %></option>
+                            <% }) %>
                         </select>
                     </div>
                 </div>
-                 <span class="image-note">Promijenite sliku oglasa. <br></span>
-                <input type="file" id="image" name="image" accept="image/*" >
+
+                <div class="image-upload-section">
+                    <span class="image-note"><i class="fa fa-image"></i> Promijenite sliku oglasa</span>
+                    <input type="file" id="image" name="image" accept="image/*">
+                </div>
+
                 <div id="error-container">
                     <i class="fa-solid fa-circle-exclamation"></i>
                     <span id="error-message"></span>
                 </div>
+
                 <div class="action-buttons">
-                    <button type="submit" class="btn-link btn-buy">
+                    <button type="submit" class="btn-link btn-save">
                         <i class="fa fa-floppy-disk"></i> Sačuvaj izmjene
                     </button>
-                    <a href="/books/details/<%= book.id %>" class="btn-link btn-msg">
+                    <a href="/books/details/<%= book.id %>" class="btn-link btn-cancel">
                         Otkaži
                     </a>
                 </div>
                 
             </form>
         </div>
+
         <% include partials/footer %>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="/javascripts/book.js"></script>

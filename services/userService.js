@@ -64,9 +64,9 @@ module.exports = {
         return await userDao.findUserDataById(id);
     },
 
-    async getUserBooks(id){
+    async getUserBooks(id, filters = {}) {
 
-        return await userDao.getUserBooks(id);
+        return await userDao.getUserBooks(id, filters);
     },
 
     async getAllGenres() {
@@ -77,33 +77,33 @@ module.exports = {
         return userDao.getAllLanguages();
     },
 
-async updateUserProfile(userData, genreIds, languageIds, file) {
-   
-    const user = await userDao.findUserDataById(userData.id); 
-    if (!user) throw new Error('Korisnik nije pronađen');
+    async updateUserProfile(userData, genreIds, languageIds, file) {
 
-    let dataToUpdate = {};
+        const user = await userDao.findUserDataById(userData.id);
+        if (!user) throw new Error('Korisnik nije pronađen');
 
-    
-    if (userData.role) dataToUpdate.role = userData.role;
-    if (userData.status) dataToUpdate.status = userData.status;
-    if (userData.bio !== undefined) dataToUpdate.bio = userData.bio;
+        let dataToUpdate = {};
 
-    if (file) {
-        dataToUpdate.profileImage = '/uploads/' + file.filename;
-    }
 
-    if (userData.newPassword && userData.newPassword.trim() !== "") {
-        const salt = await bcrypt.genSalt(10);
-        dataToUpdate.password = await bcrypt.hash(userData.newPassword, salt);
-    }
+        if (userData.role) dataToUpdate.role = userData.role;
+        if (userData.status) dataToUpdate.status = userData.status;
+        if (userData.bio !== undefined) dataToUpdate.bio = userData.bio;
 
-    const finalGenres = (genreIds !== undefined) ? genreIds : user.Genres.map(g => g.id);
-    const finalLanguages = (languageIds !== undefined) ? languageIds : user.Languages.map(l => l.id);
+        if (file) {
+            dataToUpdate.profileImage = '/uploads/' + file.filename;
+        }
 
-    return await userDao.updateUser(userData.id, dataToUpdate, finalGenres, finalLanguages);
-},
-    async updateUserRole(userId){
+        if (userData.newPassword && userData.newPassword.trim() !== "") {
+            const salt = await bcrypt.genSalt(10);
+            dataToUpdate.password = await bcrypt.hash(userData.newPassword, salt);
+        }
+
+        const finalGenres = (genreIds !== undefined) ? genreIds : user.Genres.map(g => g.id);
+        const finalLanguages = (languageIds !== undefined) ? languageIds : user.Languages.map(l => l.id);
+
+        return await userDao.updateUser(userData.id, dataToUpdate, finalGenres, finalLanguages);
+    },
+    async updateUserRole(userId) {
         return await userDao.updateUserRole(userId);
     }
 

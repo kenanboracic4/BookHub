@@ -27,10 +27,10 @@
                             <p><i class="fa-solid fa-envelope"></i>
                                 <%= profileUser.email %>
                             </p>
-                             <div class="bd-rating">
-                                    <i id="bd-rating-i" class="fa-solid fa-star"></i>
-                                    0 / 5
-                                </div>
+                            <div class="up-rating">
+                                <i id="bd-rating-i" class="fa-solid fa-star"></i>
+                                <%= profileUser.averageRating || 0 %> / 5
+                            </div>
                         </div>
                     </div>
                     <% if(profileUser.id===user.id) { %>
@@ -98,20 +98,63 @@
             </div>
             <% if(profileUser.role==='Prodavač' ) { %>
                 <div class="up-books-section">
+
+                    <div class="up-controls-wrapper">
+
+                        <div class="up-filters">
+                            <select id="statusFilter" class="up-select">
+                                <option value="all" <%=filters.status==='all' ? 'selected' : '' %>>Svi statusi</option>
+                                <option value="dostupno" <%=filters.status==='dostupno' ? 'selected' : '' %>>Dostupno
+                                </option>
+                                <option value="prodato" <%=filters.status==='prodato' ? 'selected' : '' %>>Prodato
+                                </option>
+                            </select>
+
+                            <select id="dateFilter" class="up-select">
+                                <option value="" <%=!filters.date ? 'selected' : '' %>>Poredaj po datumu</option>
+                                <option value="date-desc" <%=filters.date==='date-desc' ? 'selected' : '' %>>Najnovije
+                                    prvo</option>
+                                <option value="date-asc" <%=filters.date==='date-asc' ? 'selected' : '' %>>Najstarije
+                                    prvo</option>
+                            </select>
+
+                            <select id="priceFilter" class="up-select">
+                                <option value="" <%=!filters.price ? 'selected' : '' %>>Poredaj po cijeni</option>
+                                <option value="price-asc" <%=filters.price==='price-asc' ? 'selected' : '' %>>Cijena:
+                                    Najniža prvo</option>
+                                <option value="price-desc" <%=filters.price==='price-desc' ? 'selected' : '' %>>Cijena:
+                                    Najviša prvo</option>
+                            </select>
+
+                            <select id="titleFilter" class="up-select">
+                                <option value="" <%=!filters.title ? 'selected' : '' %>>Poredaj po naslovu</option>
+                                <option value="title-asc" <%=filters.title==='title-asc' ? 'selected' : '' %>>Naslov: A
+                                    → Z</option>
+                                <option value="title-desc" <%=filters.title==='title-desc' ? 'selected' : '' %>>Naslov:
+                                    Z → A</option>
+                            </select>
+
+                            <button id="filterBtn" class="filter-btn">
+                                Filtriraj
+                            </button>
+                        </div>
+                    </div>
                     <h2 class="up-section-title">
-                        <% if(profileUser.id===user.id) { %>
-                            Moji oglasi
-                            <% } else { %>
-                                Oglasi <%= profileUser.firstName %>a
-                                    <% } %>
-                                        (<%= profileUserBooks ? profileUserBooks.length : 0 %>)
+                        <% if(profileUser.id===user.id) { %> Moji oglasi <% } else { %> Oglasi <%= profileUser.firstName
+                                    %>a <% } %>
+                                        (<span id="bookCount">
+                                            <%= profileUserBooks ? profileUserBooks.length : 0 %>
+                                        </span>)
                     </h2>
 
                     <% if (profileUserBooks && profileUserBooks.length> 0) { %>
-                        <div class="up-books-list">
+                        <div class="up-books-list" id="booksContainer">
                             <% profileUserBooks.forEach(book=> { %>
 
-                                <div class="up-book-row">
+                                <div class="up-book-row" data-title="<%= book.title.toLowerCase() %>"
+                                    data-price="<%= book.price %>" data-date="<%= new Date(book.createdAt).getTime() %>"
+                                    data-status="<%= book.status ? book.status.toLowerCase() : 'dostupno' %>">
+
                                     <div class="up-book-info">
                                         <div class="up-book-img-wrapper">
                                             <img src="<%= book.imageUrl || '/images/default-book.png' %>"
@@ -129,6 +172,11 @@
                                             <p class="up-book-price">
                                                 <%= parseFloat(book.price).toFixed(2) %> KM
                                             </p>
+                                            <% if(book.status) { %>
+                                                <span class="up-mini-status">
+                                                    <%= book.status %>
+                                                </span>
+                                                <% } %>
                                         </div>
                                     </div>
 
@@ -146,9 +194,6 @@
                                 <% }) %>
                         </div>
                         <% } else { %>
-                            <div class="up-profile-card" style="text-align: center; padding: 40px;">
-                                <p style="color: var(--up-secondary);">Trenutno nemate objavljenih knjiga.</p>
-                            </div>
                             <% } %>
                 </div>
                 <% } %>
@@ -176,6 +221,31 @@
                 });
                 window.history.replaceState({}, document.title, window.location.pathname);
             }
+
+            function filterBooks() {
+                const status = document.getElementById('statusFilter').value;
+                const date = document.getElementById('dateFilter').value;
+                const price = document.getElementById('priceFilter').value;
+                const title = document.getElementById('titleFilter').value;
+
+                const params = new URLSearchParams();
+
+
+                if (status !== 'all') params.append('status', status);
+
+
+                if (price !== "") {
+                    params.append('price', price);
+                } else if (title !== "") {
+                    params.append('title', title);
+                } else if (date !== "") {
+                    params.append('date', date);
+                }
+                console.log(params)
+
+                window.location.href = `${window.location.pathname}?${params.toString()}`;
+            }
+            document.getElementById('filterBtn').addEventListener('click', filterBooks);
         </script>
 
         <% include partials/footer %>

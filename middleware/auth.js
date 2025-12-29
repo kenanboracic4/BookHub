@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 const cartService = require('../services/cartService');
 
 
-const verifyToken = async (req, res, next) => { // verifikacija tokena
+const verifyToken = async (req, res, next) => { // 
     const token = req.cookies.token;
 
     if (!token) {
@@ -31,10 +31,10 @@ const setUserContext = async (req, res, next) => {
     }
 
     try {
-        // 1. PRVO verifikuj token da dobiješ 'decoded' objekt
+        
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-        // 2. TEK SAD možeš koristiti decoded.id jer je definisan iznad
+       
         const cartCount = await cartService.getCartCount(decoded.id);
 
         // 3. Dodaj count u objekt

@@ -8,14 +8,14 @@ body {
     font-family: 'Inter', sans-serif;
 }
 
-/* --- GLAVNI KONTEJNER --- */
+
 .up-main-wrapper {
     max-width: 900px;
     margin: 40px auto;
     padding: 0 20px;
 }
 
-/* --- KARTICA PROFILA (GORNJI DIO) --- */
+
 .up-profile-card {
     background: #ffffff;
     border-radius: 16px;
@@ -61,6 +61,15 @@ body {
     font-size: 0.95rem;
 }
 
+.up-rating{
+    margin: 5px 0;
+    font-size: 0.9rem;
+     color: var(--up-secondary);
+}
+#bd-rating-i{
+    color: #9be31bab;
+}
+
 .up-btn-edit {
     background-color: var(--up-primary);
     color: white;
@@ -80,7 +89,7 @@ body {
     transform: translateY(-2px);
 }
 
-/* --- GRID ZA PODATKE --- */
+
 .up-data-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -116,7 +125,7 @@ body {
     grid-column: 1 / -1;
 }
 
-/* --- PREFERENCES (TAGOVI) --- */
+
 .up-preferences {
     margin-top: 30px;
     display: flex;
@@ -148,7 +157,7 @@ body {
     color: #16a34a;
 }
 
-/* --- SEKCIJA ZA KNJIGE (LISTA) --- */
+
 .up-section-title {
     font-size: 1.5rem;
     color: var(--up-primary);
@@ -223,7 +232,7 @@ body {
     font-size: 1rem;
 }
 
-/* GUMBI AKCIJE */
+
 .up-book-actions {
     display: flex;
     gap: 10px;
@@ -257,7 +266,71 @@ body {
     opacity: 0.8;
 }
 
-/* RESPONSIVE */
+.up-controls-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #ffffff;
+    padding: 15px;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+
+.up-filters {
+   display: flex;
+  gap: 20px;
+  width: 100%;
+}
+
+.up-select {
+    padding: 10px 30px 10px 15px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    background-color: #f8fafc;
+    color: var(--up-primary);
+    font-size: 0.9rem;
+    outline: none;
+    cursor: pointer;
+    font-family: inherit;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2364748b'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 16px;
+}
+
+.up-select:focus {
+    background-color: white;
+    border-color: #cbd5e1;
+}
+
+
+.up-mini-status {
+    font-size: 0.75rem;
+    background: #f1f5f9;
+    padding: 2px 6px;
+    border-radius: 4px;
+    color: var(--up-secondary);
+    margin-left: 5px;
+    text-transform: uppercase;
+}
+.filter-btn{
+    border:none;
+    background-color: #1e293b;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-decoration: none;
+    flex: 1;
+}
+
+
 @media (max-width: 768px) {
     .up-header-row {
         flex-direction: column;
@@ -283,5 +356,15 @@ body {
     .up-action-btn {
         flex: 1;
         justify-content: center;
+    }
+    .up-controls-wrapper {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .up-filters {
+        flex-direction: column;
+    }
+    .up-select {
+        width: 100%;
     }
 }

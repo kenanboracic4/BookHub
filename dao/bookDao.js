@@ -52,33 +52,32 @@ module.exports = {
         });
     },
  async getUserInterests(userId) {
-    // 1. Nađi korisnika i njegove odabrane žanrove
+    
     const user = await Users.findByPk(userId, {
         include: [{
             model: GenresLK,
-            as: 'Genres', // Mora biti isti alias kao u associations.js
+            as: 'Genres', 
             attributes: ['id'],
-            through: { attributes: [] } // Da ne vuče podatke iz UserGenres tabele
+            through: { attributes: [] } 
         }]
     });
 
-    // Ako user ne postoji ili nema interesa, vrati prazan niz
+   
     if (!user || !user.Genres || user.Genres.length === 0) {
         return [];
     }
 
-    // 2. Mapiraj ID-ove žanrova: [1, 3, 5...]
+  
     const preferredGenreIds = user.Genres.map(g => g.id);
 
-    // 3. Pronađi knjige koje pripadaju tim žanrovima
     return await Book.findAll({
         where: {
             genreId: {
                 [Op.in]: preferredGenreIds
             }
         },
-        include: ['genre', 'location'], // Da bi imao nazive na karticama
-        limit: 10 // Opciono, da ne zagušiš stranicu
+        include: ['genre', 'location'],
+        limit: 10 
     });
 },
     
@@ -160,7 +159,8 @@ module.exports = {
             genreId: bookData.genreId,
             locationId: bookData.locationId,
             conditionId: bookData.conditionId,
-            languageId: bookData.languageId
+            languageId: bookData.languageId,
+            status: bookData.status
         };
 
 
@@ -204,7 +204,7 @@ async updateBookAvgRating(bookId) {
     
     const newAvgRating = result && result.avgScore ? parseFloat(result.avgScore).toFixed(1) : 0;
 
-    // 3. Ažuriraj tabelu Book
+    
     return await Book.update({
         averageRating: newAvgRating 
     }, {

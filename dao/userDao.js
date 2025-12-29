@@ -6,7 +6,7 @@ const genresLK = require('../models/associations').GenresLK;
 const Users = require('../models/associations').User;
 const Book = require('../models/associations').Book;
 const UserRating = require('../models/associations').UserRating;
-const { Op, Sequelize} = require('sequelize');
+const { Op, Sequelize } = require('sequelize');
 module.exports = {
 
     getAllGenres() {
@@ -52,20 +52,46 @@ module.exports = {
         return user;
     },
 
-    async getUserBooks(id) {
-        return await Book.findAll({
-            where: { sellerId: id }
-        })
-    },
+async getUserBooks(id, filters = {}) {
+    const { status, date, price, title } = filters;
+    let whereClause = { sellerId: id };
+
+    
+    if (status && status !== 'all') {
+        whereClause.status = (status === 'prodato') ? 'Prodano' : 'Aktivno';
+    }
+
+    let orderClause = [];
+
+  
+    if (price) {
+        orderClause.push(['price', price === 'price-asc' ? 'ASC' : 'DESC']);
+    } 
+    else if (title) {
+        orderClause.push(['title', title === 'title-asc' ? 'ASC' : 'DESC']);
+    } 
+    else if (date) {
+        orderClause.push(['createdAt', date === 'date-asc' ? 'ASC' : 'DESC']);
+    } 
+    else {
+        
+        orderClause.push(['createdAt', 'DESC']);
+    }
+
+    return await Book.findAll({
+        where: whereClause,
+        order: orderClause
+    });
+},
 
     async updateUser(userId, updateData, genreIds, languageIds) {
         const user = await Users.findByPk(userId);
         if (!user) throw new Error('Korisnik nije pronađen');
 
-        // Update osnovnih polja
+
         await user.update(updateData);
 
-        // Update tabela povezivanja (asocijacije)
+
         if (genreIds) await user.setGenres(genreIds);
         if (languageIds) await user.setLanguages(languageIds);
 
