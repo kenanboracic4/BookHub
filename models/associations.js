@@ -9,6 +9,8 @@ const UserGenres = require("./tables/UserGenres");
 const BookRating = require("./tables/BookRating");
 const UserRating = require("./tables/UserRating");
 const Notification = require("./tables/Notification");
+const Conversation = require("./tables/Conversation");
+const Message = require("./tables/Messages");
 
 const GenresLK = require("./Lookups/GenresLK");
 const LanguagesLK = require("./Lookups/LanguageLK");
@@ -122,6 +124,33 @@ Notification.belongsTo(User, { foreignKey: 'userId', as: 'recipient' });
 
 User.hasMany(Notification, { foreignKey: 'senderId', as: 'sentNotifications' });
 Notification.belongsTo(User, { foreignKey: 'senderId', as: 'sender' });
+
+// ==========================================
+// 7. CHAT SISTEM
+// ==========================================
+
+// --- Relacije za Conversations ---
+// Povezivanje kupca sa konverzacijama
+User.hasMany(Conversation, { foreignKey: 'buyerId', as: 'buyerConversations' });
+Conversation.belongsTo(User, { foreignKey: 'buyerId', as: 'buyer' });
+
+// Povezivanje prodavača sa konverzacijama
+User.hasMany(Conversation, { foreignKey: 'sellerId', as: 'sellerConversations' });
+Conversation.belongsTo(User, { foreignKey: 'sellerId', as: 'seller' });
+
+// Povezivanje konverzacije sa konkretnom knjigom
+Book.hasMany(Conversation, { foreignKey: 'bookId' });
+Conversation.belongsTo(Book, { foreignKey: 'bookId', as: 'book' });
+
+// --- Relacije za Messages ---
+// Konverzacija ima mnogo poruka
+Conversation.hasMany(Message, { foreignKey: 'conversationId', as: 'messages' });
+Message.belongsTo(Conversation, { foreignKey: 'conversationId', as: 'conversation' });
+
+// Poruka pripada pošiljaocu (User)
+User.hasMany(Message, { foreignKey: 'senderId', as: 'sentMessages' });
+Message.belongsTo(User, { foreignKey: 'senderId', as: 'sender' });
+
 
 module.exports = {
     Sequelize,

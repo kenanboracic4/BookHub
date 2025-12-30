@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ba">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moje Prodaje</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel='stylesheet' href='/stylesheets/header.css' />
+    <link rel="stylesheet" href="/stylesheets/chat.css" />
+
+</head>
+
+<body>
+
+    <% include partials/header %>
+
+       <div class="chat-main-container">
+    <div class="conversations-container">
+        <div class="conv-header">
+            <h3>Poruke</h3>
+            <span class="chat-badge">5 novih</span>
+        </div>
+
+        <div class="conv-scroll-area">
+            <% for(let i=0; i < 5; i++) { %>
+                <div class="conversation-box <%= i === 0 ? 'active' : '' %>">
+                    <div class="img-wrapper">
+                        <img src="/images/noProfileImage.png" alt="Profil">
+                        
+                    </div>
+                    
+                    <div class="conversation-info">
+                        <div class="info-top">
+                            <h4>Ime i prezime</h4>
+                            <span class="time">12:45</span>
+                        </div>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit...</p>
+                    </div>
+
+                    <a href="/chat/neki-id" class="reply-link">
+                        <i class="fa-solid fa-paper-plane"></i>
+                        <span>Odgovori</span>
+                    </a>
+                </div>
+            <% } %>
+        </div>
+    </div>
+</div>
+
+
+
+</body>
+
+</html>

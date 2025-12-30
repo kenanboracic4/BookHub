@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel='stylesheet' href='/stylesheets/header.css' />
+    <link rel="stylesheet" href="/stylesheets/messages.css" />
+</head>
+
+<body>
+
+    <% include partials/header %>
+        <div class="chat-page-wrapper">
+            <div class="messages-container">
+                <div class="message-header">
+                    <div class="header-user-info">
+                        <a href="/chat" class="back-btn-mobile">
+                            <i class="fa-solid fa-arrow-left"></i>
+                        </a>
+
+                        <img src="/images/noProfileImage.png" class="header-avatar" alt="User">
+                        <div class="text-details">
+                            <h4>Ime i prezime</h4>
+                            <h6><i class="fa-solid fa-book"></i> Naslov knjige</h6>
+                        </div>
+                    </div>
+                    <div class="message-header-actions">
+                        <a href="#" class="btn-book-details">Oglas</a>
+                    </div>
+                </div>
+
+                <div class="messages-list" id="messagesList">
+                    <div class="message incoming">
+                        <div class="msg-bubble">Zdravo, da li je knjiga i dalje dostupna?</div>
+                        <span class="msg-time">10:30 AM</span>
+                    </div>
+
+                    <div class="message outgoing">
+                        <div class="msg-bubble">Jeste, dostupna je. Možemo se dogovoriti za dostavu.</div>
+                        <span class="msg-time">10:32 AM</span>
+                    </div>
+                </div>
+
+                <div class="chat-input-area">
+                    <form id="chatForm">
+                       
+                        <input type="text" placeholder="Napišite poruku..." id="messageInput" autocomplete="off">
+                        <button type="submit" class="send-btn">
+                            <i class="fa-solid fa-paper-plane"></i>
+                            <span>Pošalji</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+</body>
+
+</html>
