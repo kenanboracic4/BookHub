@@ -7,7 +7,83 @@
     --border: #e2e8f0;
 }
 
-/* Centriranje chata na stranici */
+/* Glavni Layout koji spaja dvije sekcije */
+.chat-main-layout {
+    display: flex;
+    width: 90%;
+
+    margin: 0 auto;
+    height: 80vh; /* Fiksna visina da scroll radi unutra */
+    background-color: white;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+    border: 1px solid var(--border);
+    overflow: hidden;
+}
+
+/* Sidebar (30%) */
+.conversations-sidebar {
+    width: 20%;
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+}
+
+.sidebar-header {
+    padding: 20px 25px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.conv-scroll-area {
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+.conversation-box {
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    gap: 15px;
+    text-decoration: none;
+    color: inherit;
+    transition: 0.2s;
+    border-bottom: 1px solid #f8fafc;
+}
+
+.conversation-box:hover { background-color: #f1f5f9; }
+.conversation-box.active { background-color: #f1f5f9; border-right: 3px solid var(--accent); }
+
+.img-wrapper img { width: 50px; height: 50px; border-radius: 50%; object-fit: cover; }
+
+.conversation-info { flex-grow: 1; overflow: hidden; }
+.info-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
+.info-top h4 { font-size: 15px; margin: 0; color: var(--chat-primary); }
+.conversation-info p { font-size: 13px; color: var(--chat-secondary); margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+
+.messages-container {
+    width: 70%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+
+@media (max-width: 768px) {
+    .conversations-sidebar {
+        width: 80px; 
+    }
+    .conversation-info, .sidebar-header h3, .chat-badge {
+        display: none;
+    }
+    .messages-container {
+        width: calc(100% - 80px);
+    }
+}
 .chat-page-wrapper {
     display: flex;
     width: 100%;
@@ -24,7 +100,6 @@
     background-color: white;
     display: flex;
     flex-direction: column;
-    border-radius: 16px;
     box-shadow: 0 10px 25px rgba(0,0,0,0.05);
     border: 1px solid var(--border);
     overflow: hidden;

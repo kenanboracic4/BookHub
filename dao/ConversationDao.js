@@ -1,6 +1,9 @@
 const Conversation = require('../models/associations').Conversation;
 const Book = require('../models/associations').Book;
 const User = require('../models/associations').User;
+
+const { Op } = require('sequelize');
+
 module.exports = {
 
     async getConversation(buyerId,sellerId, bookId){
@@ -27,7 +30,23 @@ module.exports = {
                 { model: User, as: 'seller', attributes: ['firstName', 'lastName'] }
             ]
         });
-    }
+    },
+    async getAllConversations(userId) {
+    return await Conversation.findAll({
+        where: {
+            [Op.or]: [
+                { buyerId: userId },
+                { sellerId: userId }
+            ]
+        },
+        include: [
+            { model: Book, as: 'book', attributes: ['title', 'price'] },
+            { model: User, as: 'buyer', attributes: ['firstName', 'lastName'] },
+            { model: User, as: 'seller', attributes: ['firstName', 'lastName'] }
+        ],
+        order: [['updatedAt', 'DESC']] // Da najnovije poruke budu na vrhu
+    });
+}
 
 
 };

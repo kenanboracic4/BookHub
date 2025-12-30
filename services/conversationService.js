@@ -10,6 +10,9 @@ module.exports = {
     },
     async getConversationById(conversationId){
         return await convesationDao.getConversationById(conversationId);
+    },
+    async getAllConversations(id){
+        return await convesationDao.getAllConversations(id); 
     }
 
 

@@ -11,35 +11,40 @@ module.exports = {
         res.render('chat');
     },
 
-    async renderMessagePage(req, res) {
-        try {
+   async renderMessagePage(req, res) {
+    try {
+        const conversationId = req.params.conversationId;
+        const userId = req.user.id; // ID ulogovanog korisnika
 
-            const conversationId = req.params.conversationId;
-            const conversation = await conversationService.getConversationById(conversationId);
-            const allMessages = await messageService.getMessages(conversationId);
-
-            if (!conversation) {
-                return res.redirect('/chat');
-            }
-
-            if (req.user.id !== conversation.sellerId && req.user.id !== conversation.buyerId) {
-                return res.redirect('/');
-            }
-
-            return res.render('messages', {
-                conversation: conversation,
-                messages: allMessages,
-                currentUser: req.user
-            })
-
-
-        } catch (error) {
-            console.error(error);
-            res.status(500).send('Greška prilikom prikazivanja inboxa.');
+        const conversation = await conversationService.getConversationById(conversationId);
+        
+        // Ako konverzacija ne postoji
+        if (!conversation) {
+            console.log("Konverzacija nije pronađena");
+            return res.redirect('/chat');
         }
 
+        // Provjera prava pristupa (da li je korisnik kupac ili prodavac u ovoj konverzaciji)
+        if (userId != conversation.sellerId && userId != conversation.buyerId) {
+            console.log("Nemate pravo pristupa ovoj konverzaciji");
+            return res.redirect('/');
+        }
 
-    },
+        const allMessages = await messageService.getMessages(conversationId);
+        const allConversations = await conversationService.getAllConversations(userId);
+
+        return res.render('messages', {
+            conversation: conversation,
+            messages: allMessages,
+            user: req.user, // Promijenjeno u 'user' da se poklapa sa tvojim EJS-om
+            conversations: allConversations
+        });
+
+    } catch (error) {
+        console.error("Greška u renderMessagePage:", error);
+        res.status(500).send('Greška prilikom prikazivanja inboxa.');
+    }
+},
 
     async startConversation(req, res) {
 
