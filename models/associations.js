@@ -10,7 +10,7 @@ const BookRating = require("./tables/BookRating");
 const UserRating = require("./tables/UserRating");
 const Notification = require("./tables/Notification");
 const Conversation = require("./tables/Conversation");
-const Message = require("./tables/Messages");
+const Messages = require("./tables/Messages");
 
 const GenresLK = require("./Lookups/GenresLK");
 const LanguagesLK = require("./Lookups/LanguageLK");
@@ -144,12 +144,12 @@ Conversation.belongsTo(Book, { foreignKey: 'bookId', as: 'book' });
 
 // --- Relacije za Messages ---
 // Konverzacija ima mnogo poruka
-Conversation.hasMany(Message, { foreignKey: 'conversationId', as: 'messages' });
-Message.belongsTo(Conversation, { foreignKey: 'conversationId', as: 'conversation' });
+Conversation.hasMany(Messages, { foreignKey: 'conversationId', as: 'messages' });
+Messages.belongsTo(Conversation, { foreignKey: 'conversationId', as: 'conversation' });
 
 // Poruka pripada pošiljaocu (User)
-User.hasMany(Message, { foreignKey: 'senderId', as: 'sentMessages' });
-Message.belongsTo(User, { foreignKey: 'senderId', as: 'sender' });
+User.hasMany(Messages, { foreignKey: 'senderId', as: 'sentMessages' });
+Messages.belongsTo(User, { foreignKey: 'senderId', as: 'sender' });
 
 
 module.exports = {
@@ -167,5 +167,7 @@ module.exports = {
     LocationsLK,
     UserGenres,
     UserLanguages,
-    Notification
+    Notification,
+    Messages,
+    Conversation
 };

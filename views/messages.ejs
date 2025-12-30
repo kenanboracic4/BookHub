@@ -24,8 +24,14 @@
 
                         <img src="/images/noProfileImage.png" class="header-avatar" alt="User">
                         <div class="text-details">
-                            <h4>Ime i prezime</h4>
-                            <h6><i class="fa-solid fa-book"></i> Naslov knjige</h6>
+                            <h4>
+                                <%= user.id==conversation.buyerId ? conversation.seller.firstName + ' ' +
+                                    conversation.seller.lastName : conversation.buyer.firstName + ' ' +
+                                    conversation.buyer.lastName %>
+                            </h4>
+                            <h6><i class="fa-solid fa-book"></i>
+                                <%= conversation.book.title %>
+                            </h6>
                         </div>
                     </div>
                     <div class="message-header-actions">
@@ -34,20 +40,22 @@
                 </div>
 
                 <div class="messages-list" id="messagesList">
-                    <div class="message incoming">
-                        <div class="msg-bubble">Zdravo, da li je knjiga i dalje dostupna?</div>
-                        <span class="msg-time">10:30 AM</span>
-                    </div>
+                    <% messages.forEach(message=> { %>
+                        <div class="message <%= message.senderId == user.id ? 'outgoing' : 'incoming' %>">
+                            <div class="msg-bubble">
+                                <%= message.content %>
+                            </div>
+                            <span class="msg-time">
+                                <%= new Date(message.createdAt).toLocaleTimeString('en-US') %>
+                            </span>
 
-                    <div class="message outgoing">
-                        <div class="msg-bubble">Jeste, dostupna je. Možemo se dogovoriti za dostavu.</div>
-                        <span class="msg-time">10:32 AM</span>
-                    </div>
+                        </div>
+                        <% }) %>
                 </div>
 
                 <div class="chat-input-area">
                     <form id="chatForm">
-                       
+
                         <input type="text" placeholder="Napišite poruku..." id="messageInput" autocomplete="off">
                         <button type="submit" class="send-btn">
                             <i class="fa-solid fa-paper-plane"></i>
@@ -57,6 +65,16 @@
                 </div>
             </div>
         </div>
+
+        <script>
+            const roomId = "<%= conversation.id %>";
+            const currentUserId = "<%= user.id %>";
+        </script>
+
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="/javascripts/chat.js"></script>
+
 
 </body>
 
