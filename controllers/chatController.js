@@ -91,6 +91,19 @@ module.exports = {
             console.error(error);
             res.status(500).send('Greška prilikom prikazivanja inboxa.');
         }
-    }
+    },
+
+    async markConversationAsRead(req, res) {
+        try {
+            const conversationId = req.params.conversationId;
+            await conversationService.markConversationAsRead(conversationId);
+            return res.status(200).json({ message: 'Uspješno.' });
+        } catch (error) {
+            console.error(error);
+            return res.status(500).json({ message: 'Greška prilikom označavanja konverzacije kao pročitanu.' });
+        }
+    },
+
+
 
 }

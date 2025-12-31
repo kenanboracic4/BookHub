@@ -1,5 +1,7 @@
 const Message = require('../models/associations').Messages;
 const User = require('../models/associations').User;
+const Conversation = require('../models/associations').Conversation;
+const { Op } = require('sequelize');
 
 module.exports = {
 
@@ -26,11 +28,21 @@ module.exports = {
     async getUserMessagesCount(userId) {
     return await Message.count({
         where: {
-            senderId: userId, // Obično brojimo poruke koje je korisnik PRIMIO, a ne poslao
+            senderId: { [Op.ne]: userId }, // Da nije tvoja poruka
             isRead: false
         },
-        col: 'conversationId', // Brojimo unikatne ID-ove konverzacija
-        distinct: true
+        include: [{
+            model: Conversation,
+            as: 'conversation', // Provjeri kako ti se zove asocijacija u modelu
+            where: {
+                [Op.or]: [
+                    { buyerId: userId },
+                    { sellerId: userId }
+                ]
+            }
+        }],
+        distinct: true,
+        col: 'conversationId'
     });
 }
 

@@ -1,5 +1,6 @@
 const { Server } = require("socket.io");
 const MessageDao = require('../dao/MessageDao.js');
+const Conversation = require('../models/associations').Conversation; // Potrebno da nađemo primatelja
 
 module.exports = (server) => {
     const io = new Server(server);
@@ -7,31 +8,46 @@ module.exports = (server) => {
     io.on('connection', (socket) => { 
         console.log('Korisnik povezan:', socket.id);
 
-        socket.on('joinRoom', (conversationId) => {
-            socket.join(conversationId);
-            console.log(`Korisnik ušao u sobu: ${conversationId}`);
+        // Korisnik ulazi u sobu konkretne konverzacije (za dopisivanje)
+        socket.on('joinRoom', (roomId) => {
+            socket.join(roomId);
+            console.log(`Korisnik ušao u sobu: ${roomId}`);
+        });
+
+        // NOVO: Korisnik ulazi u svoju privatnu sobu (za globalne notifikacije)
+        socket.on('joinUserGlobal', (userId) => {
+            socket.join(`user_${userId}`);
+            console.log(`Korisnik se pridružio svojoj globalnoj sobi: user_${userId}`);
         });
 
         socket.on('sendMessage', async (data) => {
             try {
-                
-                const newMessage =await MessageDao.create({
+                // Spremamo poruku u bazu
+                const newMessage = await MessageDao.create({
                     conversationId: data.conversationId,
                     senderId: data.senderId,
                     content: data.content,
                     isRead: false
                 });
 
+                // Pronalazimo konverzaciju da znamo ko je drugi učesnik (primatelj)
+                const conversation = await Conversation.findByPk(data.conversationId);
+                const recipientId = conversation.buyerId == data.senderId ? conversation.sellerId : conversation.buyerId;
 
-
-                
-                console.log('Nova poruka:', data);
-                io.to(data.conversationId).emit('newMessage', {
+                const messagePayload = {
                     id: newMessage.id,
+                    conversationId: data.conversationId,
                     content: newMessage.content,
                     senderId : newMessage.senderId,
                     createdAt: newMessage.createdAt
-                });
+                };
+
+                // 1. Šaljemo poruku svima u sobi konverzacije (onima koji trenutno gledaju taj chat)
+                io.to(data.conversationId).emit('newMessage', messagePayload);
+
+                // 2. Šaljemo signal primatelju u njegovu PRIVATNU sobu za update brojača i sidebara
+                io.to(`user_${recipientId}`).emit('updateNotification', messagePayload);
+
             } catch (error) {
                 console.error("Greška pri slanju poruke:", error);
             }

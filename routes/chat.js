@@ -8,5 +8,7 @@ router.get('/', chatController.renderChatPage);
 router.get('/inbox/:conversationId', chatController.renderMessagePage);
 router.get('/inbox/:bookId/:sellerId', chatController.startConversation);
 
+router.put('/read/:conversationId', chatController.markConversationAsRead);
+
 
 module.exports = router;

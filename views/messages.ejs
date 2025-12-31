@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,87 +10,114 @@
     <link rel="stylesheet" href="/stylesheets/messages.css" />
     <link rel="stylesheet" href="/stylesheets/footer.css" />
 </head>
+
 <body>
 
     <% include partials/header %>
 
-    <div class="chat-page-wrapper">
-        <div class="chat-main-layout">
-            
-            <div class="conversations-sidebar">
-                <div class="sidebar-header">
-                    <h3>Poruke</h3>
-                    <span class="chat-badge"><%= conversations.length %> ukupno</span>
-                </div>
-                <div class="conv-scroll-area">
-                    <% conversations.forEach(conv => { %>
-                        <a href="/chat/inbox/<%= conv.id %>" class="conversation-box <%= conv.id == conversation.id ? 'active' : '' %>">
-                            <div class="img-wrapper">
-                                <img src="/images/noProfileImage.png" alt="Profil">
-                            </div>
-                            <div class="conversation-info">
-                                <div class="info-top">
-                                    <h4>
-                                        <%= user.id == conv.buyerId ? conv.seller.firstName : conv.buyer.firstName %>
-                                    </h4>
+        <div class="chat-page-wrapper">
+            <div class="chat-main-layout">
+
+                <div class="conversations-sidebar">
+                    <div class="sidebar-header">
+                        <h3>Poruke</h3>
+                        <span class="chat-badge">
+                            <%= conversations.length %> ukupno
+                        </span>
+                    </div>
+                    <div class="conv-scroll-area">
+                        <% conversations.forEach(conv=> { %>
+
+                            <% 
+                            const isUnread=conv.messages && conv.messages.length> 0;
+                                %>
+
+                                <a href="/chat/inbox/<%= conv.id %>"
+                                    class="conv-link conversation-box <%= conv.id == conversation.id ? 'active' : '' %> <%= isUnread ? 'unread-conversation' : '' %>"
+                                    data-id="<%= conv.id %>">
+
+                                    <div class="img-wrapper">
+                                        <img src="/images/noProfileImage.png" alt="Profil">
+                                        <% if(isUnread) { %>
+                                            <span class="unread-count-badge">
+                                                <%= conv.messages.length %>
+                                            </span>
+                                            <% } %>
                                     </div>
-                                <p><i class="fa-solid fa-book"></i>  <%= conv.book.title %></p>
-                            </div>
-                        </a>
-                    <% }) %>
-                </div>
-            </div>
 
-            <div class="messages-container">
-                <div class="message-header">
-                    <div class="header-user-info">
-                        <img src="/images/noProfileImage.png" class="header-avatar" alt="User">
-                        <div class="text-details">
-                            <h4>
-                                <%= user.id == conversation.buyerId ? conversation.seller.firstName + ' ' + conversation.seller.lastName : conversation.buyer.firstName + ' ' + conversation.buyer.lastName %>
-                            </h4>
-                            <h6><i class="fa-solid fa-book"></i> <%= conversation.book.title %></h6>
-                        </div>
-                    </div>
-                    <div class="message-header-actions">
-                        <a href="/books/details/<%= conversation.bookId %>" class="btn-book-details">Oglas</a>
+                                    <div class="conversation-info">
+                                        <div class="info-top">
+                                            <h4>
+                                                <%= user.id==conv.buyerId ? conv.seller.firstName : conv.buyer.firstName
+                                                    %>
+                                            </h4>
+                                        </div>
+                                        <p class="<%= isUnread ? 'unread-text' : '' %>">
+                                            <i class="fa-solid fa-book"></i>
+                                            <%= conv.book.title %>
+                                        </p>
+                                    </div>
+                                </a>
+                                <% }) %>
                     </div>
                 </div>
 
-                <div class="messages-list" id="messagesList">
-                    <% messages.forEach(message => { %>
-                        <div class="message <%= message.senderId == user.id ? 'outgoing' : 'incoming' %>">
-                            <div class="msg-bubble">
-                                <%= message.content %>
+                <div class="messages-container">
+                    <div class="message-header">
+                        <div class="header-user-info">
+                            <img src="/images/noProfileImage.png" class="header-avatar" alt="User">
+                            <div class="text-details">
+                                <h4>
+                                    <%= user.id==conversation.buyerId ? conversation.seller.firstName + ' ' +
+                                        conversation.seller.lastName : conversation.buyer.firstName + ' ' +
+                                        conversation.buyer.lastName %>
+                                </h4>
+                                <h6><i class="fa-solid fa-book"></i>
+                                    <%= conversation.book.title %>
+                                </h6>
                             </div>
-                            <span class="msg-time">
-                                <%= new Date(message.createdAt).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }) %>
-                            </span>
                         </div>
-                    <% }) %>
-                </div>
+                        <div class="message-header-actions">
+                            <a href="/books/details/<%= conversation.bookId %>" class="btn-book-details">Oglas</a>
+                        </div>
+                    </div>
 
-                <div class="chat-input-area">
-                    <form id="chatForm">
-                        <input type="text" placeholder="Napišite poruku..." id="messageInput" autocomplete="off">
-                        <button type="submit" class="send-btn">
-                            <i class="fa-solid fa-paper-plane"></i>
-                            <span>Pošalji</span>
-                        </button>
-                    </form>
+                    <div class="messages-list" id="messagesList">
+                        <% messages.forEach(message=> { %>
+                            <div class="message <%= message.senderId == user.id ? 'outgoing' : 'incoming' %>">
+                                <div class="msg-bubble">
+                                    <%= message.content %>
+                                </div>
+                                <span class="msg-time">
+                                    <%= new Date(message.createdAt).toLocaleTimeString('en-US', { hour: '2-digit' ,
+                                        minute: '2-digit' }) %>
+                                </span>
+                            </div>
+                            <% }) %>
+                    </div>
+
+                    <div class="chat-input-area">
+                        <form id="chatForm">
+                            <input type="text" placeholder="Napišite poruku..." id="messageInput" autocomplete="off">
+                            <button type="submit" class="send-btn">
+                                <i class="fa-solid fa-paper-plane"></i>
+                                <span>Pošalji</span>
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <% include partials/footer %>
+        <% include partials/footer %>
 
-    <script>
-        const roomId = "<%= conversation.id %>";
-        const currentUserId = "<%= user.id %>";
-    </script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="/javascripts/chat.js"></script>
+            <script>
+                const roomId = "<%= conversation.id %>";
+                const currentUserId = "<%= user.id %>";
+            </script>
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+            <script src="/socket.io/socket.io.js"></script>
+            <script src="/javascripts/chat.js"></script>
 </body>
+
 </html>
