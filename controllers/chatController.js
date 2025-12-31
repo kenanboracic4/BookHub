@@ -6,25 +6,40 @@ module.exports = {
 
 
     async renderChatPage(req, res) {
+        try{
 
+         const allConversations = await conversationService.getAllConversations(req.user.id);
 
-        res.render('chat');
+         if(allConversations.length > 0){
+            return res.redirect('/chat/inbox/'+allConversations[0].id);
+
+         }
+
+         res.render('chat',{
+            conversations: [],
+            conversation: null
+
+         });
+        }catch(error){
+            console.log(error);
+            res.redirect('/');
+        }
     },
 
    async renderMessagePage(req, res) {
     try {
         const conversationId = req.params.conversationId;
-        const userId = req.user.id; // ID ulogovanog korisnika
+        const userId = req.user.id; 
 
         const conversation = await conversationService.getConversationById(conversationId);
         
-        // Ako konverzacija ne postoji
+        
         if (!conversation) {
             console.log("Konverzacija nije pronađena");
             return res.redirect('/chat');
         }
 
-        // Provjera prava pristupa (da li je korisnik kupac ili prodavac u ovoj konverzaciji)
+        
         if (userId != conversation.sellerId && userId != conversation.buyerId) {
             console.log("Nemate pravo pristupa ovoj konverzaciji");
             return res.redirect('/');
@@ -36,7 +51,7 @@ module.exports = {
         return res.render('messages', {
             conversation: conversation,
             messages: allMessages,
-            user: req.user, // Promijenjeno u 'user' da se poklapa sa tvojim EJS-om
+            user: req.user, 
             conversations: allConversations
         });
 

@@ -15,38 +15,38 @@
 
     <% include partials/header %>
 
-       <div class="chat-main-container">
-    <div class="conversations-container">
-        <div class="conv-header">
-            <h3>Poruke</h3>
-            <span class="chat-badge">5 novih</span>
-        </div>
-
-        <div class="conv-scroll-area">
-            <% for(let i=0; i < 5; i++) { %>
-                <div class="conversation-box <%= i === 0 ? 'active' : '' %>">
-                    <div class="img-wrapper">
-                        <img src="/images/noProfileImage.png" alt="Profil">
-                        
-                    </div>
-                    
-                    <div class="conversation-info">
-                        <div class="info-top">
-                            <h4>Ime i prezime</h4>
-                            <span class="time">12:45</span>
-                        </div>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit...</p>
-                    </div>
-
-                    <a href="/chat/neki-id" class="reply-link">
-                        <i class="fa-solid fa-paper-plane"></i>
-                        <span>Odgovori</span>
-                    </a>
+     
+     <div class="chat-main-layout">
+            
+            <div class="conversations-sidebar">
+                <div class="sidebar-header">
+                    <h3>Poruke</h3>
+                    <span class="chat-badge"><%= conversations.length %> ukupno</span>
                 </div>
-            <% } %>
-        </div>
-    </div>
-</div>
+                <div class="conv-scroll-area">
+                    <% conversations.forEach(conv => { %>
+                        <a href="/chat/inbox/<%= conv.id %>" class="conversation-box <%= conv.id == conversation.id ? 'active' : '' %>">
+                            <div class="img-wrapper">
+                                <img src="/images/noProfileImage.png" alt="Profil">
+                            </div>
+                            <div class="conversation-info">
+                                <div class="info-top">
+                                    <h4>
+                                        <%= user.id == conv.buyerId ? conv.seller.firstName : conv.buyer.firstName %>
+                                    </h4>
+                                    </div>
+                                <p><i class="fa-solid fa-book"></i>  <%= conv.book.title %></p>
+                            </div>
+                        </a>
+                    <% }) %>
+                    <% if(conversations.length == 0){ %>
+                        <span class="no-messages"">
+                            Još uvijek nemate nijednu konverzaciju.
+                        </span>
+                    <% } %>
+                </div>
+            </div>
+
 
 
 

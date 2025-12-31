@@ -4,6 +4,10 @@ module.exports = {
 
     async getMessages(conversationId){
         return await messageDao.getMessages(conversationId);
+    },
+    async getUserMessagesCount(userId){
+        return await messageDao.getUserMessagesCount(userId);
     }
+
 
 };

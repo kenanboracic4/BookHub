@@ -1,6 +1,7 @@
 const Conversation = require('../models/associations').Conversation;
 const Book = require('../models/associations').Book;
 const User = require('../models/associations').User;
+const Message = require('../models/associations').Messages;
 
 const { Op } = require('sequelize');
 
@@ -44,9 +45,11 @@ module.exports = {
             { model: User, as: 'buyer', attributes: ['firstName', 'lastName'] },
             { model: User, as: 'seller', attributes: ['firstName', 'lastName'] }
         ],
-        order: [['updatedAt', 'DESC']] // Da najnovije poruke budu na vrhu
+        order: [['updatedAt', 'DESC']] 
     });
 }
+
+    
 
 
 };

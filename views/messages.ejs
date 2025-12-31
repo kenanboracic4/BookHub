@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel='stylesheet' href='/stylesheets/header.css' />
     <link rel="stylesheet" href="/stylesheets/messages.css" />
+    <link rel="stylesheet" href="/stylesheets/footer.css" />
 </head>
 <body>
 
@@ -51,7 +52,7 @@
                         </div>
                     </div>
                     <div class="message-header-actions">
-                        <a href="/books/<%= conversation.bookId %>" class="btn-book-details">Oglas</a>
+                        <a href="/books/details/<%= conversation.bookId %>" class="btn-book-details">Oglas</a>
                     </div>
                 </div>
 
@@ -80,6 +81,8 @@
             </div>
         </div>
     </div>
+
+    <% include partials/footer %>
 
     <script>
         const roomId = "<%= conversation.id %>";

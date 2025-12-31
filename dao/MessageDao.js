@@ -22,6 +22,16 @@ module.exports = {
     },
     async create(data){
         return await Message.create(data);
-    }
+    },
+    async getUserMessagesCount(userId) {
+    return await Message.count({
+        where: {
+            senderId: userId, // Obično brojimo poruke koje je korisnik PRIMIO, a ne poslao
+            isRead: false
+        },
+        col: 'conversationId', // Brojimo unikatne ID-ove konverzacija
+        distinct: true
+    });
+}
 
 };

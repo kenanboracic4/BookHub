@@ -127,7 +127,7 @@
                                 <button class="bd-btn bd-btn-primary btn-buy-book" data-id="<%= book.id %>">
                                     <i class="fa fa-shopping-cart"></i> Dodaj u korpu
                                 </button>
-                                <a href="/messages/user/<%= book.sellerId %>" class="bd-btn bd-btn-outline">
+                                <a href="/chat/inbox/<%=book.id %>/<%= book.sellerId %>" class="bd-btn bd-btn-outline">  
                                     <i class="fa fa-envelope"></i> Kontakt
                                 </a>
                             </div>

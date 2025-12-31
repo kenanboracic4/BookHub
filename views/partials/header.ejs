@@ -71,6 +71,17 @@
             </div>
             <div class="header-right">
 
+                <% if(user) { %>
+                    <div class="message-wrapper">
+                        <a href="/chat" class="icon-btn" id="messageBtn">
+                            <i class="fa-solid fa-envelope"></i>
+                            <span class="notification-count">
+                               <%= messageCount %>
+                            </span>
+                        </a>
+                    </div>
+                    <% } %>
+
                 <% if(user && user.role=='Prodavač' ){ %>
                     <div class="notification-wrapper"> <!-- Notifications -->
                         <a href="#" class="icon-btn" id="notifBtn">
