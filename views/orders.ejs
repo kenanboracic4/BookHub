@@ -24,7 +24,7 @@
                 <div class="ord-list">
                     <% if (orders && orders.length> 0) { %>
                         <% orders.forEach(order=> { %>
-                            <div class="ord-card">
+                           <div class="ord-card <%= order.status === 'ZAVRŠENO' ? 'is-finished' : '' %>">
                                 <div class="ord-card-header">
                                     <span class="ord-id">ID: #ORD-<%= order.id %></span>
                                     <span class="ord-date">

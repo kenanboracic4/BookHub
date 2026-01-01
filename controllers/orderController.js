@@ -136,6 +136,7 @@ module.exports = {
     },
 
   async finishOrder(req, res) {
+    console.log("aaaa");
     try{
         const orderId = req.params.orderId;
         

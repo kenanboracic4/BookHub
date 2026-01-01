@@ -63,6 +63,10 @@
     align-items: center;
     border-bottom: 1px solid var(--ord-border);
 }
+.ord-card-header.finished{
+    background: #f1f5f9;
+}
+
 
 .ord-id {
     font-weight: 700;
@@ -392,4 +396,16 @@ padding: 10px 20px;
         width: 100%;
         justify-content: center;
     }
+}
+
+
+.ord-card.is-finished .ord-card-header {
+    background-color: #41d5758d !important; 
+    border-bottom-color: #e8e8e8;
+}
+
+
+.ord-card.is-finished .ord-status {
+    background-color: #68d990b9 !important;
+    color: #3b661e !important;
 }

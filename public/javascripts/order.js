@@ -129,6 +129,7 @@ $(document).on('click', '.finish-order-btn', function (e) {
 
     const orderId = $(this).data('id');
     const btn = $(this);
+    const card = btn.closest('.ord-card');
 
     Swal.fire({
         title: 'Završi narudžbu?',
@@ -143,17 +144,21 @@ $(document).on('click', '.finish-order-btn', function (e) {
     }).then((result) => {
         if (result.isConfirmed) {
             $.ajax({
-                url: '/orders/accept/' + orderId,
+                url: '/orders/finish/' + orderId,
                 method: 'PUT',
                 success: function (response) {
                     Swal.fire('Uspješno!', 'Narudžba je završena.', 'success')
                         .then(() => { 
-                            btn.closest('.ord-card').find('.ord-card-header').css('background-color', '#53e778be');
-                            btn.closest('.ord-card').find('.ord-card-header').find('.ord-status').text('Završeno');
-                            btn.closest('.ord-card').find('.ord-card-header').find('.ord-status').css('color', '#166534');
+                       card.addClass('is-finished');
+                            
+                            // 2. Mijenjamo tekst statusa i klase
+                            card.find('.ord-status')
+                                .text('ZAVRŠENO')
+                                .removeClass('status-pending status-cancelled') // Mičemo stare boje
+                                .addClass('status-completed'); // Dodajemo zelenu
 
-                            btn.closest('.ord-card').find('.ord-body').find('.ord-actions').css('display', 'none');
-
+                            // 3. Sakrivamo dugmad (animacija da ljepše izgleda)
+                            card.find('.ord-actions').slideUp();
                          });
                 },
                 error: function (xhr) {
