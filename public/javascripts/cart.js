@@ -1,4 +1,4 @@
-$(document).on('click', '.btn-buy-book', function (e) {
+$(document).on('click', '.btn-buy-book', function (e) { // dodavanje u korpu 
     e.preventDefault();
 
    

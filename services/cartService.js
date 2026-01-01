@@ -9,6 +9,14 @@ module.exports = {
 
     async addToCart(bookId, userId){
          const book = await bookDao.findBookById(bookId);
+
+         console.log("Statusss" , book.status);
+
+         if(book.status == 'Prodano' || book.status == 'Rezervisano'){
+            throw new Error('Ova knjiga je već prodana ili rezervisana!')
+        }
+
+        
         if(book.sellerId == userId){
             throw new Error('Ne možete kupiti svoju knjigu!')
         }
