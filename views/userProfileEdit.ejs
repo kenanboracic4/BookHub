@@ -50,7 +50,7 @@
                     <div class="up-data-grid">
                         <div class="up-input-group">
                             <label>Status</label>
-                            <select id="status" name="status" class="up-select-field">
+                            <select id="status" name="status" class="up-select-field" disabled>
                                 <option value="Aktivan" <%=user.status==='Aktivan' ? 'selected' : '' %>>Aktivan</option>
                                 <option value="Neaktivan" <%=user.status==='Neaktivan' ? 'selected' : '' %>>Neaktivan
                                 </option>
@@ -108,7 +108,7 @@
                         </div>
 
                         <div class="up-separator up-bio-full">
-                            <span>Sigurnost</span>
+                            <span>Promjenašifre:</span>
                         </div>
 
                         <div class="up-input-group">
@@ -126,49 +126,7 @@
                     </div>
                 </div>
             </form>
-            <% if(user.role==='Prodavač' ) { %>
-                <div class="up-books-section">
-                    <h2 class="up-section-title">Moji oglasi</h2>
-
-                    <% if (userBooks && userBooks.length> 0) { %>
-                        <div class="up-books-list">
-                            <% userBooks.forEach(book=> { %>
-                                <div class="up-book-row">
-                                    <div class="up-book-info">
-                                        <div class="up-book-img-wrapper">
-                                            <img src="<%= book.imageUrl || '/images/default-book.png' %>"
-                                                alt="Book cover">
-                                        </div>
-                                        <div class="up-book-text">
-                                            <h3>
-                                                <%= book.title %>
-                                            </h3>
-                                            <p class="up-book-price">
-                                                <%= parseFloat(book.price).toFixed(2) %> KM
-                                            </p>
-                                        </div>
-                                    </div>
-
-                                    <div class="up-book-actions">
-                                        <a href="/books/edit/<%= book.id %>" class="up-action-btn up-btn-modify">
-                                            <i class="fa fa-edit"></i> Uredi
-                                        </a>
-                                        <button onclick="deleteBook('<%= book.id %>')"
-                                            class="up-action-btn up-btn-delete">
-                                            <i class="fa fa-trash"></i> Obriši
-                                        </button>
-                                    </div>
-                                </div>
-                                <% }) %>
-                        </div>
-                        <% } else { %>
-                            <p class="up-no-data" style="color: var(--up-secondary); font-style: italic;">Niste objavili
-                                nijednu knjigu.</p>
-                            <% } %>
-                </div>
-
-        </div>
-        <% } %>
+         
 
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
             <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
