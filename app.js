@@ -22,6 +22,7 @@ var cartRouter = require('./routes/cart');
 var orderRouter = require('./routes/order');
 var notificationsRouter = require('./routes/notifications');
 var chatRouter = require('./routes/chat');
+var adminRouter = require('./routes/admin');
 var app = express();
 
 // view engine setup
@@ -46,6 +47,9 @@ app.use('/cart', cartRouter);
 app.use('/orders', orderRouter);
 app.use('/notifications', notificationsRouter);
 app.use('/chat', chatRouter);
+app.use('/admin', adminRouter);
+
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

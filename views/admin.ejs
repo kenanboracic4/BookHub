@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel='stylesheet' href='/stylesheets/header.css' />
+    <link rel="stylesheet" href="/stylesheets/footer.css">
+    <link rel="stylesheet" href="/stylesheets/admin.css">
+    
+  </head>
+  <body>
+    <% include partials/header %>
+<div class="admin-dashboard-wrapper">
+    <div class="admin-grid">
+        <a href="/admin/users" class="admin-box">
+            <div class="box-content">
+                <i class="fa-solid fa-users-gear"></i>
+                <h3>Upravljaj korisnicima</h3>
+               
+            </div>
+        </a>
+
+        <a href="/admin/catalog" class="admin-box">
+            <div class="box-content">
+                <i class="fa-solid fa-book-bookmark"></i>
+                <h3>Katalog sistema</h3>
+                
+            </div>
+        </a>
+
+        <a href="/admin/stats" class="admin-box">
+            <div class="box-content">
+                <i class="fa-solid fa-chart-line"></i>
+                <h3>Statistika</h3>
+                
+            </div>
+        </a>
+
+        <a href="/admin/communication" class="admin-box">
+            <div class="box-content">
+                <i class="fa-solid fa-comments"></i>
+                <h3>Komunikacija</h3>
+                
+            </div>
+        </a>
+    </div>
+</div>
+
+<% include partials/footer %>
+
+</script>
+  </body>
+</html>
