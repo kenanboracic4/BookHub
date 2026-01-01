@@ -37,19 +37,11 @@ document.addEventListener('DOMContentLoaded', () => {
 $(document).on('submit', '#ratingForm', function (e) {
     e.preventDefault();
 
-
-
-
-
-
     const userRating = $('#userRating').val();
     const bookRating = $('#bookRating').val();
     const bookComment = $('#comment').val();
     const sellerId = $('#modalSellerId').val();
     const bookId = $('#modalBookId').val();
-
-
-
 
     $.ajax({
         url: '/orders/rate',

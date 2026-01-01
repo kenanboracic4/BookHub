@@ -122,3 +122,44 @@ $(document).ready(function () {
 
 });
 
+// završi narudžbu
+
+$(document).on('click', '.finish-order-btn', function (e) {
+    e.preventDefault();
+
+    const orderId = $(this).data('id');
+    const btn = $(this);
+
+    Swal.fire({
+        title: 'Završi narudžbu?',
+        text: "Želite li zaista završiti narudžbu?",
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Da, završi!',
+        cancelButtonText: 'Odustani',
+        reverseButtons: true
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: '/orders/accept/' + orderId,
+                method: 'PUT',
+                success: function (response) {
+                    Swal.fire('Uspješno!', 'Narudžba je završena.', 'success')
+                        .then(() => { 
+                            btn.closest('.ord-card').find('.ord-card-header').css('background-color', '#53e778be');
+                            btn.closest('.ord-card').find('.ord-card-header').find('.ord-status').text('Završeno');
+                            btn.closest('.ord-card').find('.ord-card-header').find('.ord-status').css('color', '#166534');
+
+                            btn.closest('.ord-card').find('.ord-body').find('.ord-actions').css('display', 'none');
+
+                         });
+                },
+                error: function (xhr) {
+                    Swal.fire('Greška!', 'Nije uspjelo završiti narudžbu.', 'error');
+                }
+            });
+        }
+    });
+});

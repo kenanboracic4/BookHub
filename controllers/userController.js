@@ -78,7 +78,7 @@ module.exports = {
                     role: user.role
                 },
                 JWT_SECRET,
-                { expiresIn: '1h' }
+                { expiresIn: '24h' }
             );
 
             res.cookie('token', token, {

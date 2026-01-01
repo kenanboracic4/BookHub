@@ -19,7 +19,7 @@ module.exports = {
                     senderId: currentUserId,    
                     type: 'Narudžba',
                     content: `Korisnik ${buyerName} je naručio ${orderInfo.bookCount} knjigu/e od vas.`,
-                    link: '/orders/sales'
+                    link: `/orders/details/${orderInfo.id}`
                 });
             }
 
@@ -119,6 +119,7 @@ module.exports = {
             senderId: userId,
             type: 'Ocjena',
             content: ` Dobili ste ocjenu  ${bookRating} na Vašu knjigu`,
+            link: `/books/details/${bookId}`
         })
 
 
@@ -132,7 +133,25 @@ module.exports = {
                message: error.message
            })
        }
+    },
+
+  async finishOrder(req, res) {
+    try{
+        const orderId = req.params.orderId;
+        
+        await orderService.finishOrder(orderId);
+        res.status(200).json({
+            success: true,
+            message: 'Narudžba je završena.'
+        })
+    }catch(error){
+        console.log(error);
+        res.status(500).json({
+            success: false,
+            message: error.message
+        })
     }
+  }
 
 
 }

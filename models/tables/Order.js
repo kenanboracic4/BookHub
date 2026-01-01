@@ -20,10 +20,10 @@ const Order = sequelize.define("Order", {
         allowNull: false
      },
     status: { 
-       type: DataTypes.ENUM('NA ČEKANJU', 'PRIHVAĆENO', 'ODBIJENO', 'OTKAZANO'),
+       type: DataTypes.ENUM('NA ČEKANJU', 'PRIHVAĆENO', 'ODBIJENO', 'OTKAZANO', 'ZAVRŠENO'),
         defaultValue: 'NA ČEKANJU' 
     },
-    exchangeItemDetails: { // Opis knjige koja se nudi u zamjenu
+    exchangeItemDetails: { 
         type: DataTypes.TEXT 
     },
     totalPrice: {

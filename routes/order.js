@@ -12,5 +12,6 @@ router.post('/rate', verifyToken, orderController.handleRateBookAndUser);
 router.put('/accept/:orderId', verifyToken, orderController.acceptOrder);
 router.put('/reject/:orderId', verifyToken, orderController.rejectOrder);
 router.put('/cancel/:orderId', verifyToken, orderController.cancelOrder);
+router.put('finish/:orderId', verifyToken, orderController.finishOrder);
 
 module.exports = router;

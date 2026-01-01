@@ -106,5 +106,15 @@ async cancelOrder(orderId, userId) {
             } 
         } 
     );
+},
+async finishOrder(orderId){
+    return await Order.update(
+        { status: 'ZAVRŠENO' },
+        { 
+            where: { 
+                id: orderId
+            } 
+        } 
+      );
 }
 };

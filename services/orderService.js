@@ -116,6 +116,10 @@ module.exports = {
         await userDao.updateUserRating(userId);
 
         return true;
+    },
+
+    async finishOrder(orderId){
+        return await orderDao.finishOrder(orderId);
     }
 
 }
