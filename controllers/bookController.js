@@ -15,25 +15,32 @@ module.exports = {
 
        },
 
-       async renderBookDetailsPage(req, res) {
-              const id = req.params.id;
-              const book = await bookService.getBookById(parseInt(id));
+      async renderBookDetailsPage(req, res) {
+    const id = req.params.id;
+    const parsedId = parseInt(id); // Parsiramo ID odmah
 
+    // ISPRAVKA: Provjeravamo parsedId, a ne bookId (koji nije ni definisan)
+    if (isNaN(parsedId)) {
+        return res.status(400).send("Nevalidan ID knjige.");
+    }
 
+    try {
+        const book = await bookService.getBookById(parsedId);
 
+        if (!book) {
+            return res.status(404).send('Knjiga nije pronađena');
+        }
 
-
-              if (!book) {
-                     res.status(404).send('Knjiga nije pronađena');
-                     return;
-
-              }
-
-              await bookService.incrementBookViewCount(parseInt(id));
-              res.render('bookDetail', {
-                     book: book
-              });
-       },
+        await bookService.incrementBookViewCount(parsedId);
+        
+        res.render('bookDetail', {
+            book: book
+        });
+    } catch (error) {
+        console.error("Greška na details stranici:", error);
+        res.status(500).send("Serverska greška");
+    }
+},
 
        async renderAddBookPage(req, res) {
 

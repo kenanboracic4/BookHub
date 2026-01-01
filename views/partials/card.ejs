@@ -25,7 +25,7 @@
             <div class="price">
                 <%= parseFloat(book.price).toFixed(2) %> KM
             </div>
-            <a href="/books/details/<%= book.id %>" class="btn-details">Detalji</a>
+           <a href="/books/details/<%= book.id %>" class="btn-details" <%= !book.id ? 'style="display:none"' : '' %>>Detalji</a>
         </div>
     </div>
 </div>

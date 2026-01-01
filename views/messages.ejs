@@ -67,11 +67,11 @@
                         <div class="header-user-info">
                             <img src="/images/noProfileImage.png" class="header-avatar" alt="User">
                             <div class="text-details">
-                                <h4>
+                                <a>
                                     <%= user.id==conversation.buyerId ? conversation.seller.firstName + ' ' +
                                         conversation.seller.lastName : conversation.buyer.firstName + ' ' +
                                         conversation.buyer.lastName %>
-                                </h4>
+                                </a>
                                 <h6><i class="fa-solid fa-book"></i>
                                     <%= conversation.book.title %>
                                 </h6>
