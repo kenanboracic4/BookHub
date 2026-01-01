@@ -35,7 +35,7 @@ module.exports = {
             bookDao.getAllConditions(),
             bookDao.getAllLanguages()
         ]);
-        
+
         return { genres, locations, conditions, languages };
     },
 
@@ -45,7 +45,7 @@ module.exports = {
             throw new Error('Nedostaju obavezna polja za dodavanje knjige.');
         }
 
-        
+
 
         if (bookData.price < 0) {
             throw new Error('Cijena knjige ne može biti negativna.');
@@ -91,50 +91,54 @@ module.exports = {
 
 
     },
-   
-async filteredBooks(query) {
-    const { q, price_min, price_max, sort, location, genre, condition, language } = query;
-    
-    let whereClause = {};
-    let orderClause = [['createdAt', 'DESC']]; 
 
-    
-    if (q) {
-        whereClause.title = { [Op.iLike]: `%${q}%` };
+    async filteredBooks(query) {
+        const { q, price_min, price_max, sort, location, genre, condition, language } = query;
+
+        let whereClause = {};
+        let orderClause = [['createdAt', 'DESC']];
+
+
+        if (q) {
+            whereClause.title = { [Op.iLike]: `%${q}%` };
+        }
+
+
+        if (price_min || price_max) {
+            whereClause.price = {};
+            if (price_min) whereClause.price[Op.gte] = price_min;
+            if (price_max) whereClause.price[Op.lte] = price_max;
+        }
+
+
+        if (location) whereClause.locationId = location;
+        if (genre) whereClause.genreId = genre;
+        if (condition) whereClause.conditionId = condition;
+        if (language) whereClause.languageId = language;
+
+
+        if (sort) {
+            if (sort === 'price_asc') orderClause = [['price', 'ASC']];
+            if (sort === 'price_desc') orderClause = [['price', 'DESC']];
+            if (sort === 'oldest') orderClause = [['createdAt', 'ASC']];
+        }
+
+
+        return await bookDao.getBooks(whereClause, orderClause);
+    },
+    async rateBook(bookId, rating, userId) {
+
+    },
+
+    async getAverageRating(bookId) {
+        console.log(bookId);
+        return await bookDao.getAverageRating(bookId);
+    },
+    async updateBookRating(bookId, averageRating) {
+        return await bookDao.updateBookRating(bookId, averageRating);
+    },
+
+    async deleteBook(bookId){
+        return await bookDao.deleteBook(bookId);
     }
-
- 
-    if (price_min || price_max) {
-        whereClause.price = {};
-        if (price_min) whereClause.price[Op.gte] = price_min;
-        if (price_max) whereClause.price[Op.lte] = price_max;
-    }
-
-
-    if (location) whereClause.locationId = location;
-    if (genre) whereClause.genreId = genre;
-    if (condition) whereClause.conditionId = condition;
-    if (language) whereClause.languageId = language;
-
-  
-    if (sort) {
-        if (sort === 'price_asc') orderClause = [['price', 'ASC']];
-        if (sort === 'price_desc') orderClause = [['price', 'DESC']];
-        if (sort === 'oldest') orderClause = [['createdAt', 'ASC']];
-    }
-
-    
-    return await bookDao.getBooks(whereClause, orderClause);
-},
-async rateBook(bookId, rating, userId) {
-    
-},
-
-async getAverageRating(bookId) {
-    console.log(bookId);
-    return await bookDao.getAverageRating(bookId);
-},
-async updateBookRating(bookId, averageRating) {
-    return await bookDao.updateBookRating(bookId, averageRating);
-}
 };

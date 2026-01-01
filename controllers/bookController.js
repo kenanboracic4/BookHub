@@ -154,6 +154,23 @@ module.exports = {
                      res.status(500).send('Došlo je do greške.');
               }
 
+       },
+
+       async handleDeleteBook(req,res){
+              try{
+                     const bookId = parseInt(req.params.id);
+
+                     await bookService.deleteBook(bookId);
+                     res.status(200).json({
+                            success: true,
+                            message: 'Knjiga je uspješno obrisana.'
+                     })
+              }catch(error){
+                     res.status(500).json({
+                            success: false,
+                            message: 'Greška pri brisanju knjige.'
+                     })
+              }
        }
 
 };

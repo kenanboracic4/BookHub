@@ -10,7 +10,7 @@ const BookRating = require('../models/associations').BookRating;
 
 
 
-const { Op, Sequelize} = require('sequelize');
+const { Op, Sequelize } = require('sequelize');
 
 module.exports = {
 
@@ -27,8 +27,8 @@ module.exports = {
         }
         );
     },
-    getRandomBooksForBooksPage(){
-          return Book.findAll({
+    getRandomBooksForBooksPage() {
+        return Book.findAll({
             order: Book.sequelize.random(),
             limit: 32,
             include: [{
@@ -51,36 +51,36 @@ module.exports = {
             nest: true
         });
     },
- async getUserInterests(userId) {
-    
-    const user = await Users.findByPk(userId, {
-        include: [{
-            model: GenresLK,
-            as: 'Genres', 
-            attributes: ['id'],
-            through: { attributes: [] } 
-        }]
-    });
+    async getUserInterests(userId) {
 
-   
-    if (!user || !user.Genres || user.Genres.length === 0) {
-        return [];
-    }
+        const user = await Users.findByPk(userId, {
+            include: [{
+                model: GenresLK,
+                as: 'Genres',
+                attributes: ['id'],
+                through: { attributes: [] }
+            }]
+        });
 
-  
-    const preferredGenreIds = user.Genres.map(g => g.id);
 
-    return await Book.findAll({
-        where: {
-            genreId: {
-                [Op.in]: preferredGenreIds
-            }
-        },
-        include: ['genre', 'location'],
-        limit: 10 
-    });
-},
-    
+        if (!user || !user.Genres || user.Genres.length === 0) {
+            return [];
+        }
+
+
+        const preferredGenreIds = user.Genres.map(g => g.id);
+
+        return await Book.findAll({
+            where: {
+                genreId: {
+                    [Op.in]: preferredGenreIds
+                }
+            },
+            include: ['genre', 'location'],
+            limit: 10
+        });
+    },
+
     findBookById(id) {
         return Book.findByPk(id, {
             include: [{
@@ -170,45 +170,56 @@ module.exports = {
 
         return await book.update(updateFields);
     },
-    
+
     async getBooks(whereClause, orderClause) {
         return await Book.findAll({
             where: whereClause,
             order: orderClause,
-            include: [{all: true}]
+            include: [{ all: true }]
         });
     },
-    async updateBookStatus(bookId, status){
+    async updateBookStatus(bookId, status) {
         return await Book.update({
             status: status
         }, {
             where: { id: bookId }
         });
     },
-  
 
 
 
 
 
-async updateBookAvgRating(bookId) {
-    
-    const result = await BookRating.findOne({
-        where: { bookId: bookId },
-        attributes: [
-            [Sequelize.fn('AVG', Sequelize.col('value')), 'avgScore']
-        ],
-        raw: true
-    });
 
-    
-    const newAvgRating = result && result.avgScore ? parseFloat(result.avgScore).toFixed(1) : 0;
+    async updateBookAvgRating(bookId) {
 
-    
-    return await Book.update({
-        averageRating: newAvgRating 
-    }, {
-        where: { id: bookId }
-    });
-}
+        const result = await BookRating.findOne({
+            where: { bookId: bookId },
+            attributes: [
+                [Sequelize.fn('AVG', Sequelize.col('value')), 'avgScore']
+            ],
+            raw: true
+        });
+
+
+        const newAvgRating = result && result.avgScore ? parseFloat(result.avgScore).toFixed(1) : 0;
+
+
+        return await Book.update({
+            averageRating: newAvgRating
+        }, {
+            where: { id: bookId }
+        });
+    },
+
+    async deleteBook(bookId) {
+        return await Book.update(
+            {
+                status: 'Arhivirano'
+            }, {
+            where: { id: bookId }
+        }
+        );
+    }
+
 };

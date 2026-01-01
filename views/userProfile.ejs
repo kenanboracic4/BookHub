@@ -182,7 +182,7 @@
                                                 <%= parseFloat(book.price).toFixed(2) %> KM
                                             </p>
                                             <% if(book.status) { %>
-                                                <span class="up-mini-status">
+                                                <span  class="up-mini-status">
                                                     <%= book.status %>
                                                 </span>
                                                 <% } %>
@@ -193,8 +193,7 @@
                                         <a href="/books/edit/<%= book.id %>" class="up-action-btn up-btn-modify">
                                             <i class="fa fa-pen"></i> Uredi
                                         </a>
-                                        <button onclick="deleteBook('<%= book.id %>')"
-                                            class="up-action-btn up-btn-delete">
+                                        <button  id = "up-deleteBtn" class="up-action-btn up-btn-delete" data-id = "<%= book.id %>">
                                             <i class="fa fa-trash"></i> Obriši
                                         </button>
                                     </div>
@@ -210,6 +209,7 @@
         </div>
 
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="/javascripts/book.js"></script>
         <script>
             const urlParams = new URLSearchParams(window.location.search);
             if (urlParams.get('success') === 'true') {

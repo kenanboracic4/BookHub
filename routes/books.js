@@ -17,4 +17,6 @@ router.post('/add-book', verifyToken, upload.single('image'), bookController.han
 
 
 router.put('/edit/:id', verifyToken, upload.single('image'), bookController.handleEditBook);
+router.put('/delete/:id', verifyToken, bookController.handleDeleteBook);
+
 module.exports = router;
