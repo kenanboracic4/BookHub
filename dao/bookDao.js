@@ -240,6 +240,26 @@ module.exports = {
         return await BookConditionsLK.create({
             name: conditionData
         });
-    }
+    },
+    async deleteGenre(id){
+        return await GenresLK.destroy({
+            where: { id: id }
+        });
+    },
+    async deleteLanguage(id){
+        return await LanguagesLK.destroy({
+            where: { id: id }
+        });
+    },
+    async deleteLocation(id){
+        return await LocationsLK.destroy({
+            where: { id: id }
+        });
+    },
+    async deleteCondition(id){
+        return await BookConditionsLK.destroy({
+            where: { id: id }
+        });
+    },
 
 };

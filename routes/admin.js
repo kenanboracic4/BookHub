@@ -14,4 +14,6 @@ router.post('/catalog/condition', adminController.handleAddCondition);
 
 router.put('/user/archive/:id', adminController.archiveUser);
 
+router.delete('/catalog/:type/:id', adminController.handleDeleteCatalog);
+
 module.exports = router;

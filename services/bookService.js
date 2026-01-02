@@ -148,5 +148,16 @@ module.exports = {
     },
     async createCondition(conditionData){
         return await bookDao.createCondition(conditionData);
+    },
+    async deleteCatalog(type, id){
+        if(type === 'genre'){
+            return await bookDao.deleteGenre(id);
+        }else if(type === 'language'){
+            return await bookDao.deleteLanguage(id);
+        }else if(type === 'location'){
+            return await bookDao.deleteLocation(id);
+        }else if(type === 'condition'){
+            return await bookDao.deleteCondition(id);
+        }
     }
 };

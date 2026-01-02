@@ -30,7 +30,7 @@
                         <tr>
                             <td><%= g.name %></td>
                             <td class="text-right">
-                                <button class="btn-icon-only btn-delete"><i class="fa-solid fa-trash"></i></button>
+                                <button data-id="<%= g.id %>" data-type="genre" class="btn-icon-only btn-delete"><i class="fa-solid fa-trash"></i></button>
                             </td>
                         </tr>
                         <% }) %>
@@ -58,7 +58,7 @@
                         <tr>
                             <td><%= l.name %></td>
                             <td class="text-right">
-                                <button class="btn-icon-only btn-delete"><i class="fa-solid fa-trash"></i></button>
+                                <button data-id="<%=l.id %>" data-type="language" class="btn-icon-only btn-delete"><i class="fa-solid fa-trash"></i></button>
                             </td>
                         </tr>
                         <% }) %>
@@ -86,7 +86,7 @@
                         <tr>
                             <td><%= loc.name %></td>
                             <td class="text-right">
-                                <button class="btn-icon-only btn-delete"><i class="fa-solid fa-trash"></i></button>
+                                <button data-id="<%= loc.id %>" data-type="location" class="btn-icon-only btn-delete"><i class="fa-solid fa-trash"></i></button>
                             </td>
                         </tr>
                         <% }) %>
@@ -114,7 +114,7 @@
                         <tr>
                             <td><%= c.name %></td>
                             <td class="text-right">
-                                <button class="btn-icon-only btn-delete"><i class="fa-solid fa-trash"></i></button>
+                                <button data-id="<%= c.id %>" data-type="condition" class="btn-icon-only btn-delete"><i class="fa-solid fa-trash"></i></button>
                             </td>
                         </tr>
                         <% }) %>

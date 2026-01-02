@@ -101,5 +101,21 @@ module.exports  ={
                 message: 'Greška pri dodavanju stanja.'
             })
         }
-    }
+    },
+    async handleDeleteCatalog(req,res){
+        try{
+            const type = req.params.type;
+            const id = req.params.id;
+            await bookService.deleteCatalog(type, id);
+            res.status(200).json({
+                success: true,
+                message: 'Uspješno obrisano.'
+            })
+        }catch(error){
+            res.status(500).json({
+                success: false,
+                message: 'Greška pri brisanju stavka.'
+            })
+        }
+    },
 }

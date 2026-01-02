@@ -198,3 +198,52 @@ $(document).ready(function() {
     
 
 });
+
+
+// brisanje 
+
+$(document).on('click', '.btn-delete', function (e) {
+    
+    const $btn = $(this);
+    const id = $btn.data('id');
+    const type = $btn.data('type'); 
+    const $row = $btn.closest('tr');
+
+    Swal.fire({
+        title: 'Jeste li sigurni?',
+        text: "Nećete moći vratiti ovaj podatak!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Da, obriši!',
+        cancelButtonText: 'Odustani'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: `/admin/catalog/${type}/${id}`,
+                method: 'DELETE',
+                success: function(response) {
+                    if (response.success) {
+                       
+                        $row.fadeOut(400, function() {
+                            $(this).remove();
+                        });
+
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Obrisano!',
+                            toast: true,
+                            position: 'bottom-end',
+                            timer: 2000,
+                            showConfirmButton: false
+                        });
+                    }
+                },
+                error: function() {
+                    Swal.fire('Greška!', 'Nije moguće obrisati stavku.', 'error');
+                }
+            });
+        }
+    });
+});
