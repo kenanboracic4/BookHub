@@ -126,10 +126,6 @@ module.exports = {
 
         return await bookDao.getBooks(whereClause, orderClause);
     },
-    async rateBook(bookId, rating, userId) {
-
-    },
-
     async getAverageRating(bookId) {
         console.log(bookId);
         return await bookDao.getAverageRating(bookId);
@@ -140,5 +136,17 @@ module.exports = {
 
     async deleteBook(bookId){
         return await bookDao.deleteBook(bookId);
+    },
+    async createGenre(genreData){
+        return await bookDao.createGenre(genreData);
+    },
+    async createLanguage(languageData){
+        return await bookDao.createLanguage(languageData);
+    },
+    async createLocation(locationData){
+        return await bookDao.createLocation(locationData);
+    },
+    async createCondition(conditionData){
+        return await bookDao.createCondition(conditionData);
     }
 };

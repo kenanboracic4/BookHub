@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ba">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Korisnici</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="/stylesheets/adminCatalog.css">
+    <link rel="stylesheet" href="/stylesheets/footer.css">
+    <link rel="stylesheet" href="/stylesheets/header.css">
+</head>
+<body>
+    <% include partials/header %>
+
+    <div class="admin-main-wrapper">
+    <div class="catalogs-grid">
+        
+        <section class="catalog-card">
+            <h3><i class="fa-solid fa-tags"></i> Žanrovi</h3>
+            <div class="catalog-table-wrapper">
+                <table class="simple-table">
+                    <thead>
+                        <tr>
+                            <th>Naziv</th>
+                            <th class="text-right">Akcija</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% genres.forEach(g => { %>
+                        <tr>
+                            <td><%= g.name %></td>
+                            <td class="text-right">
+                                <button class="btn-icon-only btn-delete"><i class="fa-solid fa-trash"></i></button>
+                            </td>
+                        </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+            </div>
+            <form id="genre-inline-form" class="inline-add-form">
+                <input type="text" name="name" placeholder="Novi žanr..." required>
+                <button type="submit" class="btn-add-inline"><i class="fa-solid fa-plus"></i></button>
+            </form>
+        </section>
+
+        <section class="catalog-card">
+            <h3><i class="fa-solid fa-language"></i> Jezici</h3>
+            <div class="catalog-table-wrapper">
+                <table class="simple-table">
+                    <thead>
+                        <tr>
+                            <th>Naziv</th>
+                            <th class="text-right">Akcija</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% languages.forEach(l => { %>
+                        <tr>
+                            <td><%= l.name %></td>
+                            <td class="text-right">
+                                <button class="btn-icon-only btn-delete"><i class="fa-solid fa-trash"></i></button>
+                            </td>
+                        </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+            </div>
+            <form id="language-inline-form" class="inline-add-form">
+                <input type="text" name="name" placeholder="Novi jezik..." required>
+                <button type="submit" class="btn-add-inline"><i class="fa-solid fa-plus"></i></button>
+            </form>
+        </section>
+
+        <section class="catalog-card">
+            <h3><i class="fa-solid fa-location-dot"></i> Lokacije</h3>
+            <div class="catalog-table-wrapper">
+                <table class="simple-table">
+                    <thead>
+                        <tr>
+                            <th>Naziv</th>
+                            <th class="text-right">Akcija</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% locations.forEach(loc => { %>
+                        <tr>
+                            <td><%= loc.name %></td>
+                            <td class="text-right">
+                                <button class="btn-icon-only btn-delete"><i class="fa-solid fa-trash"></i></button>
+                            </td>
+                        </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+            </div>
+            <form id="location-inline-form" class="inline-add-form">
+                <input type="text" name="name" placeholder="Novi grad..." required>
+                <button type="submit" class="btn-add-inline"><i class="fa-solid fa-plus"></i></button>
+            </form>
+        </section>
+
+        <section class="catalog-card">
+            <h3><i class="fa-solid fa-star"></i> Stanje knjige</h3>
+            <div class="catalog-table-wrapper">
+                <table class="simple-table">
+                    <thead>
+                        <tr>
+                            <th>Naziv</th>
+                            <th class="text-right">Akcija</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% conditions.forEach(c => { %>
+                        <tr>
+                            <td><%= c.name %></td>
+                            <td class="text-right">
+                                <button class="btn-icon-only btn-delete"><i class="fa-solid fa-trash"></i></button>
+                            </td>
+                        </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+            </div>
+            <form id="condition-inline-form" class="inline-add-form">
+                <input type="text" name="name" placeholder="Novo stanje..." required>
+                <button type="submit" class="btn-add-inline"><i class="fa-solid fa-plus"></i></button>
+            </form>
+        </section>
+
+    </div>
+</div>
+
+    <% include partials/footer %>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="/javascripts/adminCatalog.js"></script>
+</body>
+</html>

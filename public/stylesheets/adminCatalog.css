@@ -1,0 +1,143 @@
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    font-family: 'Inter', -apple-system, sans-serif;
+    background-color: #f3f4f6;
+    color: #1f2937;
+}
+
+.admin-main-wrapper {
+    flex: 1 0 auto;
+    padding: 40px 20px;
+    display: flex;
+    justify-content: center;
+}
+
+/* Grid sistem 2x2 */
+.catalogs-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 kolone */
+    gap: 30px;
+    width: 100%;
+    max-width: 1200px;
+}
+
+/* Kartica za svaki katalog */
+.catalog-card {
+    background: #ffffff;
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+    display: flex;
+    flex-direction: column;
+    height: 450px; /* Fiksna visina za simetriju */
+}
+
+.catalog-card h3 {
+    padding: 20px;
+    margin: 0;
+    font-size: 16px;
+    font-weight: 700;
+    border-bottom: 2px solid #f3f4f6;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #374151;
+}
+
+/* Tabela unutar kartice sa skrolom ako ima puno podataka */
+.catalog-table-wrapper {
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+.simple-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.simple-table th {
+    position: sticky;
+    top: 0;
+    background: #f9fafb;
+    text-align: left;
+    padding: 12px 20px;
+    font-size: 11px;
+    text-transform: uppercase;
+    color: #6b7280;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.simple-table td {
+    padding: 12px 20px;
+    border-bottom: 1px solid #f9fafb;
+    font-size: 14px;
+}
+
+/* Forme za dodavanje na dnu */
+.inline-add-form {
+    padding: 15px 20px;
+    background: #f9fafb;
+    border-top: 1px solid #e5e7eb;
+    display: flex;
+    gap: 10px;
+    border-radius: 0 0 12px 12px;
+}
+
+.inline-add-form input {
+    flex-grow: 1;
+    padding: 8px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 14px;
+    outline: none;
+}
+
+.inline-add-form input:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
+}
+
+.btn-add-inline {
+    background: #1f2937;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-add-inline:hover {
+    background: #000000;
+}
+
+/* Pomoćne klase */
+.text-right { text-align: right; }
+
+.btn-icon-only {
+    background: none;
+    border: none;
+    color: #9ca3af;
+    cursor: pointer;
+    padding: 5px;
+    transition: color 0.2s;
+}
+
+.btn-delete:hover { color: #dc2626; }
+
+/* Responzivnost: Na mobilnom ide sve u jednu kolonu */
+@media (max-width: 900px) {
+    .catalogs-grid {
+        grid-template-columns: 1fr;
+    }
+    .catalog-card {
+        height: auto;
+        max-height: 500px;
+    }
+}
