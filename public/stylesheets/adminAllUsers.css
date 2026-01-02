@@ -1,0 +1,135 @@
+
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    font-family: 'Inter', system-ui, sans-serif;
+    background-color: #f8f8f8;
+    color: #11192c;
+    overflow-x: hidden; 
+}
+
+.admin-main-wrapper {
+    flex: 1 0 auto;
+    padding: 40px 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.table-container {
+    width: 90%; 
+    max-width: 1200px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    border: 1px solid #e5e7eb;
+}
+
+.simple-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: auto; 
+}
+
+.simple-table th {
+    text-align: left;
+    padding: 12px 16px;
+    background-color: #cfd3d730;
+    border-bottom: 2px solid #e5e7eb;
+    color: #4b5563;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 700;
+}
+
+.simple-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid #f3f4f6;
+    color: #374151;
+    font-size: 14px; 
+    vertical-align: middle;
+    white-space: nowrap; 
+}
+
+
+
+.actions {
+    display: flex;
+    justify-content: flex-start;
+    gap: 8px;
+}
+
+
+.action-link {
+    background-color: white;
+    border:none;
+    border: 1px solid #e5e7eb;
+    padding: 8px 10px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    color: #4b5563;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    transition: all 0.3s ease;
+}
+
+.action-link:hover {
+    background-color: #f9fafb;
+    border-color: #d1d5db;
+    color: rgb(12, 12, 73);
+}
+
+.font-bold{
+    color:rgb(12, 12, 73);
+    font-weight: 500;
+}
+.archive {
+    background-color: rgba(204, 72, 72, 0.557);
+    color: white;
+}
+
+.block{
+    background-color: rgba(204, 72, 72, 0.557);
+    color: white;
+}
+.status {
+    background-color: rgba(0, 160, 227, 0.557);
+    color: white;
+}
+
+
+@media (max-width: 1024px) {
+   
+    .action-link {
+        padding: 8px;
+    }
+    .table-container {
+        width: 95%;
+        margin: 0 auto;
+    }
+   
+}
+
+
+@media (max-width: 600px) {
+    .simple-table th:nth-child(3), 
+    .simple-table td:nth-child(3) {
+        display: none; 
+    }
+    .simple-table th, .simple-table td {
+        padding: 8px 10px;
+        font-size: 12px;
+    }
+     .action-link{
+        font-size: 13px;
+    }
+}

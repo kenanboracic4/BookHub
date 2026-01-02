@@ -205,7 +205,9 @@
     box-shadow: 0 4px 8px rgba(59, 130, 246, 0.4);
 }
 
-
+.disabled-btn {
+    display: none !important;
+}
 
 .rating-overlay {
     position: fixed;
@@ -223,7 +225,9 @@
     visibility: hidden;
     transition: all 0.3s ease;
 }
-
+.rating-overlay.disabled-overlay {
+    display: none;
+}
 .rating-overlay.active {
     opacity: 1;
     visibility: visible;

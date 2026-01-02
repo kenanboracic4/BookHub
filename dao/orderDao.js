@@ -116,5 +116,16 @@ async finishOrder(orderId){
             } 
         } 
       );
+},
+async updateOrderItem(bookId,  bookRating){
+    return await OrderItem.update(
+        { isRated: bookRating },
+        { 
+            where: { 
+                bookId: bookId,
+            } 
+        }
+        );
 }
+
 };

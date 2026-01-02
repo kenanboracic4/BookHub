@@ -129,6 +129,14 @@ async getUserBooks(id, filters = {}) {
         }, {
             where: { id: userId }
         })
+    },
+
+    async getAllUsers() {
+        return Users.findAll({
+            where: {
+                role: "Prodavač" || "Kupac"
+            }
+        });
     }
 
 };

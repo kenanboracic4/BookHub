@@ -115,11 +115,22 @@ module.exports = {
         await bookDao.updateBookAvgRating(bookId);
         await userDao.updateUserRating(userId);
 
+        
+
         return true;
     },
 
     async finishOrder(orderId){
         return await orderDao.finishOrder(orderId);
+    },
+
+    async updateOrderItem(bookId,  bookRating){
+        if(bookRating > 0){
+            bookRating = true;
+        }else{
+            bookRating = false;
+        }
+        return await orderDao.updateOrderItem(bookId, bookRating);
     }
 
 }

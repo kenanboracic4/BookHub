@@ -1,52 +1,52 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel='stylesheet' href='/stylesheets/style.css' />
     <link rel='stylesheet' href='/stylesheets/header.css' />
     <link rel='stylesheet' href='/stylesheets/card.css' />
     <link rel="stylesheet" href="/stylesheets/footer.css">
-  
-  </head>
-  <body>
+</head>
+<body>
 
     <% include partials/header %>
-    
-    <div class=" randomBooks">
-    <div class="section-title">Slucajno odabrane knjige: </div>
-    <div class="containerBooks">
-    <% books.forEach((book)=>{ %>
-     <%- include('partials/card', {book: book}) %>
-    <% }) %>
-    </div>
-      </div>
 
-        <div class=" randomBooks">
-    <div class="section-title">Popularne knjige: </div>
-    <div class="containerBooks">
-    <% popularBooks.forEach((book)=>{ %>
-     <%- include('partials/card', {book: book}) %>
-    <% }) %>
-    </div>
-      </div>
+    <div class="main-content-wrapper">
+        
+        <div class="randomBooks">
+            <div class="section-title">Slucajno odabrane knjige: </div>
+            <div class="containerBooks">
+                <% books.forEach((book)=>{ %>
+                    <%- include('partials/card', {book: book}) %>
+                <% }) %>
+            </div>
+        </div>
 
-        <div class=" randomBooks">
-    <div class="section-title">Preporuceno za vas: </div>
-    <% if(userInterests.length > 0) { %>
-    <div class="containerBooks">
-    <% userInterests.forEach((book)=>{ %>
-     <%- include('partials/card', {book: book}) %>
-    <% }) %>
-    </div>
-    <% } else { %>
-    <p>Ne postoje knjige koje su u okviru vaših interesa.</p>
-    <% } %>
-      </div>
+        <div class="randomBooks">
+            <div class="section-title">Popularne knjige: </div>
+            <div class="containerBooks">
+                <% popularBooks.forEach((book)=>{ %>
+                    <%- include('partials/card', {book: book}) %>
+                <% }) %>
+            </div>
+        </div>
 
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <div class="randomBooks">
+            <div class="section-title">Preporuceno za vas: </div>
+            <% if(userInterests && userInterests.length > 0) { %>
+                <div class="containerBooks">
+                    <% userInterests.forEach((book)=>{ %>
+                        <%- include('partials/card', {book: book}) %>
+                    <% }) %>
+                </div>
+            <% } else { %>
+                <p style="padding: 20px; color: #666;">Ne postoje knjige koje su u okviru vaših interesa.</p>
+            <% } %>
+        </div>
 
-<% include partials/footer %>
+    </div> <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-</script>
-  </body>
+    <% include partials/footer %>
+
+</body>
 </html>

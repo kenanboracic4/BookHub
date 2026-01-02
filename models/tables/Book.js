@@ -33,7 +33,7 @@ const Book = sequelize.define("Book", {
         },
     status: { 
         type: DataTypes.ENUM('Aktivno', 'Prodano', 'Rezervisano','Arhivirano'), 
-        defaultValue: 'active' 
+        defaultValue: 'Aktivno' 
     },
     imageUrl: { 
         type: DataTypes.STRING 

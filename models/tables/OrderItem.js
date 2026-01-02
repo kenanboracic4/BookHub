@@ -17,6 +17,10 @@ const OrderItem = sequelize.define("OrderItem", {
     },
     priceAtPurchase: { 
         type: DataTypes.DECIMAL(10, 2)
+     },
+     isRated:{
+         type: DataTypes.BOOLEAN, 
+         defaultValue: false
      } 
 }, { 
     tableName: "OrderItems",

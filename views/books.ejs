@@ -6,6 +6,7 @@
     <link rel='stylesheet' href='/stylesheets/header.css' />
     <link rel='stylesheet' href='/stylesheets/card.css' />
     <link rel='stylesheet' href='/stylesheets/footer.css' />
+
   </head>
   <body>
     <%- include('partials/header') %>
@@ -27,6 +28,7 @@
      <% include partials/footer %>
   </body>
 
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script>
     const urlParams = new URLSearchParams(window.location.search);
     
@@ -37,17 +39,13 @@
             position: 'top-end', 
             showConfirmButton: false,
             timer: 3000,
-            timerProgressBar: true,
-            didOpen: (toast) => {
-                toast.addEventListener('mouseenter', Swal.stopTimer)
-                toast.addEventListener('mouseleave', Swal.resumeTimer)
-            }
+            timerProgressBar: true
         });
 
         
         Toast.fire({
             icon: 'success',
-            title: 'Knjiga uspješno dodana!'
+            title: 'Knjiga uspješno objavljena!'
         });
 
         

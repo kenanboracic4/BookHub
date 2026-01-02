@@ -24,7 +24,7 @@
                 <div class="ord-list">
                     <% if (orders && orders.length> 0) { %>
                         <% orders.forEach(order=> { %>
-                           <div class="ord-card <%= order.status === 'ZAVRŠENO' ? 'is-finished' : '' %>">
+                            <div class="ord-card <%= order.status === 'ZAVRŠENO' ? 'is-finished' : '' %>">
                                 <div class="ord-card-header">
                                     <span class="ord-id">ID: #ORD-<%= order.id %></span>
                                     <span class="ord-date">
@@ -40,8 +40,7 @@
                                 </div>
 
                                 <div class="ord-body">
-                                    <% order.items.forEach(item=> { %>
-                                        <div class="ord-item">
+                                    <% order.items.forEach(item=> { %> <div class="ord-item">
                                             <img src="<%= item.book.imageUrl || '/images/default-book.png' %>"
                                                 alt="Knjiga">
 
@@ -58,15 +57,22 @@
                                                 </span>
                                             </div>
 
-                                            <% if(order.status==='PRIHVAĆENO' || order.status==='ODBIJENO' ) { %>
-                                                <button class="ord-btn ord-btn-rate small-btn"
-                                                    onclick="openRatingModal('<%= item.book.id %>', '<%= item.book.title %>', '<%= item.book.sellerId || order.sellerId %>')">
-                                                    <i class="fa-regular fa-star"></i> Ocijeni
-                                                </button>
-                                                <% } %>
+                                            <% if(order.status==='ZAVRŠENO' || order.status==='Završeno' ) { %>
+                                                <% if(!item.isRated) { %>
+                                                    <button
+                                                        class="ord-btn ord-btn-rate small-btn rate-btn-<%= item.book.id %>"
+                                                        onclick="openRatingModal('<%= item.book.id %>', '<%= item.book.title %>', '<%= item.book.sellerId %>')">
+                                                        <i class="fa-regular fa-star"></i> Ocijeni
+                                                    </button>
+                                                    <% } else { %>
+                                                        <span class="rated-badge"
+                                                            style="color: #27ae60; font-weight: bold;">
+                                                            <i class="fa-solid fa-check"></i> Ocijenjeno
+                                                        </span>
+                                                        <% } %>
+                                                            <% } %>
                                         </div>
                                         <% }) %>
-
                                             <div class="ord-summary">
                                                 <strong>Ukupno: <span style="color: #27ae60;">
                                                         <%= order.totalPrice %> KM
@@ -79,19 +85,17 @@
                                                         data-id="<%= order.id %>">Otkaži narudžbu</button>
                                                     <% } %>
 
-                                                        <% if(order.status==='PRIHVAĆENO' || order.status==='ODBIJENO'
-                                                            ){ %>
-
+                                                        <% if(order.status==='PRIHVAĆENO' || order.status==='Prihvaćeno'
+                                                            || order.status==='ZAVRŠENO' || order.status==='Završeno' )
+                                                            { %>
                                                             <% if (order.items && order.items.length> 0) { %>
-                                                                <% // Uzimamo ID knjige iz prve stavke narudžbe 
-                                                                const firstBookId=order.items[0].bookId %>
-                                                                    <a href="/chat/inbox/<%= firstBookId %>/<%= order.sellerId %>"
-                                                                        class="ord-btn ord-btn-contact">
-                                                                        <i class="fa-regular fa-envelope"></i>
-                                                                        Kontaktiraj prodavca
-                                                                    </a>
+                                                                <a href="/chat/inbox/<%= order.items[0].bookId %>/<%= order.sellerId %>"
+                                                                    class="ord-btn ord-btn-contact">
+                                                                    <i class="fa-regular fa-envelope"></i> Kontaktiraj
+                                                                    prodavca
+                                                                </a>
+                                                                <% } %>
                                                                     <% } %>
-                                                                        <% } %>
                                             </div>
                                 </div>
                             </div>

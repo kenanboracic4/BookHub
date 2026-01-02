@@ -1,7 +1,22 @@
+/* Osigurava da stranica uvijek zauzima punu visinu ekrana */
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
 body {
-  padding: 0px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    padding: 0px;
+    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
     background: #fffffff8;
+}
+
+/* Glavni sadržaj koji se rasteže i gura footer dole */
+.main-content-wrapper {
+    flex: 1 0 auto;
+    display: flex;
+    flex-direction: column;
 }
 
 .randomBooks {
@@ -28,6 +43,10 @@ body {
     grid-template-columns: repeat(6, 1fr);
 }
 
+/* Footer ostaje na dnu jer mu ne damo da se skuplja */
+footer {
+    flex-shrink: 0;
+}
 
 @media (max-width: 1200px) {
     .containerBooks {

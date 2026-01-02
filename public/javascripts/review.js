@@ -43,6 +43,7 @@ $(document).on('submit', '#ratingForm', function (e) {
     const sellerId = $('#modalSellerId').val();
     const bookId = $('#modalBookId').val();
 
+
     $.ajax({
         url: '/orders/rate',
         method: 'POST',
@@ -64,7 +65,7 @@ $(document).on('submit', '#ratingForm', function (e) {
                 showConfirmButton: false
             }).then(() => {
 
-                location.reload(); // da nestane button za ocjenjivanje
+              $(`.rate-btn-${bookId}`).addClass('disabled-btn');
             });
         },
         error: function (xhr) {

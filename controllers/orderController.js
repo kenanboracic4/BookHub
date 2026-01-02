@@ -18,8 +18,8 @@ module.exports = {
                     userId: orderInfo.sellerId, 
                     senderId: currentUserId,    
                     type: 'Narudžba',
-                    content: `Korisnik ${buyerName} je naručio ${orderInfo.bookCount} knjigu/e od vas.`,
-                    link: `/orders/details/${orderInfo.id}`
+                    content: `Korisnik ${buyerName} je naručio ${orderInfo.bookCount} knjigu/e od vas. Možete vidjeti narudžbu u mojem profilu.`,
+                    link: '/orders/sales'
                 });
             }
 
@@ -35,6 +35,7 @@ module.exports = {
     async renderOrdersPage(req, res) {
 
         const orders = await orderService.getPurchasesWithItems(req.user.id);
+        
 
         console.log("orders:", orders);
         res.render('orders', {
@@ -121,6 +122,8 @@ module.exports = {
             content: ` Dobili ste ocjenu  ${bookRating} na Vašu knjigu`,
             link: `/books/details/${bookId}`
         })
+
+        await orderService.updateOrderItem(bookId, userId, bookRating);
 
 
          return res.status(200).json({

@@ -188,7 +188,8 @@
                                                 <% } %>
                                         </div>
                                     </div>
-
+                                    
+                                    <% if(user.id===profileUser.id) { %>
                                     <div class="up-book-actions">
                                         <a href="/books/edit/<%= book.id %>" class="up-action-btn up-btn-modify">
                                             <i class="fa fa-pen"></i> Uredi
@@ -197,6 +198,7 @@
                                             <i class="fa fa-trash"></i> Obriši
                                         </button>
                                     </div>
+                                    <% } %>
                                 </div>
 
                                 <% }) %>

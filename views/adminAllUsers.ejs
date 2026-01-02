@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ba">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Korisnici</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="/stylesheets/adminAllUsers.css">
+    <link rel="stylesheet" href="/stylesheets/footer.css">
+    <link rel="stylesheet" href="/stylesheets/header.css">
+</head>
+<body>
+    <% include partials/header %>
+    <div class="admin-main-wrapper">
+        <div class="table-container">
+            <table class="simple-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Ime</th>
+                        <th>PrezIme</th>
+                        <th>Uloga</th>
+                        <th class="text-right">AkcIja</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% users.forEach((user, index) => { %>
+                    <tr>
+                        <td class="font-bold"><%= index + 1 %></td>
+                        <td><%= user.firstName %></td>
+                        <td><%= user.lastName %></td>
+                        <td><%= user.role %></td>
+                        <td class="text-right">
+                            <div class="actions">
+                                <a class="action-link archive">Arhiviraj</a>
+                                <button class="action-link block">Blokiraj</button>
+                                <button class="action-link status">Status</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <% include partials/footer %>
+</body>
+</html>

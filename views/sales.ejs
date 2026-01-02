@@ -25,7 +25,7 @@
                 <div class="ord-list">
                     <% if (orders && orders.length> 0) { %>
                         <% orders.forEach(order=> { %>
-                           <div class="ord-card <%= order.status === 'ZAVRŠENO' ? 'is-finished' : '' %>">
+                            <div class="ord-card <%= order.status === 'ZAVRŠENO' ? 'is-finished' : '' %>">
                                 <div class="ord-card-header">
                                     <span class="ord-id">ID: #ORD-<%= order.id %></span>
                                     <span class="ord-date">
@@ -68,22 +68,28 @@
                                             </div>
 
                                             <div class="ord-actions">
-                                                <% if(order.status==='Na čekanju' ) { %>
+                                                <% if(order.status==='Na čekanju' || order.status==='NA ČEKANJU' ) { %>
                                                     <button class="ord-btn ord-accept-btn" data-id="<%= order.id %>"
                                                         style="background-color: #27ae60; color: white;">
                                                         <i class="fa-solid fa-check"></i> Prihvati
                                                     </button>
-
                                                     <button class="ord-btn ord-reject-btn" data-id="<%= order.id %>"
                                                         style="background-color: #e74c3c; color: white;">
                                                         <i class="fa-solid fa-xmark"></i> Odbij
                                                     </button>
-                                                    <% } else if(order.status==='PRIHVAĆENO' ) { %>
+                                                    <% } else if(order.status==='PRIHVAĆENO' ||
+                                                        order.status==='prihvaćeno' ) { %>
                                                         <button class="finish-order-btn" data-id="<%= order.id %>">
-                                                            <i class="fa-solid fa-check"></i> Završi narudžbu </button>
-                                                        <button class="ord-btn ord-btn-contact">
-                                                            <i class="fa-regular fa-envelope"></i>Kontaktiraj kupca</button>
-                                                        <% } %>
+                                                            <i class="fa-solid fa-check"></i> Završi narudžbu
+                                                        </button>
+
+                                                        <% if (order.items && order.items.length> 0) { %>
+                                                            <a href="/chat/inbox/<%= order.items[0].bookId %>/<%= order.buyerId %>"
+                                                                class="ord-btn ord-btn-contact">
+                                                                <i class="fa-regular fa-envelope"></i> Kontaktiraj kupca
+                                                            </a>
+                                                            <% } %>
+                                                                <% } %>
                                             </div>
                                 </div>
                             </div>

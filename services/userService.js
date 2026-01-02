@@ -111,6 +111,9 @@ module.exports = {
     },
     async updateUserRole(userId) {
         return await userDao.updateUserRole(userId);
+    },
+    async getAllUsers() {
+        return await userDao.getAllUsers();
     }
 
 };

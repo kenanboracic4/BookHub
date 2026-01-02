@@ -57,7 +57,7 @@
 
             <div class="up-input-group">
                 <label for="genre">Žanr</label>
-                <select id="genre" name="genreId" class="up-select-field" required>
+                <select id="genre" name="genreId" class="up-select-field" >
                     <option value="" disabled selected>Odaberi žanr</option>
                     <% genres.forEach(function(genre) { %>
                         <option value="<%= genre.id %>"><%= genre.name %></option>
@@ -67,7 +67,7 @@
 
             <div class="up-input-group">
                 <label for="language">Jezik</label>
-                <select id="language" name="languageId" class="up-select-field" required>
+                <select id="language" name="languageId" class="up-select-field" >
                     <option value="" disabled selected>Odaberi jezik</option>
                     <% languages.forEach(function(language) { %>
                         <option value="<%= language.id %>"><%= language.name %></option>
@@ -77,7 +77,7 @@
 
             <div class="up-input-group">
                 <label for="condition">Stanje</label>
-                <select id="condition" name="conditionId" class="up-select-field" required>
+                <select id="condition" name="conditionId" class="up-select-field" >
                     <option value="" disabled selected>Novo/Polovno</option>
                     <% conditions.forEach(function(condition) { %>
                         <option value="<%= condition.id %>"><%= condition.name %></option>
@@ -87,7 +87,7 @@
 
             <div class="up-input-group">
                 <label for="location">Grad</label>
-                <select id="location" name="locationId" class="up-select-field" required>
+                <select id="location" name="locationId" class="up-select-field" >
                     <option value="" disabled selected>Odaberi lokaciju</option>
                     <% locations.forEach(function(location) { %>
                         <option value="<%= location.id %>"><%= location.name %></option>
