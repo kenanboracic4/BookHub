@@ -220,6 +220,26 @@ module.exports = {
             where: { id: bookId }
         }
         );
+    },
+    async createGenre(genreData){
+        return await GenresLK.create({
+            name: genreData
+        });
+    },
+    async createLanguage(languageData){
+        return await LanguagesLK.create({
+            name: languageData
+        });
+    },
+    async createLocation(locationData){
+        return await LocationsLK.create({
+            name: locationData
+        });
+    },
+    async createCondition(conditionData){
+        return await BookConditionsLK.create({
+            name: conditionData
+        });
     }
 
 };
