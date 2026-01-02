@@ -17,7 +17,7 @@
                     <div class="up-header-row">
                         <div class="up-user-info">
                             <div class="up-avatar-wrapper">
-                                <img src="<%= user.profileImage || '/images/noProfileImage.png' %>" alt="Profile"
+                                <img src="<%= targerUser.profileImage || '/images/noProfileImage.png' %>" alt="Profile"
                                     class="up-avatar" id="avatar-preview">
                                 <label for="profileImageInput" class="up-avatar-overlay">
                                     <i class="fa-solid fa-camera"></i>
@@ -27,18 +27,18 @@
 
                             <div class="up-user-details">
                                 <h1>
-                                    <%= user.firstName %>
-                                        <%= user.lastName %>
+                                    <%= targerUser.firstName %>
+                                        <%= targerUser.lastName %>
                                 </h1>
                                 <p><i class="fa-solid fa-envelope"></i>
-                                    <%= user.email %>
+                                    <%= targerUser.email %>
                                 </p>
                                 <p style="font-size: 0.8rem; margin-top: 5px; color: #94a3b8;">Kliknite na sliku za
                                     promjenu</p>
                             </div>
                         </div>
                         <div class="up-button-group">
-                            <a href="/user/profile/<%= user.id %>" class="up-btn up-btn-back">
+                            <a href="/targerUser/profile/<%= user.id %>" class="up-btn up-btn-back">
                                 <i class="fa-solid fa-arrow-left"></i> Nazad
                             </a>
                             <button type="submit" class="up-btn up-btn-save">
@@ -50,18 +50,27 @@
                     <div class="up-data-grid">
                         <div class="up-input-group">
                             <label>Status</label>
-                            <select id="status" name="status" class="up-select-field" disabled>
-                                <option value="Aktivan" <%=user.status==='Aktivan' ? 'selected' : '' %>>Aktivan</option>
+                            <% if(user.isAdmin){ %>
+                            <select id="status" name="status" class="up-select-field" >
+                                  <option value="Aktivan" <%=targerUser.status==='Aktivan' ? 'selected' : '' %>>Aktivan</option>
+                                <option value="Neaktivan" <%=targerUser.status==='Neaktivan' ? 'selected' : '' %>>Neaktivan
+                                </option>
+                            </select>
+                                <% } else { %>
+                                    <select id="status" name="status" class="up-select-field" disabled>
+                                          <option value="Aktivan" <%=user.status==='Aktivan' ? 'selected' : '' %>>Aktivan</option>
                                 <option value="Neaktivan" <%=user.status==='Neaktivan' ? 'selected' : '' %>>Neaktivan
                                 </option>
                             </select>
+                                        <% } %>
+                              
                         </div>
 
                         <div class="up-input-group">
                             <label>Uloga</label>
                             <select id="role" name="role" class="up-select-field" disabled>
-                                <option value="Kupac" <%=user.role==='Kupac' ? 'selected' : '' %>>Kupac</option>
-                                <option value="Prodavač" <%=user.role==='Prodavač' ? 'selected' : '' %>>Prodavač
+                                <option value="Kupac" <%=targerUser.role==='Kupac' ? 'selected' : '' %>>Kupac</option>
+                                <option value="Prodavač" <%=targerUser.role==='Prodavač' ? 'selected' : '' %>>Prodavač
                                 </option>
                             </select>
                         </div>
@@ -69,7 +78,7 @@
                             <label><i class="fa-solid fa-location-dot"></i> Lokacija</label>
                             <select id="location" name="location" class="up-select-field">
                                 <% locations.forEach(function(location) { %>
-                                    <option value="<%= location.id %>" <%=(user.location && user.location.id ===
+                                    <option value="<%= location.id %>" <%=(targerUser.location && targerUser.location.id ===
                                         location.id) ? 'selected' : '' %>>
                                         <%= location.name %>
                                     </option>
@@ -82,7 +91,7 @@
                             <label><i class="fa-solid fa-tags"></i> Žanrovi (CTRL + klik)</label>
                             <select name="genreIds[]" multiple class="up-select-field up-select-multiple">
                                 <% genres.forEach(function(genre) { %>
-                                    <option value="<%= genre.id %>" <%=(user.Genres && user.Genres.some(g=> g.id ===
+                                    <option value="<%= genre.id %>" <%=(targerUser.Genres && targerUser.Genres.some(g=> g.id ===
                                         genre.id)) ? 'selected' : '' %>>
                                         <%= genre.name %>
                                     </option>
@@ -94,7 +103,7 @@
                             <label><i class="fa-solid fa-language"></i> Jezici (CTRL + klik)</label>
                             <select name="languageIds[]" multiple class="up-select-field up-select-multiple">
                                 <% languages.forEach(function(lang) { %>
-                                    <option value="<%= lang.id %>" <%=(user.Languages && user.Languages.some(l=> l.id
+                                    <option value="<%= lang.id %>" <%=(targerUser.Languages && targerUser.Languages.some(l=> l.id
                                         === lang.id)) ? 'selected' : '' %>>
                                         <%= lang.name %>
                                     </option>
@@ -104,11 +113,11 @@
 
                         <div class="up-input-group up-bio-full">
                             <label>Biografija</label>
-                            <textarea name="bio" rows="5" class="up-textarea-field"><%= user.bio %></textarea>
+                            <textarea name="bio" rows="5" class="up-textarea-field"><%= targerUser.bio %></textarea>
                         </div>
 
                         <div class="up-separator up-bio-full">
-                            <span>Promjenašifre:</span>
+                            <span>Promjena šifre:</span>
                         </div>
 
                         <div class="up-input-group">

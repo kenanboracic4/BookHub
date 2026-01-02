@@ -24,7 +24,7 @@ module.exports = {
                 return;
             }
 
-            const user = await userService.registerUser({
+            await userService.registerUser({
                 firstName,
                 lastName,
                 email,
@@ -102,7 +102,7 @@ module.exports = {
 
 
             console.error(error);
-            res.status(500).send('Došlo je do greške na serveru.');
+            return res.status(500).send('Došlo je do greške na serveru.');
         }
 
     },
@@ -147,6 +147,11 @@ module.exports = {
     async renderUserProfileEditPage(req, res) {
         try {
             const id = req.params.id;
+            
+            const isAdmin = await userService.findUserDataById(parseInt(req.user.id));
+            if(req.user.id != id && isAdmin.role != 'Admin'){
+                return res.status(401).send('Niste ovlašćeni za uređivanje korisnika.');
+            }
             const user = await userService.findUserDataById(parseInt(id));
             const userBooks = await userService.getUserBooks(id);
             const genres = await userService.getAllGenres();
@@ -158,7 +163,7 @@ module.exports = {
             }
 
             res.render('userProfileEdit', {
-                user: user,
+                targerUser: user,
                 userBooks: userBooks,
                 genres: genres,
                 languages: languages,

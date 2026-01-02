@@ -114,6 +114,9 @@ module.exports = {
     },
     async getAllUsers() {
         return await userDao.getAllUsers();
+    },
+    async archiveUser(userId){
+        return await userDao.archiveUser(userId);
     }
 
 };

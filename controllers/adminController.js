@@ -14,4 +14,20 @@ module.exports  ={
             users: users
         });
     },
+
+    async archiveUser(req,res){
+        try{
+            const userId = req.params.id;
+            await userService.archiveUser(userId);
+            res.status(200).json({
+                success: true,
+                message: 'Korisnik uspješno arhiviran.'
+            })
+        }catch(error){
+            res.status(500).json({
+                success: false,
+                message: 'Greška pri arhiviranju korisnika.'
+            })
+        }
+    }
 }

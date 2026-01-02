@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const cartService = require('../services/cartService');
+const userService = require('../services/userService');
 
 
 const verifyToken = async (req, res, next) => { // 
@@ -34,10 +35,10 @@ const setUserContext = async (req, res, next) => {
         
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-       
+        const isAdmin = await userService.findUserDataById(decoded.id);
         const cartCount = await cartService.getCartCount(decoded.id);
 
-        // 3. Dodaj count u objekt
+        decoded.isAdmin = isAdmin.role === 'Admin' ? true : false;
         decoded.cartCount = cartCount;
 
         res.locals.user = decoded; // za ejs fajlove

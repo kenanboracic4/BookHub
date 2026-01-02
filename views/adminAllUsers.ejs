@@ -24,6 +24,7 @@
                             <th>#</th>
                             <th>Ime</th>
                             <th>Prezime</th>
+                            <th>ID</th>
                             <th class="text-center">Akcija</th>
                         </tr>
                     </thead>
@@ -34,12 +35,15 @@
                             <td class="font-bold"><%= index + 1 %></td>
                             <td><%= user.firstName %></td>
                             <td><%= user.lastName %></td>
+                            <td><%= user.id %></td>
                             <td class="text-center">
                                 <div class="actions">
                                     
-                                    <button class="action-link archive">Arhiviraj</button>
+                                    <button class="action-link archive" data-id="<%= user.id %>">Arhiviraj</button>
                                     <button class="action-link block">Blokiraj</button>
-                                    <button class="action-link status">Status</button>
+                                    <a href="/user/profile/<%= user.id %>/edit" class="action-link status">Status</a>
+                                    
+                                    <a href="/user/profile/<%= user.id %>/edit" class="action-link"> Profil</a>
                                 </div>
                             </td>
                         </tr>
@@ -59,6 +63,7 @@
                             <th>#</th>
                             <th>Ime</th>
                             <th>Prezime</th>
+                            <th>ID</th>
                             <th class="text-center">Akcija</th>
                         </tr>
                     </thead>
@@ -69,11 +74,15 @@
                             <td class="font-bold"><%= index + 1 %></td>
                             <td><%= user.firstName %></td>
                             <td><%= user.lastName %></td>
+                            <td><%= user.id %></td>
                             <td class="text-center">
                                 <div class="actions">
-                                    <button class="action-link archive">Arhiviraj</button>
+                                <% if(user.status != 'Arhiviran') { %>
+                                    <button class="action-link archive" data-id="<%= user.id %>">Arhiviraj</button>
+                                    <% } %>
                                     <button class="action-link block">Blokiraj</button>
-                                    <button class="action-link status">Status</button>
+                                    <a href="/user/profile/<%= user.id %>/edit" class="action-link status"> Status</a>
+                                    <a href="/user/profile/<%= user.id %>/edit" class="action-link"> Profil</a>
                                 </div>
                             </td>
                         </tr>
@@ -86,5 +95,8 @@
     </div>
 </div>
     <% include partials/footer %>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="/javascripts/adminUsers.js"></script>
 </body>
 </html>

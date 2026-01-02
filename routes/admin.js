@@ -6,4 +6,6 @@ const adminController = require('../controllers/adminController');
 router.get('/', adminController.renderAdminPage);
 router.get('/users', adminController.renderAllUsersPage);
 
+router.put('/user/archive/:id', adminController.archiveUser);
+
 module.exports = router;

@@ -5,9 +5,7 @@ const userController = require('../controllers/userController');
 const verifyToken = require('../middleware/auth').verifyToken;
 const upload = require('../middleware/multer');
 
-router.get('/', function(req, res, next) {
-    res.render('userProfile');
-});
+
 
 router.get('/register', userController.renderRegisterPage);
 router.get('/login', userController.renderLoginPage);

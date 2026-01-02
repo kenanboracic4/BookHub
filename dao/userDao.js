@@ -59,37 +59,37 @@ module.exports = {
         return user;
     },
 
-async getUserBooks(id, filters = {}) {
-    const { status, date, price, title } = filters;
-    let whereClause = { sellerId: id };
+    async getUserBooks(id, filters = {}) {
+        const { status, date, price, title } = filters;
+        let whereClause = { sellerId: id };
 
-    
-    if (status && status !== 'all') {
-        whereClause.status = (status === 'prodato') ? 'Prodano' : 'Aktivno';
-    }
 
-    let orderClause = [];
+        if (status && status !== 'all') {
+            whereClause.status = (status === 'prodato') ? 'Prodano' : 'Aktivno';
+        }
 
-  
-    if (price) {
-        orderClause.push(['price', price === 'price-asc' ? 'ASC' : 'DESC']);
-    } 
-    else if (title) {
-        orderClause.push(['title', title === 'title-asc' ? 'ASC' : 'DESC']);
-    } 
-    else if (date) {
-        orderClause.push(['createdAt', date === 'date-asc' ? 'ASC' : 'DESC']);
-    } 
-    else {
-        
-        orderClause.push(['createdAt', 'DESC']);
-    }
+        let orderClause = [];
 
-    return await Book.findAll({
-        where: whereClause,
-        order: orderClause
-    });
-},
+
+        if (price) {
+            orderClause.push(['price', price === 'price-asc' ? 'ASC' : 'DESC']);
+        }
+        else if (title) {
+            orderClause.push(['title', title === 'title-asc' ? 'ASC' : 'DESC']);
+        }
+        else if (date) {
+            orderClause.push(['createdAt', date === 'date-asc' ? 'ASC' : 'DESC']);
+        }
+        else {
+
+            orderClause.push(['createdAt', 'DESC']);
+        }
+
+        return await Book.findAll({
+            where: whereClause,
+            order: orderClause
+        });
+    },
 
     async updateUser(userId, updateData, genreIds, languageIds) {
         const user = await Users.findByPk(userId);
@@ -132,13 +132,24 @@ async getUserBooks(id, filters = {}) {
     },
 
     async getAllUsers() {
-    return Users.findAll({
-        where: {
-            role: {
-                [Op.in]: ["Prodavač", "Kupac"]
+        return Users.findAll({
+            where: {
+                role: {
+                    [Op.in]: ["Prodavač", "Kupac"]
+                }
             }
-        }
-    });
-}
+        });
+    },
+    async archiveUser(userId) {
+        return await Users.update(
+            { status: 'Arhiviran' },
+            {
+                where: {
+                    id: userId
+                }
+            }
+        );
+    }
+
 
 };
