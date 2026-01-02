@@ -11,38 +11,80 @@
 </head>
 <body>
     <% include partials/header %>
-    <div class="admin-main-wrapper">
-        <div class="table-container">
-            <table class="simple-table">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Ime</th>
-                        <th>PrezIme</th>
-                        <th>Uloga</th>
-                        <th class="text-right">AkcIja</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <% users.forEach((user, index) => { %>
-                    <tr>
-                        <td class="font-bold"><%= index + 1 %></td>
-                        <td><%= user.firstName %></td>
-                        <td><%= user.lastName %></td>
-                        <td><%= user.role %></td>
-                        <td class="text-right">
-                            <div class="actions">
-                                <a class="action-link archive">Arhiviraj</a>
-                                <button class="action-link block">Blokiraj</button>
-                                <button class="action-link status">Status</button>
-                            </div>
-                        </td>
-                    </tr>
-                    <% }) %>
-                </tbody>
-            </table>
+   <div class="admin-main-wrapper">
+    <div class="table-sections-container">
+        
+        <div class="section-group">
+             <% const sellers = users.filter(u => u.role === 'Prodavač'); %>
+            <h2 class="table-title"> Prodavači <span class="badge"><%= sellers.length %></span></h2>
+            <div class="table-container">
+                <table class="simple-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Ime</th>
+                            <th>Prezime</th>
+                            <th class="text-center">Akcija</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                       
+                        <% sellers.forEach((user, index) => { %>
+                        <tr>
+                            <td class="font-bold"><%= index + 1 %></td>
+                            <td><%= user.firstName %></td>
+                            <td><%= user.lastName %></td>
+                            <td class="text-center">
+                                <div class="actions">
+                                    
+                                    <button class="action-link archive">Arhiviraj</button>
+                                    <button class="action-link block">Blokiraj</button>
+                                    <button class="action-link status">Status</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+            </div>
         </div>
+
+       <div class="section-group">
+        <% const buyers = users.filter(u => u.role === 'Kupac'); %>
+            <h2 class="table-title"> Kupci<span class="badge"><%= buyers.length %></span></h2>
+            <div class="table-container">
+                <table class="simple-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Ime</th>
+                            <th>Prezime</th>
+                            <th class="text-center">Akcija</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                        <% buyers.forEach((user, index) => { %>
+                        <tr>
+                            <td class="font-bold"><%= index + 1 %></td>
+                            <td><%= user.firstName %></td>
+                            <td><%= user.lastName %></td>
+                            <td class="text-center">
+                                <div class="actions">
+                                    <button class="action-link archive">Arhiviraj</button>
+                                    <button class="action-link block">Blokiraj</button>
+                                    <button class="action-link status">Status</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
     </div>
+</div>
     <% include partials/footer %>
 </body>
 </html>

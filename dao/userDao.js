@@ -132,11 +132,13 @@ async getUserBooks(id, filters = {}) {
     },
 
     async getAllUsers() {
-        return Users.findAll({
-            where: {
-                role: "Prodavač" || "Kupac"
+    return Users.findAll({
+        where: {
+            role: {
+                [Op.in]: ["Prodavač", "Kupac"]
             }
-        });
-    }
+        }
+    });
+}
 
 };
