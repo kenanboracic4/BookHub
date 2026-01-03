@@ -118,4 +118,21 @@ module.exports  ={
             })
         }
     },
+    async handleUpdateCatalog(req,res){
+        try{
+            const type = req.params.type;
+            const id = req.params.id;
+            const data = req.body;
+            await bookService.updateCatalog(type, id, data);
+            res.status(200).json({
+                success: true,
+                message: 'Uspješno ažurirano.'
+            })
+        }catch(error){
+            res.status(500).json({
+                success: false,
+                message: 'Greška pri ažuriranju stavka.'
+            })
+        }
+    }
 }

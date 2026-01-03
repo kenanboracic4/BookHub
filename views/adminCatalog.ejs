@@ -22,7 +22,7 @@
                     <thead>
                         <tr>
                             <th>Naziv</th>
-                            <th class="text-right">Akcija</th>
+                            <th class="text-right"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -30,6 +30,7 @@
                         <tr>
                             <td><%= g.name %></td>
                             <td class="text-right">
+                                <button data-id="<%= g.id %>" data-type="genre" class="btn-icon-only btn-edit"><i class="far fa-edit"></i></button>
                                 <button data-id="<%= g.id %>" data-type="genre" class="btn-icon-only btn-delete"><i class="fa-solid fa-trash"></i></button>
                             </td>
                         </tr>
@@ -50,7 +51,7 @@
                     <thead>
                         <tr>
                             <th>Naziv</th>
-                            <th class="text-right">Akcija</th>
+                            <th class="text-right"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -58,6 +59,7 @@
                         <tr>
                             <td><%= l.name %></td>
                             <td class="text-right">
+                                <button data-id="<%=l.id %>" data-type="language" class="btn-icon-only btn-edit"><i class="far fa-edit"></i></button>
                                 <button data-id="<%=l.id %>" data-type="language" class="btn-icon-only btn-delete"><i class="fa-solid fa-trash"></i></button>
                             </td>
                         </tr>
@@ -78,7 +80,7 @@
                     <thead>
                         <tr>
                             <th>Naziv</th>
-                            <th class="text-right">Akcija</th>
+                            <th class="text-right"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -86,6 +88,7 @@
                         <tr>
                             <td><%= loc.name %></td>
                             <td class="text-right">
+                                <button data-id="<%= loc.id %>" data-type="location" class="btn-icon-only btn-edit"><i class="far fa-edit"></i></button>
                                 <button data-id="<%= loc.id %>" data-type="location" class="btn-icon-only btn-delete"><i class="fa-solid fa-trash"></i></button>
                             </td>
                         </tr>
@@ -100,13 +103,13 @@
         </section>
 
         <section class="catalog-card">
-            <h3><i class="fa-solid fa-star"></i> Stanje knjige</h3>
+            <h3><i class="fa-solid fa-book"></i>Stanje knjige</h3>
             <div class="catalog-table-wrapper">
                 <table class="simple-table">
                     <thead>
                         <tr>
                             <th>Naziv</th>
-                            <th class="text-right">Akcija</th>
+                            <th class="text-right"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -114,6 +117,7 @@
                         <tr>
                             <td><%= c.name %></td>
                             <td class="text-right">
+                                <button data-id="<%= c.id %>" data-type="condition" class="btn-icon-only btn-edit"><i class="far fa-edit"></i></button>
                                 <button data-id="<%= c.id %>" data-type="condition" class="btn-icon-only btn-delete"><i class="fa-solid fa-trash"></i></button>
                             </td>
                         </tr>

@@ -247,3 +247,69 @@ $(document).on('click', '.btn-delete', function (e) {
         }
     });
 });
+
+
+// edit
+$(document).on('click', '.btn-edit', function (e) {
+    e.preventDefault();
+    
+    const $btn = $(this);
+    const $row = $btn.closest('tr');
+    const $nameCell = $row.find('td:first-child');
+    const id = $btn.data('id');
+    const type = $btn.data('type');
+
+  
+    const isEditing = $row.hasClass('editing-mode');
+
+    if (!isEditing) {
+       
+        const currentName = $nameCell.text().trim();
+        $row.addClass('editing-mode');
+
+     
+        $nameCell.html(`<input type="text" class="edit-input" value="${currentName}" style="width: 100%; padding: 4px; border: 1px solid #2563eb; border-radius: 4px;">`);
+
+      
+        $btn.html('<i class="fa-solid fa-check" style="color: #059669;"></i>');
+        
+      
+        $nameCell.find('input').focus();
+
+    } else {
+       
+        const newName = $nameCell.find('input').val().trim();
+
+        if (!newName) {
+            Swal.fire('Greška!', 'Polje ne smije biti prazno.', 'error');
+            return;
+        }
+
+        $.ajax({
+            url: `/admin/catalog/${type}/${id}`,
+            method: 'PUT', 
+            contentType: 'application/json',
+            data: JSON.stringify({ name: newName }),
+            success: function(response) {
+                if (response.success) {
+                    $nameCell.text(newName);
+                    $row.removeClass('editing-mode');
+                    $btn.html('<i class="far fa-edit"></i>'); 
+
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Spremljeno!',
+                        toast: true,
+                        position: 'bottom-end',
+                        timer: 1500,
+                        showConfirmButton: false
+                    });
+                }
+            },
+            error: function(xhr) {
+                console.error("Greška sa servera:", xhr.status);
+                Swal.fire('Greška!', 'Server nije prihvatio izmjenu.', 'error');
+            }
+        });
+    }
+});

@@ -159,5 +159,16 @@ module.exports = {
         }else if(type === 'condition'){
             return await bookDao.deleteCondition(id);
         }
+    },
+    async updateCatalog(type, id, data){
+        if(type === 'genre'){
+            return await bookDao.updateGenre(id, data);
+        }else if(type === 'language'){
+            return await bookDao.updateLanguage(id, data);
+        }else if(type === 'location'){
+            return await bookDao.updateLocation(id, data);
+        }else if(type === 'condition'){
+            return await bookDao.updateCondition(id, data);
+        }
     }
 };

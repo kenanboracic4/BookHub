@@ -261,5 +261,33 @@ module.exports = {
             where: { id: id }
         });
     },
+    async updateGenre(id, data){
+        return await GenresLK.update({
+            name: data.name
+        }, {
+            where: { id: id }
+        });
+    },
+    async updateLanguage(id, data){
+        return await LanguagesLK.update({
+            name: data.name
+        }, {
+            where: { id: id }
+        });
+    },
+    async updateLocation(id, data){
+        return await LocationsLK.update({
+            name: data.name
+        }, {
+            where: { id: id }
+        });
+    },
+    async updateCondition(id, data){
+        return await BookConditionsLK.update({
+            name: data.name
+        }, {
+            where: { id: id }
+        });
+    },
 
 };

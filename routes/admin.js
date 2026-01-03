@@ -13,6 +13,7 @@ router.post('/catalog/location', adminController.handleAddLocation);
 router.post('/catalog/condition', adminController.handleAddCondition);
 
 router.put('/user/archive/:id', adminController.archiveUser);
+router.put('/catalog/:type/:id', adminController.handleUpdateCatalog);
 
 router.delete('/catalog/:type/:id', adminController.handleDeleteCatalog);
 
