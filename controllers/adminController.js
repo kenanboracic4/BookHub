@@ -2,6 +2,7 @@
 const userService = require('../services/userService');
 const bookService = require('../services/bookService');
 const orderService = require('../services/orderService');
+const AdminService = require('../services/adminService');
 
 module.exports  ={
     async renderAdminPage(req,res){
@@ -158,6 +159,42 @@ module.exports  ={
                 success: false,
                 message: 'Greška pri prikazivanju statistike.'
             })
+        }
+    },
+
+    async renderAdminCommunicationPage(req,res){
+        try{
+            res.render('adminMessages');
+        }catch(error){
+            res.status(500).json({
+                success: false,
+                message: 'Greška pri prikazivanju komunikacije.'
+            })
+        }
+    },
+
+    async sendBroadcast(req, res) {
+        try {
+            const adminId = req.user.id; 
+            const { content } = req.body;
+            
+           
+            const io = req.app.get('io'); 
+
+            console.log("--- DEBUG START ---");
+        console.log("Admin ID:", adminId);
+        console.log("Sadržaj:", content);
+            const count = await AdminService.broadcastMessage(adminId, content, io);
+
+            res.status(200).json({ 
+                success: true, 
+                message: `Poruka poslana za ${count} korisnika.` 
+            });
+        } catch (error) {
+            console.error("--- ADMIN BROADCAST ERROR ---");
+        console.error(error); 
+        console.log("-----------------------------");
+            res.status(500).json({ success: false, error: error.message });
         }
     }
 }

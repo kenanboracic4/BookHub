@@ -44,14 +44,14 @@ module.exports = {
             { model: Book, as: 'book', attributes: ['title', 'price'] },
             { model: User, as: 'buyer', attributes: ['firstName', 'lastName'] },
             { model: User, as: 'seller', attributes: ['firstName', 'lastName'] },
-            // DODANO OVO: Uključujemo poruke da vidimo ima li nepročitanih
+           
             { 
                 model: Message,
                 as: 'messages',
-                required: false, // Left join (da vrati konverzaciju iako nema nepročitanih poruka)
+                required: false, 
                 where: {
-                    isRead: false,          // Samo nepročitane
-                    senderId: { [Op.ne]: userId } // Koje NIJE poslao trenutni user
+                    isRead: false,          
+                    senderId: { [Op.ne]: userId } 
                 }
             }
         ],
@@ -64,12 +64,24 @@ module.exports = {
         }, {
             where: {
                 conversationId: cconversationId
-                // senderId: { [Op.ne]: currentUserId }
+              
             }
         })
-    }
-
-
-
-
+    },
+   async findOrCreateSystemConversation(userId, adminId) {
+    return await Conversation.findOrCreate({
+        where: {
+            [Op.or]: [
+                { buyerId: userId, sellerId: adminId },
+                { buyerId: adminId, sellerId: userId }
+            ],
+            bookId: null // Sada će baza ovo prihvatiti
+        },
+        defaults: { 
+            buyerId: userId, 
+            sellerId: adminId, 
+            bookId: null 
+        }
+    });
+}
 };

@@ -25,7 +25,8 @@ var server = http.createServer(app);
  * Socket server
  */
 const chatSocket = require('../sockets/chatSocket');
-chatSocket(server); // Proslijediš server našoj funkciji iz Koraka 1
+const  io = chatSocket(server); // Proslijediš server našoj funkciji iz Koraka 1
+app.set('io', io);
 /**
  * Listen on provided port, on all network interfaces.
  */

@@ -149,6 +149,13 @@ module.exports = {
                 }
             }
         );
+    },
+    async findAllExcept(adminId) {
+        return await Users.findAll({
+            where: {
+                id: { [Op.ne]: adminId }
+            }
+        });
     }
 
 

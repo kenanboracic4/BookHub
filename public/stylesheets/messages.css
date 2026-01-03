@@ -289,6 +289,22 @@
     transform: translateY(-1px);
 }
 
+.conversation-box.system-conversation {
+    background-color: #fff4f4;
+    border-left: 4px solid #d9534f; 
+}
+
+
+.conversation-box.system-conversation.active {
+    background-color: #fce8e8;
+    border-left: 4px solid #c9302c;
+}
+
+
+.system-conversation .system-tag {
+    color: #d9534f;
+    font-weight: 600;
+}
 
 @media (max-width: 768px) {
     .chat-page-wrapper {

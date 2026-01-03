@@ -106,10 +106,10 @@ body {
     color: rgb(12, 12, 73);
     font-weight: 600;
 }
-/* Dashboard Grid System */
+
 .stats-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr; /* Dva stuba */
+    grid-template-columns: 1fr 1fr; 
     gap: 25px;
     margin-bottom: 40px;
 }
@@ -126,13 +126,11 @@ body {
 
 .chart-container {
     position: relative;
-    height: 250px; /* Fiksna visina za grafikone */
+    height: 250px; 
     width: 100%;
 }
 
-@media (max-width: 900px) {
-    
-}
+
 
 
 

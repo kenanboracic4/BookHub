@@ -15,37 +15,92 @@
 
     <% include partials/header %>
 
-     
-     <div class="chat-main-layout">
-            
-            <div class="conversations-sidebar">
-                <div class="sidebar-header">
-                    <h3>Poruke</h3>
-                    <span class="chat-badge"><%= conversations.length %> ukupno</span>
-                </div>
-                <div class="conv-scroll-area">
-                    <% conversations.forEach(conv => { %>
-                        <a href="/chat/inbox/<%= conv.id %>" class="conversation-box <%= conv.id == conversation.id ? 'active' : '' %>">
-                            <div class="img-wrapper">
-                                <img src="/images/noProfileImage.png" alt="Profil">
-                            </div>
-                            <div class="conversation-info">
-                                <div class="info-top">
-                                    <h4>
-                                        <%= user.id == conv.buyerId ? conv.seller.firstName : conv.buyer.firstName %>
-                                    </h4>
-                                    </div>
-                                <p><i class="fa-solid fa-book"></i>  <%= conv.book.title %></p>
-                            </div>
-                        </a>
-                    <% }) %>
-                    <% if(conversations.length == 0){ %>
-                        <span class="no-messages"">
-                            Još uvijek nemate nijednu konverzaciju.
-                        </span>
-                    <% } %>
-                </div>
+
+       <div class="chat-main-layout">
+        <div class="conversations-sidebar">
+            <div class="sidebar-header">
+                <h3>Poruke</h3>
+                <span class="chat-badge">
+                    <%= conversations.length %> ukupno
+                </span>
             </div>
+            <div class="conv-scroll-area">
+                <% conversations.forEach(conv => { %>
+                    <a href="/chat/inbox/<%= conv.id %>"
+                        class="conversation-box <%= (conversation && conv.id == conversation.id) ? 'active' : '' %>">
+                        <div class="img-wrapper">
+                            <img src="/images/noProfileImage.png" alt="Profil">
+                        </div>
+                        <div class="conversation-info">
+                            <div class="info-top">
+                                <h4>
+                                    <%= user.id == conv.buyerId ? conv.seller.firstName : conv.buyer.firstName %>
+                                </h4>
+                            </div>
+                            <div class="info-bottom">
+                                <% if (conv.book) { %>
+                                    <p>
+                                        <i class="fa-solid fa-book"></i>
+                                        <%= conv.book.title %>
+                                    </p>
+                                <% } else { %>
+                                    <p class="system-tag">
+                                        <i class="fa-solid fa-circle-info"></i> Administracija
+                                    </p>
+                                <% } %>
+                            </div>
+                        </div>
+                    </a>
+                <% }) %>
+
+                <% if(conversations.length == 0){ %>
+                    <span class="no-messages">Još uvijek nemate nijednu konverzaciju.</span>
+                <% } %>
+            </div>
+        </div>
+
+        <div class="chat-window">
+            <% if (conversation) { %>
+                <div class="chat-header">
+                    <div class="header-user-info">
+                        <img src="/images/noProfileImage.png" alt="Profil" class="nav-profile-img">
+                        <div class="user-details">
+                            <h4><%= user.id == conversation.buyerId ? conversation.seller.firstName : conversation.buyer.firstName %></h4>
+                            <% if (conversation.book) { %>
+                                <span><i class="fa-solid fa-book"></i> <%= conversation.book.title %></span>
+                            <% } else { %>
+                                <span class="system-text"><i class="fa-solid fa-shield-halved"></i> Sistemska komunikacija</span>
+                            <% } %>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="messages-container" id="messagesContainer">
+                    <% messages.forEach(msg => { %>
+                        <div class="message-wrapper <%= msg.senderId == user.id ? 'sent' : 'received' %>">
+                            <div class="message-content">
+                                <p><%= msg.content %></p>
+                                <span class="time"><%= new Date(msg.createdAt).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) %></span>
+                            </div>
+                        </div>
+                    <% }) %>
+                </div>
+
+                <form class="chat-input-area" id="chatForm">
+                    <input type="hidden" id="conversationId" value="<%= conversation.id %>">
+                    <input type="hidden" id="receiverId" value="<%= user.id == conversation.buyerId ? conversation.sellerId : conversation.buyerId %>">
+                    <input type="text" id="messageInput" placeholder="Napišite poruku..." required autocomplete="off">
+                    <button type="submit"><i class="fa-solid fa-paper-plane"></i></button>
+                </form>
+
+            <% } else { %>
+                <div class="no-chat-selected">
+                    <i class="fa-regular fa-comments"></i>
+                    <p>Odaberite konverzaciju da biste započeli dopisivanje.</p>
+                </div>
+            <% } %>
+        </div>
+    </div>
 
 
 

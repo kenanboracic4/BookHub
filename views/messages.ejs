@@ -27,14 +27,11 @@
                     </div>
                     <div class="conv-scroll-area">
                         <% conversations.forEach(conv=> { %>
+                            <% const isUnread=conv.messages && conv.messages.length> 0; %>
 
-                            <% 
-                            const isUnread=conv.messages && conv.messages.length> 0;
-                                %>
-
-                                <a href="/chat/inbox/<%= conv.id %>"
-                                    class="conv-link conversation-box <%= conv.id == conversation.id ? 'active' : '' %> <%= isUnread ? 'unread-conversation' : '' %>"
-                                    data-id="<%= conv.id %>">
+                                <a href="/chat/inbox/<%= conv.id %>" class="conv-link conversation-box 
+          <%= conversation && conv.id == conversation.id ? 'active' : '' %> 
+          <%= !conv.bookId ? 'system-conversation' : '' %>" data-id="<%= conv.id %>">
 
                                     <div class="img-wrapper">
                                         <img src="/images/noProfileImage.png" alt="Profil">
@@ -53,8 +50,12 @@
                                             </h4>
                                         </div>
                                         <p class="<%= isUnread ? 'unread-text' : '' %>">
-                                            <i class="fa-solid fa-book"></i>
-                                            <%= conv.book.title %>
+                                            <% if (conv.book) { %>
+                                                <i class="fa-solid fa-book"></i>
+                                                <%= conv.book.title %>
+                                                    <% } else { %>
+                                                        <i class="fa-solid fa-circle-info"></i> Administracija
+                                                        <% } %>
                                         </p>
                                     </div>
                                 </a>
@@ -63,48 +64,65 @@
                 </div>
 
                 <div class="messages-container">
-                    <div class="message-header">
-                        <div class="header-user-info">
-                            <img src="/images/noProfileImage.png" class="header-avatar" alt="User">
-                            <div class="text-details">
-                                <a>
-                                    <%= user.id==conversation.buyerId ? conversation.seller.firstName + ' ' +
-                                        conversation.seller.lastName : conversation.buyer.firstName + ' ' +
-                                        conversation.buyer.lastName %>
-                                </a>
-                                <h6><i class="fa-solid fa-book"></i>
-                                    <%= conversation.book.title %>
-                                </h6>
-                            </div>
-                        </div>
-                        <div class="message-header-actions">
-                            <a href="/books/details/<%= conversation.bookId %>" class="btn-book-details">Oglas</a>
-                        </div>
-                    </div>
-
-                    <div class="messages-list" id="messagesList">
-                        <% messages.forEach(message=> { %>
-                            <div class="message <%= message.senderId == user.id ? 'outgoing' : 'incoming' %>">
-                                <div class="msg-bubble">
-                                    <%= message.content %>
+                    <% if (conversation) { %>
+                        <div class="message-header">
+                            <div class="header-user-info">
+                                <img src="/images/noProfileImage.png" class="header-avatar" alt="User">
+                                <div class="text-details">
+                                    <a>
+                                        <%= user.id==conversation.buyerId ? conversation.seller.firstName + ' ' +
+                                            conversation.seller.lastName : conversation.buyer.firstName + ' ' +
+                                            conversation.buyer.lastName %>
+                                    </a>
+                                    <h6>
+                                        <% if (conversation.book) { %>
+                                            <i class="fa-solid fa-book"></i>
+                                            <%= conversation.book.title %>
+                                                <% } else { %>
+                                                    <i class="fa-solid fa-shield-halved"></i> Sistemska obavijest
+                                                    <% } %>
+                                    </h6>
                                 </div>
-                                <span class="msg-time">
-                                    <%= new Date(message.createdAt).toLocaleTimeString('en-US', { hour: '2-digit' ,
-                                        minute: '2-digit' }) %>
-                                </span>
                             </div>
-                            <% }) %>
-                    </div>
+                            <div class="message-header-actions">
+                                <% if (conversation.bookId) { %>
+                                    <a href="/books/details/<%= conversation.bookId %>"
+                                        class="btn-book-details">Oglas</a>
+                                    <% } %>
+                            </div>
+                        </div>
 
-                    <div class="chat-input-area">
-                        <form id="chatForm">
-                            <input type="text" placeholder="Napišite poruku..." id="messageInput" autocomplete="off">
-                            <button type="submit" class="send-btn">
-                                <i class="fa-solid fa-paper-plane"></i>
-                                <span>Pošalji</span>
-                            </button>
-                        </form>
-                    </div>
+                        <div class="messages-list" id="messagesList">
+                            <% messages.forEach(message=> { %>
+                                <div class="message <%= message.senderId == user.id ? 'outgoing' : 'incoming' %>">
+                                    <div class="msg-bubble">
+                                        <%= message.content %>
+                                    </div>
+                                    <span class="msg-time">
+                                        <%= new Date(message.createdAt).toLocaleTimeString('en-US', { hour: '2-digit' ,
+                                            minute: '2-digit' }) %>
+                                    </span>
+                                </div>
+                                <% }) %>
+                        </div>
+
+                        <div class="chat-input-area">
+                            <form id="chatForm">
+                                <input type="text" placeholder="Napišite poruku..." id="messageInput"
+                                    autocomplete="off">
+                                <button type="submit" class="send-btn">
+                                    <i class="fa-solid fa-paper-plane"></i>
+                                    <span>Pošalji</span>
+                                </button>
+                            </form>
+                        </div>
+                        <% } else { %>
+                            <div
+                                style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; color: #888;">
+                                <i class="fa-regular fa-comments" style="font-size: 3rem; margin-bottom: 10px;"></i>
+                                <p>Odaberite konverzaciju za početak razgovora.</p>
+                            </div>
+                            <% } %>
                 </div>
             </div>
         </div>
@@ -112,7 +130,7 @@
         <% include partials/footer %>
 
             <script>
-                const roomId = "<%= conversation.id %>";
+                const roomId = "<%= conversation ? conversation.id : '' %>";
                 const currentUserId = "<%= user.id %>";
             </script>
             <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
