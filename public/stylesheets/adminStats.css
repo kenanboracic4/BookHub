@@ -106,12 +106,41 @@ body {
     color: rgb(12, 12, 73);
     font-weight: 600;
 }
+/* Dashboard Grid System */
+.stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Dva stuba */
+    gap: 25px;
+    margin-bottom: 40px;
+}
 
+.chart-card {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    border: 1px solid #e5e7eb;
+    display: flex;
+    flex-direction: column;
+}
+
+.chart-container {
+    position: relative;
+    height: 250px; /* Fiksna visina za grafikone */
+    width: 100%;
+}
+
+@media (max-width: 900px) {
+    
+}
 
 
 
 @media (max-width: 1024px) {
     .table-sections-container { width: 95%; }
+    .stats-grid {
+        grid-template-columns: 1fr; 
+    }
 }
 
 @media (max-width: 600px) {

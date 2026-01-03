@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="/stylesheets/adminStats.css">
     <link rel="stylesheet" href="/stylesheets/footer.css">
     <link rel="stylesheet" href="/stylesheets/header.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
@@ -192,6 +194,49 @@
 
 
 
+            <div class="admin-main-wrapper">
+                <div class="table-sections-container">
+
+                    <div class="stats-grid">
+                        <div class="chart-card">
+                            <h2 class="table-title">Korisnici <span class="badge">
+                                    <%= users.length %>
+                                </span></h2>
+                            <div class="chart-container">
+                                <canvas id="usersChart"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="chart-card">
+                            <h2 class="table-title">Status Knjiga <span class="badge">
+                                    <%= books.length %>
+                                </span></h2>
+                            <div class="chart-container">
+                                <canvas id="booksStatusChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="stats-grid">
+                        <div class="chart-card">
+                            <h2 class="table-title">Oglasi / Narudžbe <span class="badge">
+                                    <%= orders.length %>
+                                </span></h2>
+                            <div class="chart-container">
+                                <canvas id="ordersChart"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="chart-card">
+                            <h2 class="table-title">Top 5 Žanrova</h2>
+                            <div class="chart-container">
+                                <canvas id="genresChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
         </div>
 
         <% include partials/footer %>
@@ -199,7 +244,29 @@
 
             <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
             <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-            <script src="/javascripts/adminUsers.js"></script>
+        <script>
+    
+    window.adminData = {
+        users: {
+            prodavaci: <%= users.filter(u => u.role === 'Prodavač').length || 0 %>,
+            kupci: <%= users.filter(u => u.role === 'Kupac').length || 0 %>
+        },
+        books: {
+            aktivno: <%= books.filter(u => u.status === 'Aktivno').length || 0 %>,
+            prodano: <%= books.filter(u => u.status === 'Prodano').length || 0 %>,
+            arhivirano: <%= books.filter(u => u.status === 'Arhivirano').length || 0 %>
+        },
+        orders: {
+            zavrseno: <%= orders.filter(u => u.status === 'ZAVRŠENO').length || 0 %>,
+            otkazano: <%= orders.filter(u => u.status === 'OTKAZANO').length || 0 %>,
+            odbijeno: <%= orders.filter(u => u.status === 'ODBIJENO').length || 0 %>
+        },
+        popularGenres: <%- JSON.stringify(popularGenres || []) %>
+    };
+    
+</script>
+
+<script src="/javascripts/charts.js"></script>
 </body>
 
 </html>
