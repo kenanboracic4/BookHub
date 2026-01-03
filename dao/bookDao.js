@@ -10,10 +10,13 @@ const BookRating = require('../models/associations').BookRating;
 
 
 
-const { Op, Sequelize } = require('sequelize');
+const {fn,col,Op, Sequelize} = require('sequelize');
 
 module.exports = {
 
+    getAllBooks(){
+        return Book.findAll();
+    },
     getRandomBooks() {
         return Book.findAll({
             order: Book.sequelize.random(),
@@ -289,5 +292,39 @@ module.exports = {
             where: { id: id }
         });
     },
+    async avgBooksPerSeller(){
+        const totalBooks = await Book.count();
+        const totalSellers = await Users.count({
+            where: { role: 'Prodavač' }
+        });
+
+        if(totalSellers === 0){
+            return 0;
+        }
+        return totalBooks / totalSellers;
+    },
+
+   async getPopularGenres() {
+    return await Book.findAll({
+        attributes: [
+            'genreId',
+            [fn('COUNT', col('Book.id')), 'bookCount']
+        ],
+        where: {
+            genreId: { [Op.ne]: null }
+        },
+        include: [{
+            model: GenresLK,
+            as: 'genre',     
+            attributes: ['name']
+        }],
+        group: ['genreId', 'genre.id'], 
+        order: [[fn('COUNT', col('Book.id')), 'DESC']],
+        limit: 5,
+        raw: true,
+        nest: true
+    });
+}
+
 
 };

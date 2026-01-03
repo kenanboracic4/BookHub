@@ -19,6 +19,9 @@ module.exports = {
     async getUserInterests(userId) {
         return await bookDao.getUserInterests(userId);
     },
+    async getAllBooks(){
+        return await bookDao.getAllBooks();
+    },
 
 
     async getBookById(id) {
@@ -170,5 +173,11 @@ module.exports = {
         }else if(type === 'condition'){
             return await bookDao.updateCondition(id, data);
         }
-    }
+    },
+    async getAvgBooksPerSeller(){
+        return await bookDao.avgBooksPerSeller();
+    },
+    async getPopularGenres(){
+        return await bookDao.getPopularGenres();
+    },
 };

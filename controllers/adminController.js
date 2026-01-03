@@ -1,6 +1,7 @@
 
 const userService = require('../services/userService');
 const bookService = require('../services/bookService');
+const orderService = require('../services/orderService');
 
 module.exports  ={
     async renderAdminPage(req,res){
@@ -132,6 +133,30 @@ module.exports  ={
             res.status(500).json({
                 success: false,
                 message: 'Greška pri ažuriranju stavka.'
+            })
+        }
+    },
+    async renderAdminStatsPage(req,res){
+        try{
+            const users = await userService.getAllUsers();
+            const books = await bookService.getAllBooks();
+            const orders = await orderService.getAllOrders();
+            const avgBooksPerSeller = await bookService.getAvgBooksPerSeller();
+            const popularGenres = await bookService.getPopularGenres();
+
+            console.log(popularGenres)
+
+            res.render('adminStats',{
+                users: users,
+                books: books,
+                avgBooksPerSeller: avgBooksPerSeller,
+                orders: orders,
+                popularGenres: popularGenres
+            });
+        }catch(error){
+            res.status(500).json({
+                success: false,
+                message: 'Greška pri prikazivanju statistike.'
             })
         }
     }

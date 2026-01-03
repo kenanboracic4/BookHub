@@ -6,6 +6,7 @@ const adminController = require('../controllers/adminController');
 router.get('/', adminController.renderAdminPage);
 router.get('/users', adminController.renderAllUsersPage);
 router.get('/catalog', adminController.renderAdminCatalogPage);
+router.get('/stats', adminController.renderAdminStatsPage);
 
 router.post('/catalog/genre', adminController.handleAddGenre);
 router.post('/catalog/language', adminController.handleAddLanguage);

@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="ba">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Korisnici</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="/stylesheets/adminStats.css">
+    <link rel="stylesheet" href="/stylesheets/footer.css">
+    <link rel="stylesheet" href="/stylesheets/header.css">
+</head>
+
+<body>
+    <% include partials/header %>
+        <div class="admin-main-wrapper">
+            <div class="table-sections-container">
+
+                <div class="section-group">
+
+                    <h2 class="table-title"> Korisnici <span class="badge">
+                            <%= users.length %>
+                        </span></h2>
+                    <div class="table-container">
+                        <table class="simple-table">
+                            <thead>
+                                <tr>
+                                    <th>Ukupno</th>
+                                    <th>Prodavači</th>
+                                    <th>Kupci</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+
+                                <tr class="text-centre">
+                                    <td>
+                                        <%= users.length %>
+                                    </td>
+                                    <td>
+                                        <%= users.filter(u=> u.role === 'Prodavač').length %>
+                                    </td>
+                                    <td>
+                                        <%= users.filter(u=> u.role === 'Kupac').length %>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+
+
+            </div>
+
+            <div class="table-sections-container">
+
+                <div class="section-group">
+
+                    <h2 class="table-title"> Knjige <span class="badge">
+                            <%= books.length %>
+                        </span></h2>
+                    <div class="table-container">
+                        <table class="simple-table">
+                            <thead>
+                                <tr>
+                                    <th>Ukupno</th>
+                                    <th>Aktivnih</th>
+                                    <th>Prodanih</th>
+                                    <th>Arhiviranih</th>
+                                    <th>Broj knjiga po prodavaču</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+
+                                <tr class="text-centre">
+                                    <td>
+                                        <%= books.length %>
+                                    </td>
+                                    <td>
+                                        <%= books.filter(u=> u.status === 'Aktivno').length %>
+                                    </td>
+                                    <td>
+                                        <%= books.filter(u=> u.status === 'Prodano').length %>
+                                    </td>
+                                    <td>
+                                        <%= books.filter(u=> u.status === 'Arhivirano').length %>
+                                    </td>
+                                    <td>
+                                        <%= avgBooksPerSeller %>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+
+
+            </div>
+
+
+            <div class="table-sections-container">
+
+                <div class="section-group">
+
+                    <h2 class="table-title"> Oglasi <span class="badge">
+                            <%= orders.length %>
+                        </span></h2>
+                    <div class="table-container">
+                        <table class="simple-table">
+                            <thead>
+                                <tr>
+                                    <th>Ukupno</th>
+                                    <th>Završenih</th>
+                                    <th>Otkazanih</th>
+                                    <th>Odbijenih</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+
+
+                                <tr class="text-centre">
+                                    <td>
+                                        <%= orders.length %>
+                                    </td>
+                                    <td>
+                                        <%= orders.filter(u=> u.status === 'ZAVRŠENO').length %>
+                                    </td>
+                                    <td>
+                                        <%= orders.filter(u=> u.status === 'OTKAZANO').length %>
+                                    </td>
+                                    <td>
+                                        <%= orders.filter(u=> u.status === 'ODBIJENO').length %>
+                                    </td>
+
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+
+
+            </div>
+
+            <div class="table-sections-container">
+
+                <div class="section-group">
+
+                    <h2 class="table-title"> Najpopularniji žanrovi</h2>
+                    <div class="table-container">
+                        <table class="simple-table">
+                            <thead>
+                                <tr>
+                                    <th>1</th>
+                                    <th>2</th>
+                                    <th>3</th>
+                                    <th>4</th>
+                                    <th>5</th>
+
+                                </tr>
+                            </thead>
+                            <tbody class="text-centre">
+                                <tr>
+                                    <% popularGenres.forEach(g=> { %>
+                                        <td>
+                                            <%= g.genre.name %> (<%= g.bookCount %>)
+                                        </td>
+                                        <% }) %>
+
+                                            <% /* Sigurnosni check: ako ima manje od 5 žanrova, popuni prazna polja da
+                                                tabela ne pukne */ %>
+                                                <% for(let i=popularGenres.length; i < 5; i++) { %>
+                                                    <td>-</td>
+                                                    <% } %>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+
+
+            </div>
+
+
+
+
+        </div>
+
+        <% include partials/footer %>
+
+
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+            <script src="/javascripts/adminUsers.js"></script>
+</body>
+
+</html>

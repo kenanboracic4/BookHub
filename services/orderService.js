@@ -131,6 +131,9 @@ module.exports = {
             bookRating = false;
         }
         return await orderDao.updateOrderItem(bookId, bookRating);
+    },
+    async getAllOrders(){
+        return await orderDao.getAllOrders();
     }
 
 }

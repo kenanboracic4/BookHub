@@ -126,6 +126,9 @@ async updateOrderItem(bookId,  bookRating){
             } 
         }
         );
+},
+async getAllOrders(){
+    return await Order.findAll();
 }
 
 };
