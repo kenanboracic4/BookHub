@@ -76,6 +76,9 @@
                             <td><%= user.lastName %></td>
                             <td><%= user.id %></td>
                             <td class="text-center">
+                                <% if(user.status == 'Arhiviran' || user.status == 'Blokiran') { %>
+                                    <span style="font-size: 0.9rem" ><%= user.status %></span>
+                                <% } else { %>
                                 <div class="actions">
                                 <% if(user.status != 'Arhiviran') { %>
                                     <button class="action-link archive" data-id="<%= user.id %>">Arhiviraj</button>
@@ -84,6 +87,7 @@
                                     <a href="/user/profile/<%= user.id %>/edit" class="action-link status"> Status</a>
                                     <a href="/user/profile/<%= user.id %>/edit" class="action-link"> Profil</a>
                                 </div>
+                                <% } %>
                             </td>
                         </tr>
                         <% }) %>
