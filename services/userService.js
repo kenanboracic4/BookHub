@@ -117,6 +117,14 @@ module.exports = {
     },
     async archiveUser(userId){
         return await userDao.archiveUser(userId);
-    }
+    },
+    async banUser(userId, duration) {
+      let block = null;
+      if (duration === '15') {
+        block = new Date();
+        block.setDate(block.getDate() + 15);
+      }
+      return await userDao.banUser(userId, block);
+    }  
 
 };

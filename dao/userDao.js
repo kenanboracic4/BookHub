@@ -156,7 +156,20 @@ module.exports = {
                 id: { [Op.ne]: adminId }
             }
         });
+    },
+    async banUser(userId, duration) {
+        return await Users.update(
+            { status: 'Blokiran',
+            blockExpiresAt: duration
+             },
+            {
+                where: {
+                    id: userId
+                }
+            }
+        ); 
     }
+    
 
 
 };

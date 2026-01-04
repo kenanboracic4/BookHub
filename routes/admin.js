@@ -20,6 +20,7 @@ router.post('/reports/user', adminController.handleReportUser);
 
 router.put('/user/archive/:id', adminController.archiveUser);
 router.put('/catalog/:type/:id', adminController.handleUpdateCatalog);
+router.put('/user/ban/:id', adminController.banUser);
 
 router.delete('/catalog/:type/:id', adminController.handleDeleteCatalog);
 

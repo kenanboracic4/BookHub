@@ -40,7 +40,7 @@
                                 <div class="actions">
                                     
                                     <button class="action-link archive" data-id="<%= user.id %>">Arhiviraj</button>
-                                    <button class="action-link block">Blokiraj</button>
+                                    <button class="action-link block" data-id = "<%= user.id %>">Blokiraj</button>
                                     <a href="/user/profile/<%= user.id %>/edit" class="action-link status">Status</a>
                                     
                                     <a href="/user/profile/<%= user.id %>/edit" class="action-link"> Profil</a>
@@ -80,7 +80,7 @@
                                 <% if(user.status != 'Arhiviran') { %>
                                     <button class="action-link archive" data-id="<%= user.id %>">Arhiviraj</button>
                                     <% } %>
-                                    <button class="action-link block">Blokiraj</button>
+                                    <button class="action-link block" data-id = "<%= user.id %>">Blokiraj</button>
                                     <a href="/user/profile/<%= user.id %>/edit" class="action-link status"> Status</a>
                                     <a href="/user/profile/<%= user.id %>/edit" class="action-link"> Profil</a>
                                 </div>

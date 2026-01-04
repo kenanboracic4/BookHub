@@ -34,4 +34,58 @@ $(document).ready(function(){
         });
     })
 
+    $('.block').on('click', function(e) {
+        e.preventDefault();
+        
+          const userId = $(this).data('id');
+        console.log(userId);
+
+
+        Swal.fire({
+            title: 'Blokiranje korisnika',
+            text: "Odaberite trajanje zabrane pristupa:",
+            icon: 'warning',
+            input: 'radio',
+            inputOptions: {
+                '15': 'Privremeni ban (15 dana)',
+                'permanent': 'Trajni ban'
+            },
+            inputValidator: (value) => {
+                if (!value) {
+                    return 'Morate odabrati jednu opciju!';
+                }
+            },
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Potvrdi ban',
+            cancelButtonText: 'Odustani',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                const banType = result.value; // '15' ili 'permanent'
+
+                $.ajax({
+                    url: '/admin/user/ban/' + userId,
+                    method: 'PUT',
+                    contentType: 'application/json',
+                    data: JSON.stringify({ duration: banType }),
+                    success: function (response) {
+                        Swal.fire('Blokiran!', response.message, 'success')
+                            .then(() => {
+                                // Promijeni izgled dugmeta ili status u tabeli
+                                const btn = $('.block').filter(function() {
+                                    return $(this).closest('tr').find('td:nth-child(4)').text().trim() === userId;
+                                });
+                                btn.text('Banovan').prop('disabled', true).css('background', '#64748b');
+                            });
+                    },
+                    error: function (xhr) {
+                        Swal.fire('Greška!', 'Nije uspjelo blokiranje korisnika.', 'error');
+                    }
+                });
+            }
+        });
+    });
+
 });

@@ -237,5 +237,22 @@ async handleReportUser(req, res) {
         console.error(error);
         res.status(500).json({ message: 'Greška na serveru' });
     }
+},
+async banUser(req, res) {
+    try {
+        const userId = req.params.id;
+        const duration = req.body.duration;
+
+        await userService.banUser(userId, duration);
+
+        res.status(200).json({
+            message: 'Korisnik je blokiran.'
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            message: 'Greška na serveru'
+        });
+    }
 }
 }
