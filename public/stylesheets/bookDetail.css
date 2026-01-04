@@ -359,3 +359,137 @@ body {
         border-top: 1px solid #e2e8f0;
     }
 }
+
+.btn-report-user-new {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    height: 41px; /* Ista visina kao bd-value-field */
+    padding: 0 15px;
+    background-color: transparent;
+    border: 1px solid #fee2e2; /* Blaga crvena ivica */
+    border-radius: 8px;
+    color: #ef4444; /* Crvena boja za report */
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: inherit;
+}
+
+.btn-report-user-new:hover {
+    background-color: #fef2f2;
+    border-color: #ef4444;
+    transform: translateY(-1px);
+}
+
+/* Osiguravamo da na mobilnim uređajima dugme ne izgleda čudno */
+@media (max-width: 768px) {
+    .bd-report-align {
+        order: 99; /* Baca dugme na sam kraj grida na mobilnom */
+    }
+}
+/* Modal Overlay */
+.report-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    backdrop-filter: blur(3px);
+}
+
+/* Modal Kartica */
+.report-modal-card {
+    background: white;
+    width: 90%;
+    max-width: 450px;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    animation:  0.3s ease-out;
+}
+
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.modal-header h4 {
+    margin: 0;
+    color: #2f3542;
+    font-size: 1.2rem;
+}
+
+.close-modal {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #a4b0be;
+}
+
+/* Forme unutar modala */
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+    font-size: 14px;
+    color: #57606f;
+}
+
+.form-group select, .form-group textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    font-family: inherit;
+}
+
+.form-group textarea {
+    height: 100px;
+    resize: none;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.btn-secondary {
+    background: #f1f2f6;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.btn-danger {
+    background: #ff4757;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.btn-danger:hover {
+    background: #ff6b81;
+}

@@ -139,6 +139,10 @@
     justify-content: space-between;
     align-items: center;
 }
+.message-header-actions {
+    display: flex;
+    gap: 15px;
+}
 
 .header-user-info {
     display: flex;
@@ -349,13 +353,9 @@
     border-radius: 12px;
     padding: 25px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-    animation: slideIn 0.3s ease-out;
+    animation:  0.3s ease-out;
 }
 
-@keyframes slideIn {
-    from { transform: translateY(-20px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
-}
 
 .modal-header {
     display: flex;

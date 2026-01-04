@@ -234,6 +234,7 @@ async handleReportUser(req, res) {
 
         res.status(200).json({ message: 'Prijava uspješna' });
     } catch (error) {
+        console.error(error);
         res.status(500).json({ message: 'Greška na serveru' });
     }
 }

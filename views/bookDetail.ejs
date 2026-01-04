@@ -25,7 +25,7 @@
                             <img src="<%= book.imageUrl %>" alt="<%= book.title %>">
 
                         </div>
- 
+
                     </div>
 
                     <div class="bd-info-col">
@@ -93,8 +93,16 @@
                                             <i class="fa-solid fa-circle-xmark" style="color: #ef4444;"></i> Ne
                                             <% } %>
                                 </div>
+
                             </div>
-                             
+                            <% if(user && user.role == 'Kupac'){ %>
+                            <div class="bd-input-group bd-report-align">
+                                <label>Žalba</label> <button type="button" class="btn-report-user-new"
+                                    onclick="openReportModal()">
+                                    <i class="fa-solid fa-flag"></i> Prijavi oglas
+                                </button>
+                            </div>
+                            <% } %>
                         </div>
 
                         <div class="bd-description">
@@ -106,17 +114,19 @@
 
                         <div class="bd-seller-box">
                             <div class="bd-seller-avatar">
-                                <img class="avatar-circle-profile" src="<%=(book.seller.profileImage && book.seller.profileImage.length > 0) ? book.seller.profileImage : '/images/noProfileImage.png' %>" alt="<%= book.seller.firstName %> <%= book.seller.lastName %>">
+                                <img class="avatar-circle-profile"
+                                    src="<%=(book.seller.profileImage && book.seller.profileImage.length > 0) ? book.seller.profileImage : '/images/noProfileImage.png' %>"
+                                    alt="<%= book.seller.firstName %> <%= book.seller.lastName %>">
                             </div>
                             <div class="bd-seller-info">
                                 <span class="bd-seller-label">Prodavač</span>
-                                <a href="/user/profile/<%= book.sellerId  %>"class="bd-seller-name">
+                                <a href="/user/profile/<%= book.sellerId  %>" class="bd-seller-name">
                                     <%= (book.seller) ? book.seller.firstName + ' ' + book.seller.lastName : 'Nepoznato'
-                                        %> 
+                                        %>
                                 </a>
                             </div>
                             <div class="bd-post-date">
-                                
+
                                 <i class="fa-regular fa-calendar"></i>
                                 <%= new Date(book.createdAt).toLocaleDateString('bs-BA') %>
                             </div>
@@ -127,20 +137,53 @@
                                 <button class="bd-btn bd-btn-primary btn-buy-book" data-id="<%= book.id %>">
                                     <i class="fa fa-shopping-cart"></i> Dodaj u korpu
                                 </button>
-                                <a href="/chat/inbox/<%=book.id %>/<%= book.sellerId %>" class="bd-btn bd-btn-outline">  
+                                <a href="/chat/inbox/<%=book.id %>/<%= book.sellerId %>" class="bd-btn bd-btn-outline">
                                     <i class="fa fa-envelope"></i> Kontakt
                                 </a>
                             </div>
                             <% } %>
 
+
                     </div>
                 </div>
             </div>
         </div>
+
+
+        <div id="reportModal" class="report-modal-overlay" style="display: none;">
+    <div class="report-modal-card">
+        <div class="modal-header">
+            <h4><i class="fa-solid fa-triangle-exclamation"></i> Prijavi oglas</h4>
+            <button class="close-modal" onclick="closeReportModal()">&times;</button>
+        </div>
+        <form id="reportForm">
+            <input type="hidden" name="targetId" value="<%= book.id %>">
+            
+            <div class="form-group">
+                <label>Razlog prijave:</label>
+                <select name="reason" required>
+                    <option value="">Odaberite razlog...</option>
+                    <option value="Prevara">Prevara / Lažni podaci</option>
+                    <option value="Neprikladan sadržaj">Neprikladan sadržaj ili slike</option>
+                    <option value="Pogrešna kategorija">Pogrešna kategorija/žanr</option>
+                    <option value="Ostalo">Ostalo</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Detaljan opis:</label>
+                <textarea name="description" placeholder="Objasnite zašto prijavljujete ovaj oglas..." required></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-secondary" onclick="closeReportModal()">Odustani</button>
+                <button type="submit" class="btn-danger">Pošalji prijavu</button>
+            </div>
+        </form>
+    </div>
+</div>
         <% include partials/footer %>
             <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
             <script src="/javascripts/book.js"></script>
-           <script>
+            <script>
                 const urlParams = new URLSearchParams(window.location.search);
                 if (urlParams.get('success') === 'true') {
                     const Toast = Swal.mixin({
@@ -156,6 +199,59 @@
                     });
                     window.history.replaceState({}, document.title, window.location.pathname);
                 }
+               const roomId = "<%= typeof conversation !== 'undefined' && conversation ? conversation.id : '' %>";
+
+// Provjeravamo da li user postoji (da izbjegnemo grešku ako posjetilac nije ulogovan)
+const currentUserId = "<%= typeof user !== 'undefined' && user ? user.id : '' %>";
+
+                function openReportModal() {
+                    document.getElementById('reportModal').style.display = 'flex';
+                }
+
+                function closeReportModal() {
+                    document.getElementById('reportModal').style.display = 'none';
+                }
+
+                // Zatvori modal ako se klikne van njega
+                window.onclick = function (event) {
+                    let modal = document.getElementById('reportModal');
+                    if (event.target == modal) {
+                        closeReportModal();
+                    }
+                }
+
+              $(document).ready(function () {
+    $('#reportForm').on('submit', function (e) {
+        e.preventDefault();
+
+        const formData = {
+            reportedUserId: $('input[name="targetId"]').val(), // Ovdje je to zapravo ID knjige
+            reason: $('select[name="reason"]').val(),
+            description: $('textarea[name="description"]').val(),
+            type: 'KNJIGA' // Ključna promjena: Tip je sada KNJIGA
+        };
+
+        $.ajax({
+            url: '/admin/reports/user', // Koristimo istu rutu jer tvoj kontroler prima te parametre
+            method: 'POST',
+            data: formData,
+            success: function (response) {
+                closeReportModal();
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Prijavljeno!',
+                    text: 'Hvala vam. Administratori će pregledati ovaj oglas.',
+                    confirmButtonColor: '#2563eb'
+                });
+                $('#reportForm')[0].reset();
+            },
+            error: function (err) {
+                console.error(err);
+                Swal.fire('Greška!', 'Došlo je do problema prilikom slanja prijave.', 'error');
+            }
+        });
+    });
+});
             </script>
 </body>
 
