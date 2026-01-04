@@ -1,0 +1,168 @@
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    /* Koristimo min-height da osiguramo da body uvijek pokriva bar cijeli ekran */
+    min-height: 100vh; 
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    background-color: #f4f7fa;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* Glavni kontejner koji "gura" footer */
+.admin-container {
+    flex: 1 0 auto; /* Ovaj element će zauzeti sav slobodan prostor */
+    padding: 2rem 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* Footer ostaje na dnu jer container iznad njega ima flex: 1 */
+footer {
+    flex-shrink: 0;
+    width: 100%;
+    /* Opcionalno: dodaj margin-top: auto kao osiguranje */
+    margin-top: auto; 
+}
+
+/* Popravka za SweetAlert2 - sprečava skakanje sadržaja */
+body.swal2-shown {
+    height: 100vh !important;
+    overflow: hidden !important;
+}
+
+/* Header sekcija */
+.admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+.admin-header h1 {
+    color: #1e293b;
+    font-size: 1.75rem;
+    margin: 0;
+}
+
+/* Dugmad */
+.btn-broadcast {
+    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2);
+}
+
+.btn-broadcast:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 12px rgba(37, 99, 235, 0.3);
+}
+
+/* Tablica */
+.table-card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+}
+
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.admin-table th {
+    background: #f8fafc;
+    padding: 16px;
+    text-align: left;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #64748b;
+    border-bottom: 2px solid #f1f5f9;
+}
+
+.admin-table td {
+    padding: 16px;
+    vertical-align: middle;
+    border-bottom: 1px solid #f1f5f9;
+    color: #334155;
+    font-size: 0.95rem;
+}
+
+.admin-table tr:hover {
+    background-color: #fbfcfe;
+}
+
+/* Tagovi i statusi */
+.type-tag {
+    background: #fee2e2;
+    color: #ef4444;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 800;
+}
+
+.meta-info {
+    font-size: 0.9rem;
+    color: #475569;
+}
+
+.reason-text {
+    max-width: 300px;
+    line-height: 1.5;
+}
+
+/* Akcijska dugmad u tablici */
+.btn-small {
+    padding: 8px 14px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: 0.2s;
+}
+
+.btn-gray {
+    background: #f1f5f9;
+    color: #475569;
+    margin-right: 8px;
+}
+
+.btn-gray:hover {
+    background: #e2e8f0;
+}
+
+.btn-danger {
+    background: #fff1f2;
+    color: #e11d48;
+    border: 1px solid #fecdd3;
+}
+
+.btn-danger:hover {
+    background: #e11d48;
+    color: white;
+}
+
+.section-title {
+    margin: 0 0 1.5rem 0;
+    color: #1e293b;
+    font-size: 1.25rem;
+}

@@ -15,6 +15,8 @@ router.post('/catalog/language', adminController.handleAddLanguage);
 router.post('/catalog/location', adminController.handleAddLocation);
 router.post('/catalog/condition', adminController.handleAddCondition);
 router.post('/broadcast', adminController.sendBroadcast);
+router.post('/reports/:id/:action', adminController.handleReportAction);
+router.post('/reports/user', adminController.handleReportUser);
 
 router.put('/user/archive/:id', adminController.archiveUser);
 router.put('/catalog/:type/:id', adminController.handleUpdateCatalog);

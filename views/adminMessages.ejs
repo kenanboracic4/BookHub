@@ -6,82 +6,95 @@
     <title>Admin Komunikacija | BookHub</title>
     
     <link rel="stylesheet" href="/stylesheets/style.css">
-    <link rel="stylesheet" href="/stylesheets/admin.css">
+    <link rel="stylesheet" href="/stylesheets/header.css">
+    <link rel="stylesheet" href="/stylesheets/footer.css">
+    <link rel="stylesheet" href="/stylesheets/adminMessages.css">
     
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-    <style>
-        .admin-container { padding: 2rem; max-width: 1200px; margin: 0 auto; }
-        .admin-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; border-bottom: 2px solid #eee; padding-bottom: 1rem; }
-        .btn-broadcast { background: #2563eb; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; transition: 0.3s; }
-        .btn-broadcast:hover { background: #1e40af; }
-        .admin-table { width: 100%; border-collapse: collapse; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        .admin-table th, .admin-table td { padding: 15px; text-align: left; border-bottom: 1px solid #f0f0f0; }
-        .admin-table th { background: #f8fafc; font-weight: 600; color: #64748b; }
-        .type-tag { background: #fee2e2; color: #ef4444; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: bold; }
-        .btn-small { padding: 6px 12px; border-radius: 4px; border: none; cursor: pointer; font-size: 13px; margin-right: 5px; }
-        .btn-gray { background: #e2e8f0; color: #475569; }
-        .btn-danger { background: #ef4444; color: white; }
-        .section-title { margin: 2rem 0 1rem 0; color: #1e293b; }
-    </style>
 </head>
 <body>
 
-    <div class="admin-container">
+    <%- include('partials/header') %>
+
+    <main class="admin-container">
         <header class="admin-header">
-            <h1>Admin Centar za Komunikaciju</h1>
+            <div>
+                <h1>Admin Centar</h1>
+                <p style="color: #64748b; margin-top: 5px;">Upravljanje prijavama i obavijestima</p>
+            </div>
             <button onclick="openBroadcastModal()" class="btn-broadcast">
-                📢 Pošalji poruku svim korisnicima
+                📢 Pošalji poruku svima
             </button>
         </header>
 
         <h2 class="section-title">Prijave i žalbe (Moderacija)</h2>
-        <div class="table-container">
+        
+        <div class="table-card">
             <table class="admin-table">
                 <thead>
                     <tr>
                         <th>Prijavio</th>
-                        <th>Tip prijave</th>
+                        <th>Tip</th>
                         <th>Predmet (Meta)</th>
                         <th>Razlog žalbe</th>
                         <th>Datum</th>
-                        <th>Akcije</th>
+                        <th style="text-align: right;">Akcije</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr id="report-row-101">
-                        <td><strong>Marko123</strong></td>
-                        <td><span class="type-tag">KORISNIK</span></td>
-                        <td>Prodavač: Ivan_Books</td>
-                        <td>Korisnik psuje u privatnim porukama i vrijeđa.</td>
-                        <td>03.01.2026.</td>
-                        <td>
-                            <button onclick="handleReport('101', 'dismiss')" class="btn-small btn-gray">Odbaci</button>
-                            <button onclick="handleReport('101', 'action')" class="btn-small btn-danger">Sankcioniraj</button>
-                        </td>
-                    </tr>
-                    <tr id="report-row-102">
-                        <td><strong>Amra_H</strong></td>
-                        <td><span class="type-tag">KNJIGA</span></td>
-                        <td>Naslov: "Harry Potter"</td>
-                        <td>Oglas je prevara, knjiga nije u opisanom stanju.</td>
-                        <td>02.01.2026.</td>
-                        <td>
-                            <button onclick="handleReport('102', 'dismiss')" class="btn-small btn-gray">Odbaci</button>
-                            <button onclick="handleReport('102', 'action')" class="btn-small btn-danger">Ukloni Oglas</button>
-                        </td>
-                    </tr>
-                </tbody>
+             <tbody>
+    <% if (reports && reports.length > 0) { %>
+        <% reports.forEach(report => { %>
+            <tr id="report-row-<%= report.id %>">
+                <td>
+                    <strong><%= report.reporter ? report.reporter.firstName + ' ' + report.reporter.lastName : 'Nepoznato' %></strong>
+                </td>
+                <td>
+                    <span class="type-tag <%= report.type === 'KORISNIK' ? 'tag-user' : 'tag-book' %>">
+                        <%= report.type %>
+                    </span>
+                </td>
+                <td class="meta-info">
+                    <% if (report.type === 'KORISNIK' && report.reportedUser) { %>
+                        Korisnik: <%= report.reportedUser.firstName %>
+                    <% } else if (report.type === 'KNJIGA' && report.reportedBook) { %>
+                        Knjiga: <%= report.reportedBook.title %>
+                    <% } else { %>
+                        Nije dostupno
+                    <% } %>
+                </td>
+                <td class="reason-text">
+                    <strong><%= report.reason %></strong><br>
+                    <small><%= report.description %></small>
+                </td>
+                <td>
+                    <%= new Date(report.createdAt).toLocaleDateString('hr-HR') %>
+                </td>
+                <td style="text-align: right;">
+                    <button onclick="handleReport('<%= report.id %>', 'dismiss')" class="btn-small btn-gray">Odbaci</button>
+                    <button onclick="handleReport('<%= report.id %>', 'action')" class="btn-small btn-danger">
+                        <%= report.type === 'KORISNIK' ? 'Banuj Korisnika' : 'Ukloni Oglas' %>
+                    </button>
+                </td>
+            </tr>
+        <% }) %>
+    <% } else { %>
+        <tr>
+            <td colspan="6" style="text-align: center; padding: 20px; color: #64748b;">
+                Trenutno nema aktivnih prijava.
+            </td>
+        </tr>
+    <% } %>
+</tbody>
             </table>
         </div>
-    </div>
+    </main>
 
+    <%- include('partials/footer') %>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
     <script>
-        /**
-         * 1. BROADCAST PORUKA
-         * Šalje zahtjev na tvoj AdminController.postBroadcast
-         */
         function openBroadcastModal() {
             Swal.fire({
                 title: 'Nova globalna obavijest',
@@ -98,7 +111,6 @@
                         Swal.showValidationMessage('Poruka ne može biti prazna!');
                         return false;
                     }
-                    // AJAX poziv prema tvom backendu
                     return $.ajax({
                         url: '/admin/broadcast',
                         method: 'POST',
@@ -115,11 +127,38 @@
             });
         }
 
-        /**
-         * 2. RUKOVANJE PRIJAVAMA
-         * Simulira rješavanje žalbi
-         */
-      
+       function handleReport(id, action) {
+    const actionText = action === 'dismiss' ? 'odbaciti ovu prijavu' : 'izvršiti sankciju';
+    const confirmButtonColor = action === 'dismiss' ? '#64748b' : '#ef4444';
+
+    Swal.fire({
+        title: 'Jeste li sigurni?',
+        text: `Želite li ${actionText}?`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: confirmButtonColor,
+        cancelButtonColor: '#cbd5e1',
+        confirmButtonText: 'Da, potvrdi!',
+        cancelButtonText: 'Odustani'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: `/admin/reports/${id}/${action}`, // Dinamička ruta
+                method: 'POST',
+                success: function(response) {
+                    // Sakrij red u tabeli sa efektom
+                    $(`#report-row-${id}`).fadeOut(500, function() {
+                        $(this).remove();
+                    });
+                    Swal.fire('Uspješno!', response.message, 'success');
+                },
+                error: function(error) {
+                    Swal.fire('Greška!', 'Došlo je do problema prilikom obrade.', 'error');
+                }
+            });
+        }
+    });
+}
     </script>
 </body>
 </html>

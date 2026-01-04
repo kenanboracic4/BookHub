@@ -11,6 +11,7 @@ const UserRating = require("./tables/UserRating");
 const Notification = require("./tables/Notification");
 const Conversation = require("./tables/Conversation");
 const Messages = require("./tables/Messages");
+const Report = require("./tables/Report");
 
 const GenresLK = require("./Lookups/GenresLK");
 const LanguagesLK = require("./Lookups/LanguageLK");
@@ -152,6 +153,22 @@ User.hasMany(Messages, { foreignKey: 'senderId', as: 'sentMessages' });
 Messages.belongsTo(User, { foreignKey: 'senderId', as: 'sender' });
 
 
+// ==========================================
+// 8. SISTEM PRIJAVA (Reports)
+// ==========================================
+
+// Ko je prijavio (User)
+User.hasMany(Report, { foreignKey: 'reporterId', as: 'reportsSent' });
+Report.belongsTo(User, { foreignKey: 'reporterId', as: 'reporter' });
+
+// Napomena: Pošto targetId može biti i User i Book, 
+// standardne belongsTo relacije pravimo ovako:
+
+// Ako je prijava na KORISNIKA
+Report.belongsTo(User, { foreignKey: 'targetId', as: 'reportedUser', constraints: false });
+
+// Ako je prijava na KNJIGU
+Report.belongsTo(Book, { foreignKey: 'targetId', as: 'reportedBook', constraints: false });
 module.exports = {
     Sequelize,
     User,
@@ -169,5 +186,6 @@ module.exports = {
     UserLanguages,
     Notification,
     Messages,
-    Conversation
+    Conversation,
+    Report
 };

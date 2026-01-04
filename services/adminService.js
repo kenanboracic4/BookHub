@@ -3,6 +3,7 @@ const bookDao = require('../dao/bookDao');
 const UserDao = require('../dao/userDao');
 const MessageDao = require('../dao/MessageDao');
 const NotificationDao = require('../dao/NotificationDao');
+const reportDao = require('../dao/ReportDao');
 
 module.exports = {
 
@@ -40,5 +41,39 @@ module.exports = {
             }
         }
         return users.length;
+    },
+    async getReports() {
+        return await reportDao.getAllPendingReports();
+    },
+    async processReport(id, action) {
+        const report = await reportDao.findById(id);
+        
+        if (!report) {
+            throw new Error('REPORT_NOT_FOUND');
+        }
+
+        // Izvršavanje sankcije ako je akcija 'action'
+        if (action === 'action') {
+            if (report.type === 'KORISNIK') {
+                await reportDao.banUser(report.targetId);
+            } else if (report.type === 'KNJIGA') {
+                await reportDao.deleteBook(report.targetId);
+            }
+        }
+
+        // Brisanje prijave (za oba slučaja: dismiss i action)
+        await reportDao.deleteReport(id);
+
+        return {
+            success: true,
+            message: action === 'dismiss' ? 'Prijava odbačena.' : 'Sankcija izvršena.'
+        };
+    },
+   async createReport(reportData) {
+    // Možeš dodati validaciju ovdje (npr. da korisnik ne može prijaviti sam sebe)
+    if (reportData.reporterId == reportData.targetId) {
+        throw new Error("Ne možete prijaviti sami sebe.");
     }
+    return await reportDao.createReport(reportData);
+}
 };

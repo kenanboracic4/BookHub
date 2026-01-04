@@ -3,6 +3,7 @@ const userService = require('../services/userService');
 const bookService = require('../services/bookService');
 const orderService = require('../services/orderService');
 const AdminService = require('../services/adminService');
+const adminService = require('../services/adminService');
 
 module.exports  ={
     async renderAdminPage(req,res){
@@ -164,8 +165,12 @@ module.exports  ={
 
     async renderAdminCommunicationPage(req,res){
         try{
-            res.render('adminMessages');
+            const reports = await adminService.getReports();
+            res.render('adminMessages', {
+                reports: reports
+            });
         }catch(error){
+            console.error(error);
             res.status(500).json({
                 success: false,
                 message: 'Greška pri prikazivanju komunikacije.'
@@ -196,5 +201,40 @@ module.exports  ={
         console.log("-----------------------------");
             res.status(500).json({ success: false, error: error.message });
         }
+    },
+    async handleReportAction(req, res) {
+       const { id, action } = req.params;
+
+    try {
+        const result = await adminService.processReport(id, action);
+        return res.status(200).json(result);
+    } catch (error) {
+        console.error("Admin Controller Error:", error);
+
+        if (error.message === 'REPORT_NOT_FOUND') {
+            return res.status(404).json({ message: 'Prijava nije pronađena.' });
+        }
+
+        return res.status(500).json({ message: 'Interna greška na serveru.' });
     }
+},
+async handleReportUser(req, res) {
+    try {
+        const { reportedUserId, reason, description, type } = req.body;
+        const reporterId = req.user.id; // ID ulogovanog korisnika
+
+        // Pozivamo servis da spasi u bazu
+        await adminService.createReport({
+            reporterId,
+            targetId: reportedUserId,
+            type,
+            reason,
+            description
+        });
+
+        res.status(200).json({ message: 'Prijava uspješna' });
+    } catch (error) {
+        res.status(500).json({ message: 'Greška na serveru' });
+    }
+}
 }
