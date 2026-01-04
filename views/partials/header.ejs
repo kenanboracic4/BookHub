@@ -11,24 +11,35 @@
         </div>
         <div class="side-nav-content">
             <a href="/" class="nav-link"><i class="fa-solid fa-house"></i> Početna</a>
-            <% if (user) { %>
+
+            <% if (user && !user.isAdmin) { %>
                 <a href="/user/profile/<%= user.id %>" class="nav-link"><i class="fa-solid fa-user"></i> Moj Profil</a>
                 <% } %>
                     <a href="/books" class="nav-link"><i class="fa-solid fa-book-open"></i> Oglasi</a>
-                    <a href="/books/add-book" class="nav-link highlight"><i class="fa-solid fa-circle-plus"></i> Objavi
-                        oglas</a>
-                    <% if (user && user.role=='Prodavač' ) { %>
-                        <a href="/orders/sales" class="nav-link"><i class="fa-solid fa-box-open"></i> Moje prodaje</a>
+                    <% if(!user.isAdmin) { %>
+                        <a href="/books/add-book" class="nav-link highlight"><i class="fa-solid fa-circle-plus"></i>
+                            Objavi
+                            oglas</a>
                         <% } %>
-                            <% if (user && user.role=='Kupac' ) { %>
-                                <a href="/orders" class="nav-link"><i class="fa-solid fa-bag-shopping"></i> Moje
-                                    narudžbe</a>
+                            <% if (user && user.role=='Prodavač' ) { %>
+                                <a href="/orders/sales" class="nav-link"><i class="fa-solid fa-box-open"></i> Moje
+                                    prodaje</a>
                                 <% } %>
-                                    <% if (user) { %>
-                                        <div class="nav-divider"></div>
-                                        <a href="/user/logout" class="nav-link logout"><i
-                                                class="fa-solid fa-arrow-right-from-bracket"></i> Odjavi se</a>
+                                    <% if (user && user.role=='Kupac' ) { %>
+                                        <a href="/orders" class="nav-link"><i class="fa-solid fa-bag-shopping"></i> Moje
+                                            narudžbe</a>
                                         <% } %>
+                                            <% if(user.isAdmin) { %>
+                                                <a href="/admin" class="nav-link"><i class="fa-solid fa-gear"></i>
+                                                    Kontrolna ploča</a>
+                                                <% } %>
+                                                    <% if (user) { %>
+                                                        <div class="nav-divider"></div>
+                                                        <a href="/user/logout" class="nav-link logout"><i
+                                                                class="fa-solid fa-arrow-right-from-bracket"></i> Odjavi
+                                                            se</a>
+                                                        <% } %>
+
         </div>
     </div>
 
@@ -69,6 +80,7 @@
                     <img src="/images/logo.png" alt="BookHub">
                 </a>
             </div>
+            
             <div class="header-right">
 
                 <% if(user) { %>
@@ -76,92 +88,94 @@
                         <a href="/chat" class="icon-btn" id="messageBtn">
                             <i class="fa-solid fa-envelope"></i>
                             <span class="notification-count">
-                               <%= messageCount %>
+                                <%= messageCount %>
                             </span>
                         </a>
                     </div>
                     <% } %>
+                    
+                        <% if(user && user.role=='Prodavač' ){ %>
+                            <div class="notification-wrapper"> <!-- Notifications -->
+                                <a href="#" class="icon-btn" id="notifBtn">
+                                    <i class="fa-solid fa-bell"></i>
+                                    <span class="notification-count">
+                                        <%= notificationsCount %>
+                                    </span>
+                                </a>
 
-                <% if(user && user.role=='Prodavač' ){ %>
-                    <div class="notification-wrapper"> <!-- Notifications -->
-                        <a href="#" class="icon-btn" id="notifBtn">
-                            <i class="fa-solid fa-bell"></i>
-                            <span class="notification-count">
-                                <%= notificationsCount %>
-                            </span>
-                        </a>
-
-                        <div class="notification-dropdown" id="notifDropdown">
-                            <div class="notif-header">
-                                <span>Obavijesti</span>
+                                <div class="notification-dropdown" id="notifDropdown">
+                                    <div class="notif-header">
+                                        <span>Obavijesti</span>
 
 
-                            </div>
-                            <% if(notifications.length> 0) { %>
-                                <div class="notif-list">
+                                    </div>
+                                    <% if(notifications.length> 0) { %>
+                                        <div class="notif-list">
 
-                                    <% notifications.forEach(notif=> { %>
-                                        <a class="notif-item-link" style="text-decoration: none;"
-                                            href="<%= notif.link %>" data-id="<%= notif.id %>">
+                                            <% notifications.forEach(notif=> { %>
+                                                <a class="notif-item-link" style="text-decoration: none;"
+                                                    href="<%= notif.link %>" data-id="<%= notif.id %>">
 
-                                           <div class="notif-item <%= notif.isRead ? 'read' : 'unread' %>">
-                                                <div class="notif-icon">
-                                                    <% if(notif.type==='order' || notif.type==='Narudžba' ){ %>
-                                                        <i class="fa-solid fa-box"></i>
-                                                        <% } else if(notif.type==='Ocjena' ){ %>
-                                                            <i class="fa-solid fa-star"></i>
-                                                            <% } else { %>
-                                                                <i class="fa-solid fa-bell"></i>
-                                                                <% } %>
-                                                </div>
-                                                <div class="notif-info">
-                                                    <p class="notif-text">
-                                                        <%= notif.content %>
-                                                    </p>
-                                                    <span class="notif-time text-muted">
-                                                        <%= new Date(notif.createdAt).toLocaleString() %>
-                                                    </span>
-                                                </div>
+                                                    <div class="notif-item <%= notif.isRead ? 'read' : 'unread' %>">
+                                                        <div class="notif-icon">
+                                                            <% if(notif.type==='order' || notif.type==='Narudžba' ){ %>
+                                                                <i class="fa-solid fa-box"></i>
+                                                                <% } else if(notif.type==='Ocjena' ){ %>
+                                                                    <i class="fa-solid fa-star"></i>
+                                                                    <% } else { %>
+                                                                        <i class="fa-solid fa-bell"></i>
+                                                                        <% } %>
+                                                        </div>
+                                                        <div class="notif-info">
+                                                            <p class="notif-text">
+                                                                <%= notif.content %>
+                                                            </p>
+                                                            <span class="notif-time text-muted">
+                                                                <%= new Date(notif.createdAt).toLocaleString() %>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                                <% }) %>
+                                        </div>
+                                        <% } else { %>
+                                            <div class="no-notifications" style="text-align: center; padding: 50px;">
+                                                <span>Nema obavijesti</span>
                                             </div>
-                                        </a>
-                                        <% }) %>
+                                            <% } %>
+
+
                                 </div>
-                                <% } else { %>
-                                    <div class="no-notifications" style="text-align: center; padding: 50px;">
-                                        <span>Nema obavijesti</span>
-                                    </div>
-                                    <% } %>
-
-
-                        </div>
-                    </div>
-                    <% } %>
-                        <% if (user) { %>
-                            <% if (user.role == 'Kupac') { %>
-                            <div class="user-actions">
-                                <a href="#" class="icon-btn cart-trigger">
-                                    <i class="fa-solid fa-bag-shopping"></i>
-                                    <span class="cart-badge-count"
-                                        style="display: <%= (user && user.cartCount > 0) ? 'flex' : 'none' %>;">
-                                        <%= user.cartCount %>
-                                    </span>
-                                </a>
-                                <% } %>
-                                <a href="/user/profile/<%= user.id %>" class="user-pill">
-                                    <div class="avatar-circle">
-                                        <%= user.firstName.charAt(0) %>
-                                    </div>
-                                    <span class="desktop-only">
-                                        <%= user.firstName %>
-                                    </span>
-                                </a>
                             </div>
-                            <% } else { %>
-                                <div class="auth-buttons">
-                                    <a href="/user/login" class="btn-ghost">Prijava</a>
-                                    <a href="/user/register" class="btn-primary-sm">Registracija</a>
-                                </div>
-                                <% } %>
+                            <% } %>
+                                <% if (user) { %>
+                                    <% if (user.role=='Kupac' ) { %>
+                                        <div class="user-actions">
+                                            <a href="#" class="icon-btn cart-trigger">
+                                                <i class="fa-solid fa-bag-shopping"></i>
+                                                <span class="cart-badge-count"
+                                                    style="display: <%= (user && user.cartCount > 0) ? 'flex' : 'none' %>;">
+                                                    <%= user.cartCount %>
+                                                </span>
+                                            </a>
+                                            <% } %>
+                                            <% if(!user.isAdmin) { %>
+                                                <a href="/user/profile/<%= user.id %>" class="user-pill">
+                                                    <div class="avatar-circle">
+                                                        <%= user.firstName.charAt(0) %>
+                                                    </div>
+                                                    <span class="desktop-only">
+                                                        <%= user.firstName %>
+                                                    </span>
+                                                </a>
+                                            <% } %>
+                                        </div>
+                                        <% } else { %>
+                                            <div class="auth-buttons">
+                                                <a href="/user/login" class="btn-ghost">Prijava</a>
+                                                <a href="/user/register" class="btn-primary-sm">Registracija</a>
+                                            </div>
+                                            <% } %>
             </div>
         </div>
 
@@ -270,10 +284,12 @@
                 </div>
             </form>
 
-            <a href="/books/add-book" class="btn-action">
-                <i class="fa-solid fa-plus"></i>
-                <span>Objavi knjigu</span>
-            </a>
+            <% if(!user.isAdmin) { %>
+                <a href="/books/add-book" class="btn-action">
+                    <i class="fa-solid fa-plus"></i>
+                    <span>Objavi knjigu</span>
+                </a>
+                <% } %>
         </div>
     </div>
 </header>

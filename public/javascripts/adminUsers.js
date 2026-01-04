@@ -63,7 +63,7 @@ $(document).ready(function(){
             reverseButtons: true
         }).then((result) => {
             if (result.isConfirmed) {
-                const banType = result.value; // '15' ili 'permanent'
+                const banType = result.value; 
 
                 $.ajax({
                     url: '/admin/user/ban/' + userId,
@@ -73,7 +73,7 @@ $(document).ready(function(){
                     success: function (response) {
                         Swal.fire('Blokiran!', response.message, 'success')
                             .then(() => {
-                                // Promijeni izgled dugmeta ili status u tabeli
+                                
                                 const btn = $('.block').filter(function() {
                                     return $(this).closest('tr').find('td:nth-child(4)').text().trim() === userId;
                                 });
