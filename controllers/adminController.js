@@ -221,9 +221,9 @@ module.exports  ={
 async handleReportUser(req, res) {
     try {
         const { reportedUserId, reason, description, type } = req.body;
-        const reporterId = req.user.id; // ID ulogovanog korisnika
+        const reporterId = req.user.id;
 
-        // Pozivamo servis da spasi u bazu
+       
         await adminService.createReport({
             reporterId,
             targetId: reportedUserId,
