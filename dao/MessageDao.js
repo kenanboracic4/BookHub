@@ -28,12 +28,12 @@ module.exports = {
     async getUserMessagesCount(userId) {
     return await Message.count({
         where: {
-            senderId: { [Op.ne]: userId }, // Da nije tvoja poruka
+            senderId: { [Op.ne]: userId }, 
             isRead: false
         },
         include: [{
             model: Conversation,
-            as: 'conversation', // Provjeri kako ti se zove asocijacija u modelu
+            as: 'conversation',
             where: {
                 [Op.or]: [
                     { buyerId: userId },

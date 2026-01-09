@@ -35,13 +35,13 @@ module.exports = {
             },
             { 
                 model: User, 
-                as: 'reportedUser', // Mora se podudarati s relacijom u models/index.js
+                as: 'reportedUser', 
                 attributes: ['firstName', 'lastName'],
                 required: false 
             },
             { 
                 model: Book, 
-                as: 'reportedBook', // Mora se podudarati s relacijom u models/index.js
+                as: 'reportedBook', 
                 attributes: ['title'],
                 required: false 
             }

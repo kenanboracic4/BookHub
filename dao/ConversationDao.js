@@ -75,7 +75,7 @@ module.exports = {
                 { buyerId: userId, sellerId: adminId },
                 { buyerId: adminId, sellerId: userId }
             ],
-            bookId: null // Sada će baza ovo prihvatiti
+            bookId: null 
         },
         defaults: { 
             buyerId: userId, 
