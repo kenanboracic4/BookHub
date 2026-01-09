@@ -58,7 +58,7 @@ const Book = sequelize.define("Book", {
     },
 
 
-    // Statistika
+    
     viewCount: { 
         type: DataTypes.INTEGER, 
         defaultValue: 0 

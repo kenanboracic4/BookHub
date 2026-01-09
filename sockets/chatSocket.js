@@ -1,6 +1,6 @@
 const { Server } = require("socket.io");
 const MessageDao = require('../dao/MessageDao.js');
-const Conversation = require('../models/associations').Conversation; // Potrebno da nađemo primatelja
+const Conversation = require('../models/associations').Conversation; 
 
 module.exports = (server) => {
     const io = new Server(server);
@@ -8,13 +8,13 @@ module.exports = (server) => {
     io.on('connection', (socket) => { 
         console.log('Korisnik povezan:', socket.id);
 
-        // Korisnik ulazi u sobu konkretne konverzacije (za dopisivanje)
+        // Korisnik ulazi u sobu konkretne konverzacije 
         socket.on('joinRoom', (roomId) => {
             socket.join(roomId);
             console.log(`Korisnik ušao u sobu: ${roomId}`);
         });
 
-        // NOVO: Korisnik ulazi u svoju privatnu sobu (za globalne notifikacije)
+        //  Korisnik ulazi u svoju privatnu sobu (za globalne notifikacije)
         socket.on('joinUserGlobal', (userId) => {
             socket.join(`user_${userId}`);
             console.log(`Korisnik se pridružio svojoj globalnoj sobi: user_${userId}`);
@@ -42,10 +42,10 @@ module.exports = (server) => {
                     createdAt: newMessage.createdAt
                 };
 
-                // 1. Šaljemo poruku svima u sobi konverzacije (onima koji trenutno gledaju taj chat)
+                //  Šaljemo poruku svima u sobi konverzacije
                 io.to(data.conversationId).emit('newMessage', messagePayload);
 
-                // 2. Šaljemo signal primatelju u njegovu PRIVATNU sobu za update brojača i sidebara
+                //  Šaljemo signal primatelju u njegovu PRIVATNU sobu za update brojača i sidebara
                 io.to(`user_${recipientId}`).emit('updateNotification', messagePayload);
 
             } catch (error) {

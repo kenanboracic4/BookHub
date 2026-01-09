@@ -34,7 +34,7 @@ const setUserContext = async (req, res, next) => {
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         
-        // Uzimamo svježe podatke direktno iz baze
+        
         const dbUser = await userService.findUserDataById(decoded.id);
 
         if (!dbUser) {
@@ -43,20 +43,20 @@ const setUserContext = async (req, res, next) => {
             return next();
         }
 
-        // --- PROVJERA BAN / ARHIVA ---
+        
         const now = new Date();
 
-        // Ako je privremeni ban istekao, automatski ga aktiviraj
+       
         if (dbUser.status === 'Blokiran' && dbUser.blockExpiresAt && new Date(dbUser.blockExpiresAt) < now) {
             await dbUser.update({ status: 'Aktivan', blockExpiresAt: null });
         } 
-        // Ako je i dalje Blokiran ili je Arhiviran, šalji 403
+        
         else if (dbUser.status === 'Blokiran' || dbUser.status === 'Arhiviran') {
             res.clearCookie('token');
             return res.status(403).send('Korisnik je blokiran.');
         }
 
-        // --- SVE OK - POSTAVI KONTEKST ---
+      
         const cartCount = await cartService.getCartCount(decoded.id);
         
         req.user = {
