@@ -84,30 +84,28 @@ module.exports = {
         });
     },
 
-    findBookById(id) {
-        return Book.findByPk(id, {
-            include: [{
-                model: GenresLK,
-                as: 'genre'
-            },
+    async findBookById(id) {
+        return await Book.findByPk(id, {
+        include: [
+            { model: Users, as: 'seller' },
+            { model: GenresLK, as: 'genre' },
+            { model: LanguagesLK, as: 'language' },
+            { model: BookConditionsLK, as: 'condition' },
+            { model: LocationsLK, as: 'location' },
+            // DODAJ OVO ZA KOMENTARE:
             {
-                model: LocationsLK,
-                as: 'location'
-            },
-            {
-                model: BookConditionsLK,
-                as: 'condition'
-            },
-            {
-                model: LanguagesLK,
-                as: 'language'
-            }, {
-                model: Users,
-                as: 'seller'
+                model: BookRating,
+                as: 'bookReviews', // Alias iz tvojih asocijacija
+                include: [
+                    {
+                        model: Users,
+                        as: 'reviewer', // Ko je ostavio komentar
+                        attributes: ['firstName', 'lastName', 'profileImage']
+                    }
+                ]
             }
-            ],
-        }
-        );
+        ]
+    });
     },
     getAllGenres() {
         return GenresLK.findAll();
