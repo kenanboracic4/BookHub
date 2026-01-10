@@ -116,10 +116,11 @@ module.exports = {
     async renderUserProfilePage(req, res) {
     try {
         const id = req.params.id;
-        // Izvlačimo parametre iz URL-a
+        
         const { status, date, price, title } = req.query;
 
         const user = await userService.findUserDataById(parseInt(id));
+        console.log("User" , user);
         if (!user) {
             return res.status(404).send('Korisnik nije pronađen.');
         }

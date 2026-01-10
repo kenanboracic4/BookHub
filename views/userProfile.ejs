@@ -29,7 +29,11 @@
                             </p>
                             <div class="up-rating">
                                 <i id="bd-rating-i" class="fa-solid fa-star"></i>
-                                <%= profileUser.averageRating || 0 %> / 5
+                                <% if(profileUser.averageRating) { %>
+                                    <%= profileUser.averageRating %> / 5
+                                    <% } else { %>
+                                        N / N
+                                        <% } %>
                             </div>
                         </div>
                     </div>

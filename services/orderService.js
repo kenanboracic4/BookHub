@@ -112,8 +112,8 @@ module.exports = {
         await bookRatingDao.rateBook(parseInt(bookId), parseInt(bookRating), parseInt(userId), comment);
         await userRatingDao.rateUser(parseInt(sellerId), parseInt(userRating), parseInt(userId));
 
-        await bookDao.updateBookAvgRating(bookId);
-        await userDao.updateUserRating(userId);
+        await bookDao.updateBookAvgRating(parseInt(sellerId));
+        await userDao.updateUserRating(parseInt(sellerId));
 
         
 

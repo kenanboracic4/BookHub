@@ -16,7 +16,7 @@
                 <a href="/user/profile/<%= user.id %>" class="nav-link"><i class="fa-solid fa-user"></i> Moj Profil</a>
                 <% } %>
                     <a href="/books" class="nav-link"><i class="fa-solid fa-book-open"></i> Oglasi</a>
-                    <% if(!user.isAdmin) { %>
+                    <% if(user && !user.isAdmin) { %>
                         <a href="/books/add-book" class="nav-link highlight"><i class="fa-solid fa-circle-plus"></i>
                             Objavi
                             oglas</a>
@@ -29,7 +29,7 @@
                                         <a href="/orders" class="nav-link"><i class="fa-solid fa-bag-shopping"></i> Moje
                                             narudžbe</a>
                                         <% } %>
-                                            <% if(user.isAdmin) { %>
+                                            <% if(user && user.isAdmin) { %>
                                                 <a href="/admin" class="nav-link"><i class="fa-solid fa-gear"></i>
                                                     Kontrolna ploča</a>
                                                 <% } %>
@@ -284,7 +284,7 @@
                 </div>
             </form>
 
-            <% if(!user.isAdmin) { %>
+            <% if(user && !user.isAdmin) { %>
                 <a href="/books/add-book" class="btn-action">
                     <i class="fa-solid fa-plus"></i>
                     <span>Objavi knjigu</span>

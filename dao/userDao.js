@@ -1,4 +1,4 @@
-const { where } = require('sequelize');
+
 
 
 const languageLK = require('../models/associations').LanguagesLK;

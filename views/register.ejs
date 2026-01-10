@@ -49,7 +49,7 @@
                             <span class="mobile-info">Dodirnite za više</span>
                         </span>
                     </div>
-                    <select name="genreIds" id="genreIds" multiple required class="custom-scroll">
+                    <select name="genreIds" id="genreIds" multiple  class="custom-scroll">
                         <% genres.forEach(function(genre) { %>
                             <option value="<%= genre.id %>">
                                 <%= genre.name %>
@@ -66,7 +66,7 @@
                             <span class="mobile-info">Tapnite više</span>
                         </span>
                     </div>
-                    <select name="languageIds" id="languageIds" multiple required class="custom-scroll">
+                    <select name="languageIds" id="languageIds" multiple s class="custom-scroll">
                         <% languages.forEach(function(language) { %>
                             <option value="<%= language.id %>">
                                 <%= language.name %>
