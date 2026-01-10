@@ -365,12 +365,12 @@ body {
     align-items: center;
     justify-content: center;
     gap: 8px;
-    height: 41px; /* Ista visina kao bd-value-field */
+    height: 41px; 
     padding: 0 15px;
     background-color: transparent;
-    border: 1px solid #fee2e2; /* Blaga crvena ivica */
+    border: 1px solid #fee2e2;
     border-radius: 8px;
-    color: #ef4444; /* Crvena boja za report */
+    color: #ef4444; 
     font-weight: 600;
     font-size: 0.95rem;
     cursor: pointer;
@@ -383,14 +383,35 @@ body {
     border-color: #ef4444;
     transform: translateY(-1px);
 }
+.btn-comment-book{
+     display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    height: 41px; 
+    padding: 0 15px;
+    background-color: transparent;
+    border: 1px solid #1f164b52;
+    border-radius: 8px;
+    color: #1f164b; 
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.35s ease;
+    font-family: inherit;
+}
+.btn-comment-book:hover{
+    background-color: #18103ffa;
+    color: white;
+}
 
-/* Osiguravamo da na mobilnim uređajima dugme ne izgleda čudno */
+
 @media (max-width: 768px) {
     .bd-report-align {
-        order: 99; /* Baca dugme na sam kraj grida na mobilnom */
+        order: 99; 
     }
 }
-/* Modal Overlay */
+
 .report-modal-overlay {
     position: fixed;
     top: 0;
@@ -405,7 +426,7 @@ body {
     backdrop-filter: blur(3px);
 }
 
-/* Modal Kartica */
+
 .report-modal-card {
     background: white;
     width: 90%;
@@ -492,4 +513,85 @@ body {
 
 .btn-danger:hover {
     background: #ff6b81;
+}
+
+/* --- MODAL ZA PREGLED KOMENTARA --- */
+.comment-modal-card {
+    background: white;
+    width: 95%;
+    max-width: 500px; /* Kompaktan dizajn */
+    max-height: 75vh;
+    display: flex;
+    flex-direction: column;
+    border-radius: 16px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.25);
+    animation: modalFadeIn 0.3s ease-out;
+    overflow: hidden;
+}
+
+.comments-list-container {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px 25px;
+}
+
+/* Stil svakog komentara */
+.comment-item {
+    display: flex;
+    gap: 15px;
+    padding: 15px 0;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.comment-item:last-child {
+    border-bottom: none;
+}
+
+/* Avatar ikona glave */
+.comment-avatar-circle {
+    width: 42px;
+    height: 42px;
+    background-color: #f1f5f9;
+    color: #475569;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+    border: 1px solid #e2e8f0;
+}
+
+.comment-content-box {
+    flex: 1;
+}
+
+.comment-user-fullname {
+    display: block;
+    font-weight: 700;
+    color: #0f172a;
+    font-size: 0.95rem;
+    margin-bottom: 4px;
+}
+
+.comment-text-body {
+    font-size: 0.9rem;
+    color: #475569;
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* Animacija otvaranja */
+@keyframes modalFadeIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+/* Scrollbar za listu */
+.comments-list-container::-webkit-scrollbar {
+    width: 5px;
+}
+.comments-list-container::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 10px;
 }
