@@ -130,7 +130,7 @@ module.exports = {
         return await bookDao.getBooks(whereClause, orderClause);
     },
     async getAverageRating(bookId) {
-        console.log(bookId);
+        
         return await bookDao.getAverageRating(bookId);
     },
     async updateBookRating(bookId, averageRating) {

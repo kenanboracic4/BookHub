@@ -36,6 +36,12 @@ module.exports = {
             ]
         })
     },
+   async findUserBasicInfo(id) {
+        return await Users.findByPk(id, {
+
+            attributes: ['id', 'firstName', 'lastName', 'email', 'role', 'status', 'blockExpiresAt'] 
+        });
+    },
 
     async createUser(userData) {
 

@@ -83,7 +83,7 @@ $(document).ready(function () {
             // Ako konverzacija uopšte ne postoji (neko ti je prvi put poslao poruku)
             // Ovdje je najbolje uraditi reload da Sequelize povuče sve asocijacije (ime, sliku, knjigu)
             // Alternativno, možeš kroz socket poslati CIJELI objekt konverzacije
-            console.log("Novi chat započet. Refreshujem listu...");
+           
             location.reload(); 
         }
     });

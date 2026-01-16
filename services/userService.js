@@ -68,6 +68,9 @@ module.exports = {
 
         return await userDao.getUserBooks(id, filters);
     },
+   async getBasicUser(id) {
+        return await userDao.findUserBasicInfo(id);
+    },
 
     async getAllGenres() {
         return userDao.getAllGenres();

@@ -9,7 +9,7 @@ module.exports = async (req, res, next) => {
 
         const numberOfMessages = await messageService.getUserMessagesCount(req.user.id);
         res.locals.messageCount = numberOfMessages;
-        console.log(numberOfMessages);
+       
         return next();
     }catch(error){
         console.error(error);

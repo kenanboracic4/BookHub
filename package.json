@@ -6,6 +6,25 @@
     "start": "node ./bin/www",
     "dev": "nodemon ./bin/www"
   },
+  "nodemonConfig": {
+    "ignore": [
+      "node_modules/*",
+      "public/uploads/*",
+      "uploads/*",
+      ".git/*",
+      "*.test.js"
+    ],
+    "watch": [
+      "bin",
+      "routes",
+      "controllers",
+      "middleware",
+      "config",
+      "views",
+      "app.js"
+    ],
+    "ext": "js,json,ejs,css"
+  },
   "dependencies": {
     "bcrypt": "^6.0.0",
     "bcryptjs": "^3.0.3",

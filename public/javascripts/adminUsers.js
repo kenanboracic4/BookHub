@@ -3,7 +3,7 @@ $(document).ready(function(){
         e.preventDefault();
 
         const userId = $(this).data('id');
-        console.log(userId);
+        
 
         Swal.fire({
             title: 'Arhiviraj korisnika?',
@@ -38,7 +38,7 @@ $(document).ready(function(){
         e.preventDefault();
         
           const userId = $(this).data('id');
-        console.log(userId);
+       
 
 
         Swal.fire({

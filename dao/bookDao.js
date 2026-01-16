@@ -17,18 +17,18 @@ module.exports = {
     getAllBooks(){
         return Book.findAll();
     },
-    getRandomBooks() {
+   getRandomBooks() {
         return Book.findAll({
-            order: Book.sequelize.random(),
+            order: Sequelize.literal('RANDOM()'), // Za Postgres. Ako je MySQL koristi 'RAND()'
             limit: 12,
             include: [{
                 model: GenresLK,
-                as: 'genre'
+                as: 'genre',
+                attributes: ['name'] // Uzmi samo ime, ne sve kolone
             }],
             raw: true,
             nest: true
-        }
-        );
+        });
     },
     getRandomBooksForBooksPage() {
         return Book.findAll({

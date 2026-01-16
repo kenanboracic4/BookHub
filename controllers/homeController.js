@@ -4,17 +4,16 @@ module.exports = {
     async renderHomePage(req, res) {
         try {
            
-           const randomBooks = await bookService.getHomePageBooks();
-            const popularBooks = await bookService.getPopularBooks();
-
-            const userInterests = req.user ? await bookService.getUserInterests(req.user.id): [];
-            
+            const [randomBooks, popularBooks, userInterests] = await Promise.all([
+                bookService.getHomePageBooks(),
+                bookService.getPopularBooks(),
+                req.user ? bookService.getUserInterests(req.user.id) : [] 
+            ]);
       
             res.render('index', {
                 books: randomBooks,
                 popularBooks : popularBooks,
                 userInterests : userInterests
-                
             });
            
         } catch (error) {

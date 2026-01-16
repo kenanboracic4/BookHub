@@ -13,7 +13,7 @@ module.exports = {
         const sellers = {};
         const cartItems = await cartDao.getCartItems(userId);
 
-        console.log("Broj stavki u korpi:", cartItems.length);
+       
 
         if (!cartItems || cartItems.length === 0) {
             throw new Error('Korpa je prazna!');

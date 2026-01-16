@@ -34,7 +34,6 @@ module.exports = {
             },
             include: [
                 { model: Book ,
-                    
                     attributes : ["id","title","price","imageUrl","sellerId"]
                 }
                 

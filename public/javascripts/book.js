@@ -19,7 +19,7 @@ $('#edit-book-form').on('submit', function (e) {
                 const errorMessage = xhr.responseText || 'Došlo je do greške prilikom prijave.';
                 $('#error-message').text(errorMessage);
                $('#error-container').css('display', 'flex');
-                console.log(errorMessage);
+                
             }
         });
     });
