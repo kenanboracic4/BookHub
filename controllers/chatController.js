@@ -5,7 +5,9 @@ module.exports = {
 
     async renderChatPage(req, res) {
         try {
-            const allConversations = await conversationService.getAllConversations(req.user.id);
+        
+        const allConversations = await conversationService.getAllConversations(req.user.id);
+        
             if(allConversations.length > 0){
                 return res.redirect('/chat/inbox/'+allConversations[0].id);
             }
@@ -24,22 +26,19 @@ module.exports = {
             const conversationId = req.params.conversationId;
             const userId = req.user.id; 
 
-            // 1. Prvo provjeri samo konverzaciju (jer ako nje nema, nema smisla dohvatiti ostalo)
+           
             const conversation = await conversationService.getConversationById(conversationId);
             
             if (!conversation) {
-                console.log("Konverzacija nije pronađena");
                 return res.redirect('/chat');
             }
 
-            // Sigurnosna provjera
+           
             if (userId != conversation.sellerId && userId != conversation.buyerId) {
                 console.log("Nemate pravo pristupa ovoj konverzaciji");
                 return res.redirect('/');
             }
 
-            // 2. PARALELNO dohvati poruke i sidebar (conversations listu)
-            // Ovo će ubrzati učitavanje za duplo!
             const [allMessages, allConversations] = await Promise.all([
                 messageService.getMessages(conversationId),
                 conversationService.getAllConversations(userId)

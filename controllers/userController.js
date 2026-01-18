@@ -68,8 +68,7 @@ module.exports = {
             }
 
             const user = await userService.loginUser(email, password);
-            console.log(user);
-            console.log("user role: ", user.role);
+           
             const token = jwt.sign(
                 {
                     id: user.id,
@@ -87,7 +86,14 @@ module.exports = {
                 maxAge: 3600000
             });
 
-            return res.json({ message: 'Uspješna prijava!' });
+            let redirectUrl = user.role == 'Admin' ? '/admin' : '/';
+            
+            
+
+            return res.json({ 
+                message: 'Uspješna prijava!',
+                redirectUrl: redirectUrl
+            });
         } catch (error) {
 
             if (error.message == 'Email nije pronađen.') {

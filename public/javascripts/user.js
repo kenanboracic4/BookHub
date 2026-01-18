@@ -49,7 +49,7 @@ $(document).ready(($)=>{
             contentType: 'application/json',
             data: JSON.stringify(loginData),
             success: function(response){
-                window.location.href = '/books';
+                window.location.href = response.redirectUrl;
             },
             error: function(xhr){
                 const errorMessage = xhr.responseText || 'Došlo je do greške prilikom prijave.';
