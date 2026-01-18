@@ -1,55 +1,65 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
+    <title>Knjige | BookHub</title>
+    <link rel="icon" type="image/png" href="/images/favicon.png?v=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel='stylesheet' href='/stylesheets/style.css' />
     <link rel='stylesheet' href='/stylesheets/header.css' />
     <link rel='stylesheet' href='/stylesheets/card.css' />
     <link rel='stylesheet' href='/stylesheets/footer.css' />
+</head>
 
-  </head>
-  <body>
+<body>
     <%- include('partials/header') %>
-      
-    <div class="randomBooks">
-      <div class="section-title">Knjige</div>
-      
-      <% if (books && books.length > 0) { %>
-        <div class="containerBooks">
-          <% books.forEach((book) => { %>
-            <%- include('partials/card', {book: book}) %>
-          <% }) %>
-        </div>
-      <% } else { %>
-        <p>Nema dostupnih knjiga.</p>
-      <% } %>
-      
-    </div>
-     <% include partials/footer %>
-  </body>
 
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <script>
+    <div class="main-content-wrapper">
+        
+        <div class="randomBooks">
+            <div class="section-title">Knjige</div>
+
+            <% if (books && books.length > 0) { %>
+                <div class="containerBooks">
+                    <% books.forEach((book)=> { %>
+                        <%- include('partials/card', {book: book}) %>
+                    <% }) %>
+                </div>
+            <% } else { %>
+                <div style="padding: 20px; text-align: center; color: #666;">
+                    <p>Nema dostupnih knjiga.</p>
+                </div>
+            <% } %>
+
+        </div>
+
+    </div>
+    <%- include('partials/footer') %>
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
     const urlParams = new URLSearchParams(window.location.search);
-    
+
     if (urlParams.get('success') === 'true') {
-      
+
         const Toast = Swal.mixin({
             toast: true,
-            position: 'top-end', 
+            position: 'top-end',
             showConfirmButton: false,
             timer: 3000,
             timerProgressBar: true
         });
 
-        
+
         Toast.fire({
             icon: 'success',
             title: 'Knjiga uspješno objavljena!'
         });
 
-        
+
         window.history.replaceState({}, document.title, window.location.pathname);
     }
 </script>
+
 </html>
