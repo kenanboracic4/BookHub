@@ -18,7 +18,6 @@ module.exports = {
 
     async getConversationById(id) {
         return await Conversation.findByPk(id, {
-            // OPTIMIZACIJA: Samo potrebni podaci
             include: [
                 { model: Book, as: 'book', attributes: ['id', 'title', 'price', 'imageUrl'] },
                 { model: User, as: 'buyer', attributes: ['id', 'firstName', 'lastName', 'profileImage'] },
@@ -35,22 +34,22 @@ async getAllConversations(userId) {
                     { sellerId: userId }
                 ]
             },
-            attributes: ['id', 'updatedAt', 'bookId', 'buyerId', 'sellerId'], // Samo ključni podaci konverzacije
+            attributes: ['id', 'updatedAt', 'bookId', 'buyerId', 'sellerId'], 
             include: [
                 { 
                     model: Book, 
                     as: 'book', 
-                    attributes: ['title'] // SAMO naslov i slika (bez opisa!)
+                    attributes: ['title'] 
                 },
                 { 
                     model: User, 
                     as: 'buyer', 
-                    attributes: ['firstName', 'lastName', 'profileImage'] // SAMO ime i slika
+                    attributes: ['firstName', 'lastName', 'profileImage'] 
                 },
                 { 
                     model: User, 
                     as: 'seller', 
-                    attributes: ['firstName', 'lastName', 'profileImage'] // SAMO ime i slika
+                    attributes: ['firstName', 'lastName', 'profileImage'] 
                 }
             ],
             order: [['updatedAt', 'DESC']]

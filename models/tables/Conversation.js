@@ -17,7 +17,7 @@ const Conversation = sequelize.define("Conversation", {
     },
     bookId: {
     type: DataTypes.INTEGER,
-    allowNull: true, // Ovo mora biti true da bi null radio
+    allowNull: true, 
     references: {
         model: 'Books',
         key: 'id'

@@ -180,7 +180,7 @@
         </div>
 
     </div>
-
+    <% if(!user.isAdmin) { %>
     <div class="action-bar-container">
         <div class="action-bar-wrapper">
             <form action="/books/search" method="GET" class="search-filter-form" id="searchForm">
@@ -292,6 +292,7 @@
                 <% } %>
         </div>
     </div>
+    <% } %>
 </header>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
