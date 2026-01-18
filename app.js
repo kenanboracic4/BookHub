@@ -90,7 +90,7 @@ async function testConnection() {
 
 testConnection();
 
-/*
+
 sequelize.sync({ alter: true })
   .then(() => {
     console.log("Sve tabele su sinhronizovane sa bazom podataka.");
@@ -98,5 +98,5 @@ sequelize.sync({ alter: true })
   .catch((error) => {
     console.error("Greška pri sinhronizaciji tabela:", error);
   });
-*/
+  
 module.exports = app;
