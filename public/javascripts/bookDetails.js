@@ -1,8 +1,8 @@
-/* public/javascripts/bookDetail.js */
+
 
 document.addEventListener('DOMContentLoaded', function () {
     
-    // 1. TOAST NOTIFIKACIJE (Provjera URL parametara)
+    // 1. TOAST NOTIFIKACIJE
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams.get('success') === 'true') {
         const Toast = Swal.mixin({
@@ -16,17 +16,15 @@ document.addEventListener('DOMContentLoaded', function () {
             icon: 'success',
             title: 'Akcija uspješna!'
         });
-        // Ukloni parametar iz URL-a da se ne prikazuje ponovo na refresh
+      
         window.history.replaceState({}, document.title, window.location.pathname);
     }
 
-    // 2. PREUZIMANJE PODATAKA IZ EJS-a (Most)
-    // Ovi podaci su definirani u EJS fajlu prije učitavanja ove skripte
-    const context = window.bookContext || {};
-    // Ako ti trebaju roomId ili currentUserId kasnije u JS-u, dostupni su ovdje:
-    // console.log("User ID:", context.currentUserId);
 
-    // 3. AJAX PRIJAVA (REPORT)
+    const context = window.bookContext || {};
+
+
+    // 3.  PRIJAVA
     $('#reportForm').on('submit', function (e) {
         e.preventDefault();
 
@@ -59,10 +57,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-/* --- GLOBALNE FUNKCIJE ZA MODALE --- */
-/* Moraju biti na window objektu jer ih pozivaš preko onclick="" u HTML-u */
 
-// Report Modal
 window.openReportModal = function() {
     document.getElementById('reportModal').style.display = 'flex';
 };
@@ -71,20 +66,18 @@ window.closeReportModal = function() {
     document.getElementById('reportModal').style.display = 'none';
 };
 
-// Comment Modal
 window.openCommentModal = function() {
     const modal = document.getElementById('commentModal');
     modal.style.display = 'flex';
-    document.body.style.overflow = 'hidden'; // Spriječi skrolanje pozadine
+    document.body.style.overflow = 'hidden'; 
 };
 
 window.closeCommentModal = function() {
     const modal = document.getElementById('commentModal');
     modal.style.display = 'none';
-    document.body.style.overflow = 'auto'; // Vrati skrolanje
+    document.body.style.overflow = 'auto';
 };
 
-// Zatvaranje na klik izvan modala (Objedinjeno)
 window.onclick = function (event) {
     const reportModal = document.getElementById('reportModal');
     const commentModal = document.getElementById('commentModal');

@@ -3,7 +3,7 @@ const cartService = require('../services/cartService');
 const userService = require('../services/userService');
 
 
-const verifyToken = async (req, res, next) => { // 
+const verifyToken = async (req, res, next) => { 
     const token = req.cookies.token;
 
     if (!token) {
@@ -30,10 +30,6 @@ const setUserContext = async (req, res, next) => {
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         
-        // 🔴 STARI POZIV (Vjerovatno je ovo vuklo pogrešnu funkciju ili JOIN-ove)
-        // const dbUser = await userService.getUserById(decoded.id);
-
-        // 🟢 NOVI POZIV (Garantovano brz i bez JOIN-ova)
         const dbUser = await userService.getBasicUser(decoded.id); 
 
         if (!dbUser) {
@@ -42,7 +38,7 @@ const setUserContext = async (req, res, next) => {
             return next();
         }
 
-        // Provjera blokade
+       
         const now = new Date();
         if (dbUser.status === 'Blokiran' && dbUser.blockExpiresAt && new Date(dbUser.blockExpiresAt) < now) {
             await dbUser.update({ status: 'Aktivan', blockExpiresAt: null });
@@ -52,7 +48,7 @@ const setUserContext = async (req, res, next) => {
             return res.status(403).send('Korisnik je blokiran.');
         }
 
-        // Cart count (ovo je ok jer je count brz, pod uslovom da imaš index na Carts.userId)
+     
         const cartCount = await cartService.getCartCount(decoded.id);
         
         req.user = {

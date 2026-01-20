@@ -22,9 +22,6 @@ module.exports = {
             const book = await bookService.getBookById(parsedId);
             if (!book) return res.status(404).send('Knjiga nije pronađena');
 
-            // 🚀 OPTIMIZACIJA: "Fire and Forget"
-            // Ne koristimo 'await'. Pustimo bazu da to radi u pozadini dok mi odmah šaljemo odgovor korisniku.
-            // Ovo skida oko 500ms-1s sa vremena učitavanja.
             bookService.incrementBookViewCount(parsedId).catch(err => console.error("Greška pri brojanju pregleda:", err));
 
             res.render('bookDetail', { book: book });
@@ -35,8 +32,6 @@ module.exports = {
         }
     },
 
-    // ... Ostale metode (renderAddBookPage, handleAddBook, itd.) su OK, ostavi ih iste ...
-    // Samo kopiraj gornje dvije metode, a ostatak fajla ostavi kako jeste.
     async renderAddBookPage(req, res) {
            const LKData = await bookService.getAllLookupData();
            res.render('addBook', { ...LKData });

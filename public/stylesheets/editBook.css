@@ -92,7 +92,7 @@ body {
 .edit-select, 
 .edit-textarea {
     width: 100%;
-    background-color: var(--up-bg-input); /* #f8fafc */
+    background-color: var(--up-bg-input);
     border: 1px solid var(--up-border);
     border-radius: 8px;
     padding: 12px 15px; 

@@ -14,8 +14,8 @@ module.exports = {
     async getAllConversations(id){
         return await convesationDao.getAllConversations(id); 
     },
-    async markConversationAsRead(conversationId){
-        return await convesationDao.markConversationAsRead(conversationId);
+    async markConversationAsRead(conversationId, userId){
+        return await convesationDao.markConversationAsRead(conversationId, userId);
     },
 
 

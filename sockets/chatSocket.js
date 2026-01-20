@@ -14,7 +14,7 @@ module.exports = (server) => {
             console.log(`Korisnik ušao u sobu: ${roomId}`);
         });
 
-        //  Korisnik ulazi u svoju privatnu sobu (za globalne notifikacije)
+        //  Korisnik ulazi u svoju privatnu sobu 
         socket.on('joinUserGlobal', (userId) => {
             socket.join(`user_${userId}`);
             console.log(`Korisnik se pridružio svojoj globalnoj sobi: user_${userId}`);
@@ -37,7 +37,7 @@ module.exports = (server) => {
                 const messagePayload = {
                     id: newMessage.id,
                     conversationId: data.conversationId,
-                    content: newMessage.content,
+                    content: newMessage.content, 
                     senderId : newMessage.senderId,
                     createdAt: newMessage.createdAt
                 };

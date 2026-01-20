@@ -5,7 +5,7 @@
 html, body {
     margin: 0;
     padding: 0;
-    /* Koristimo min-height da osiguramo da body uvijek pokriva bar cijeli ekran */
+
     min-height: 100vh; 
 }
 
@@ -16,30 +16,27 @@ body {
     font-family: 'Segoe UI', sans-serif;
 }
 
-/* Glavni kontejner koji "gura" footer */
+
 .admin-container {
-    flex: 1 0 auto; /* Ovaj element će zauzeti sav slobodan prostor */
+    flex: 1 0 auto; 
     padding: 2rem 1rem;
     max-width: 1200px;
     margin: 0 auto;
     width: 100%;
 }
 
-/* Footer ostaje na dnu jer container iznad njega ima flex: 1 */
+
 footer {
     flex-shrink: 0;
     width: 100%;
-    /* Opcionalno: dodaj margin-top: auto kao osiguranje */
     margin-top: auto; 
 }
 
-/* Popravka za SweetAlert2 - sprečava skakanje sadržaja */
 body.swal2-shown {
     height: 100vh !important;
     overflow: hidden !important;
 }
 
-/* Header sekcija */
 .admin-header {
     display: flex;
     justify-content: space-between;
@@ -55,7 +52,7 @@ body.swal2-shown {
     margin: 0;
 }
 
-/* Dugmad */
+
 .btn-broadcast {
     background:#192436;
     color: white;
@@ -73,7 +70,6 @@ body.swal2-shown {
     box-shadow: 0 6px 12px rgba(37, 99, 235, 0.3);
 }
 
-/* Tablica */
 .table-card {
     background: white;
     border-radius: 12px;
@@ -109,7 +105,7 @@ body.swal2-shown {
     background-color: #fbfcfe;
 }
 
-/* Tagovi i statusi */
+
 .type-tag {
     background: #fee2e2;
     color: #ef4444;
@@ -129,7 +125,6 @@ body.swal2-shown {
     line-height: 1.5;
 }
 
-/* Akcijska dugmad u tablici */
 .btn-small {
     padding: 8px 14px;
     border-radius: 6px;

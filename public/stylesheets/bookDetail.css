@@ -459,7 +459,6 @@ body {
     color: #a4b0be;
 }
 
-/* Forme unutar modala */
 .form-group {
     margin-bottom: 15px;
 }
@@ -515,11 +514,10 @@ body {
     background: #ff6b81;
 }
 
-/* --- MODAL ZA PREGLED KOMENTARA --- */
 .comment-modal-card {
     background: white;
     width: 95%;
-    max-width: 500px; /* Kompaktan dizajn */
+    max-width: 500px;
     max-height: 75vh;
     display: flex;
     flex-direction: column;
@@ -535,7 +533,6 @@ body {
     padding: 20px 25px;
 }
 
-/* Stil svakog komentara */
 .comment-item {
     display: flex;
     gap: 15px;
@@ -547,7 +544,6 @@ body {
     border-bottom: none;
 }
 
-/* Avatar ikona glave */
 .comment-avatar-circle {
     width: 42px;
     height: 42px;
@@ -581,13 +577,11 @@ body {
     margin: 0;
 }
 
-/* Animacija otvaranja */
 @keyframes modalFadeIn {
     from { opacity: 0; transform: scale(0.95); }
     to { opacity: 1; transform: scale(1); }
 }
 
-/* Scrollbar za listu */
 .comments-list-container::-webkit-scrollbar {
     width: 5px;
 }

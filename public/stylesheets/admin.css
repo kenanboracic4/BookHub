@@ -62,7 +62,7 @@
     margin: 0;
 }
 
-/* Responzivnost za tablet i mobitel */
+
 @media (max-width: 1024px) {
     .admin-dashboard-wrapper {
         width: 90%;
@@ -71,7 +71,7 @@
 
 @media (max-width: 768px) {
     .admin-grid {
-        grid-template-columns: 1fr; /* Na mobitelu jedna kolona */
+        grid-template-columns: 1fr;
         grid-template-rows: auto;
     }
     .admin-dashboard-wrapper {

@@ -193,14 +193,12 @@ body {
     align-items: flex-start; 
 }
 
-/* Wrapper da drži ikonu i meni na okupu */
 .notification-wrapper {
     position: relative;
     display: flex;
     align-items: center;
 }
 
-/* Stil za crveni kružić (brojač) - isti kao tvoj cart badge */
 .notification-count {
     position: absolute;
     top: -5px;
@@ -219,12 +217,11 @@ body {
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-/* Padajući meni - sakriven po defaultu */
 .notification-dropdown {
-    display: none; /* Sakriveno */
+    display: none; 
     position: absolute;
-    top: 140%; /* Malo ispod ikone */
-    right: -10px; /* Poravnato desno */
+    top: 140%; 
+    right: -10px; 
     width: 320px;
     background: white;
     border: 1px solid var(--border);
@@ -234,18 +231,15 @@ body {
     animation: slideDownNotif 0.2s ease-out;
 }
 
-/* Animacija pojave */
 @keyframes slideDownNotif {
     from { opacity: 0; transform: translateY(-10px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* Prikazi meni kad ima klasu 'active' */
 .notification-dropdown.active {
     display: block;
 }
 
-/* Zaglavlje menija */
 .notif-header {
     padding: 16px;
     border-bottom: 1px solid var(--border);
@@ -269,13 +263,11 @@ body {
     text-decoration: underline;
 }
 
-/* Lista notifikacija */
 .notif-list {
     max-height: 350px;
     overflow-y: auto;
 }
 
-/* Pojedinačna notifikacija */
 .notif-item {
     display: flex;
     padding: 12px 16px;
@@ -292,7 +284,6 @@ body {
     background-color: #f8fafc;
 }
 
-/* Stil za nepročitane - blago plava pozadina */
 .notif-item.unread {
     background-color: #f0f9ff;
 }

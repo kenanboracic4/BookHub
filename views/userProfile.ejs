@@ -216,56 +216,14 @@
 
         </div>
 
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-        <script src="/javascripts/book.js"></script>
-        <script>
-            const urlParams = new URLSearchParams(window.location.search);
-            if (urlParams.get('success') === 'true') {
-                const Toast = Swal.mixin({
-                    toast: true,
-                    position: 'top-end',
-                    showConfirmButton: false,
-                    timer: 3000,
-                    timerProgressBar: true,
-                    didOpen: (toast) => {
-                        toast.addEventListener('mouseenter', Swal.stopTimer)
-                        toast.addEventListener('mouseleave', Swal.resumeTimer)
-                    }
-                });
-                Toast.fire({
-                    icon: 'success',
-                    title: 'Profil uspješno ažuriran!'
-                });
-                window.history.replaceState({}, document.title, window.location.pathname);
-            }
-
-            function filterBooks() {
-                const status = document.getElementById('statusFilter').value;
-                const date = document.getElementById('dateFilter').value;
-                const price = document.getElementById('priceFilter').value;
-                const title = document.getElementById('titleFilter').value;
-
-                const params = new URLSearchParams();
-
-
-                if (status !== 'all') params.append('status', status);
-
-
-                if (price !== "") {
-                    params.append('price', price);
-                } else if (title !== "") {
-                    params.append('title', title);
-                } else if (date !== "") {
-                    params.append('date', date);
-                }
-                console.log(params)
-
-                window.location.href = `${window.location.pathname}?${params.toString()}`;
-            }
-            document.getElementById('filterBtn').addEventListener('click', filterBooks);
-        </script>
+      
 
         <% include partials/footer %>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        
+        <script src="/javascripts/book.js"></script>
+
+        <script src="/javascripts/userProfile.js"></script>
 </body>
 
 </html>

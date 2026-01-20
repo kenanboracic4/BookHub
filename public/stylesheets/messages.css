@@ -230,13 +230,11 @@
     color: white;
     border-bottom-right-radius: 4px;
 }
-/* Stil za nepročitanu konverzaciju (cijeli div) */
 .conversation-box.unread-conversation {
-    background-color: #f0f7ff; /* Svijetlo plava ili neka druga boja koja odudara */
-    border-left: 4px solid #007bff; /* Plava crta s lijeve strane */
+    background-color: #f0f7ff; 
+    border-left: 4px solid #007bff; 
 }
 
-/* Ako želiš da tekst bude tamniji/boldan */
 .unread-text {
     font-weight: 600;
     color: #333;
@@ -310,7 +308,6 @@
     font-weight: 600;
 }
 
-/* Dugme u zaglavlju */
 .btn-report-user {
     background: transparent;
     border: 1px solid #ff4757;
@@ -330,7 +327,6 @@
     color: white;
 }
 
-/* Modal Overlay */
 .report-modal-overlay {
     position: fixed;
     top: 0;
@@ -345,7 +341,6 @@
     backdrop-filter: blur(3px);
 }
 
-/* Modal Kartica */
 .report-modal-card {
     background: white;
     width: 90%;
@@ -378,7 +373,6 @@
     color: #a4b0be;
 }
 
-/* Forme unutar modala */
 .form-group {
     margin-bottom: 15px;
 }

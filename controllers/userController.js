@@ -12,7 +12,7 @@ module.exports = {
             ...data
         });
     },
-    // post (ajax) register
+   
     async registerUser(req, res) {
         try {
 

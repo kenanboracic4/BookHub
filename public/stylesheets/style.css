@@ -1,4 +1,4 @@
-/* Osigurava da stranica uvijek zauzima punu visinu ekrana */
+
 html, body {
     height: 100%;
     margin: 0;
@@ -12,7 +12,6 @@ body {
     background: #fffffff8;
 }
 
-/* Glavni sadržaj koji se rasteže i gura footer dole */
 .main-content-wrapper {
     flex: 1 0 auto;
     display: flex;
@@ -43,7 +42,6 @@ body {
     grid-template-columns: repeat(6, 1fr);
 }
 
-/* Footer ostaje na dnu jer mu ne damo da se skuplja */
 footer {
     flex-shrink: 0;
 }

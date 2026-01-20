@@ -26,7 +26,7 @@ module.exports = {
         });
     },
 
-async getAllConversations(userId) {
+    async getAllConversations(userId) {
         return await Conversation.findAll({
             where: {
                 [Op.or]: [
@@ -34,22 +34,31 @@ async getAllConversations(userId) {
                     { sellerId: userId }
                 ]
             },
-            attributes: ['id', 'updatedAt', 'bookId', 'buyerId', 'sellerId'], 
+            attributes: ['id', 'updatedAt', 'bookId', 'buyerId', 'sellerId'],
             include: [
-                { 
-                    model: Book, 
-                    as: 'book', 
-                    attributes: ['title'] 
+                {
+                    model: Book,
+                    as: 'book',
+                    attributes: ['title']
                 },
-                { 
-                    model: User, 
-                    as: 'buyer', 
-                    attributes: ['firstName', 'lastName', 'profileImage'] 
+                {
+                    model: User,
+                    as: 'buyer',
+                    attributes: ['firstName', 'lastName', 'profileImage']
                 },
-                { 
-                    model: User, 
-                    as: 'seller', 
-                    attributes: ['firstName', 'lastName', 'profileImage'] 
+                {
+                    model: User,
+                    as: 'seller',
+                    attributes: ['firstName', 'lastName', 'profileImage']
+                },
+                {
+                    model: Message,
+                    as: 'messages',
+                    required: false, 
+                    where: {
+                        isRead: false,
+                        senderId: { [Op.ne]: userId } 
+                    }
                 }
             ],
             order: [['updatedAt', 'DESC']]
@@ -57,16 +66,14 @@ async getAllConversations(userId) {
     },
 
     async markConversationAsRead(conversationId, userId) {
-    // Fire and forget - Ne stavljamo 'await' ispred, neka radi u pozadini
-    // Pazi: userId je onaj KOJI ČITA (tvoj ID), pa setujemo isRead=true porukama gdje TI nisi pošiljalac
-    Message.update({ isRead: true }, {
-        where: { 
-            conversationId: conversationId,
-            senderId: { [Op.ne]: userId }, // Ne označavaj svoje poruke kao pročitane (ionako su pročitane)
-            isRead: false 
-        }
-    }).catch(err => console.error(err));
-},
+        Message.update({ isRead: true }, {
+            where: {
+                conversationId: conversationId,
+                senderId: { [Op.ne]: userId },
+                isRead: false
+            }
+        }).catch(err => console.error(err));
+    },
 
     async findOrCreateSystemConversation(userId, adminId) {
         return await Conversation.findOrCreate({
@@ -75,7 +82,7 @@ async getAllConversations(userId) {
                     { buyerId: userId, sellerId: adminId },
                     { buyerId: adminId, sellerId: userId }
                 ],
-                bookId: null 
+                bookId: null
             },
             defaults: { buyerId: userId, sellerId: adminId, bookId: null }
         });

@@ -70,7 +70,6 @@ module.exports = {
                 return res.redirect('back');
             }
 
-            // Prvo pokušaj naći, ako nema, kreiraj
             let conversation = await conversationService.getConversation(buyerId, sellerId, bookId);
 
             if (!conversation) {
@@ -88,9 +87,9 @@ module.exports = {
     async markConversationAsRead(req, res) {
         try {
             const conversationId = req.params.conversationId;
-            // Ne moramo čekati await ako ne vraćamo podatke odmah, 
-            // ali radi sigurnosti ostavit ćemo ga.
-            await conversationService.markConversationAsRead(conversationId);
+            const userId = req.user.id;
+
+            await conversationService.markConversationAsRead(conversationId, userId);
             return res.status(200).json({ message: 'Uspješno.' });
         } catch (error) {
             console.error(error);

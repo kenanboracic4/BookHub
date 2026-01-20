@@ -19,12 +19,12 @@ module.exports = {
     },
    getRandomBooks() {
         return Book.findAll({
-            order: Sequelize.literal('RANDOM()'), // Za Postgres. Ako je MySQL koristi 'RAND()'
+            order: Sequelize.literal('RANDOM()'), 
             limit: 12,
             include: [{
                 model: GenresLK,
                 as: 'genre',
-                attributes: ['name'] // Uzmi samo ime, ne sve kolone
+                attributes: ['name'] 
             }],
             raw: true,
             nest: true
@@ -92,14 +92,14 @@ module.exports = {
             { model: LanguagesLK, as: 'language' },
             { model: BookConditionsLK, as: 'condition' },
             { model: LocationsLK, as: 'location' },
-            // DODAJ OVO ZA KOMENTARE:
+           
             {
                 model: BookRating,
-                as: 'bookReviews', // Alias iz tvojih asocijacija
+                as: 'bookReviews',
                 include: [
                     {
                         model: Users,
-                        as: 'reviewer', // Ko je ostavio komentar
+                        as: 'reviewer',
                         attributes: ['firstName', 'lastName', 'profileImage']
                     }
                 ]

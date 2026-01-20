@@ -52,7 +52,7 @@ module.exports = {
             throw new Error('REPORT_NOT_FOUND');
         }
 
-        // Izvršavanje sankcije ako je akcija 'action'
+        
         if (action === 'action') {
             if (report.type === 'KORISNIK') {
                 await reportDao.banUser(report.targetId);
@@ -60,8 +60,6 @@ module.exports = {
                 await reportDao.deleteBook(report.targetId);
             }
         }
-
-        // Brisanje prijave (za oba slučaja: dismiss i action)
         await reportDao.deleteReport(id);
 
         return {
@@ -70,7 +68,7 @@ module.exports = {
         };
     },
    async createReport(reportData) {
-    // Možeš dodati validaciju ovdje (npr. da korisnik ne može prijaviti sam sebe)
+   
     if (reportData.reporterId == reportData.targetId) {
         throw new Error("Ne možete prijaviti sami sebe.");
     }

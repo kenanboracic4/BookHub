@@ -103,7 +103,7 @@ BookRating.belongsTo(User, { foreignKey: 'userId', as: 'reviewer' });
 Book.hasMany(BookRating, { foreignKey: 'bookId', as: 'bookReviews' });
 BookRating.belongsTo(Book, { foreignKey: 'bookId', as: 'book' });
 
-// Opcionalno: Direktna Many-to-Many veza za knjige
+// Direktna Many-to-Many veza za knjige
 User.belongsToMany(Book, { 
     through: BookRating, 
     foreignKey: 'userId', 
