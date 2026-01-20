@@ -97,14 +97,14 @@
                                 </div>
 
                             </div>
-                            <% if(user && user.role == 'Kupac'){ %>
-                            <div class="bd-input-group bd-report-align">
-                                <label>Žalba</label> <button type="button" class="btn-report-user-new"
-                                    onclick="openReportModal()">
-                                    <i class="fa-solid fa-flag"></i> Prijavi oglas
-                                </button>
-                            </div>
-                            <% } %>
+                            <% if(user && user.role=='Kupac' ){ %>
+                                <div class="bd-input-group bd-report-align">
+                                    <label>Žalba</label> <button type="button" class="btn-report-user-new"
+                                        onclick="openReportModal()">
+                                        <i class="fa-solid fa-flag"></i> Prijavi oglas
+                                    </button>
+                                </div>
+                                <% } %>
                         </div>
 
                         <div class="bd-description">
@@ -145,12 +145,12 @@
                             </div>
                             <% } %>
 
-                             <div class="bd-input-group bd-report-align">
-                                <label>Komentari</label> <button type="button" class="btn-comment-book"
-                                    onclick="openCommentModal()">
-                                    <i class="fa-solid fa-flag"></i> Komentari
-                                </button>
-                            </div>
+                                <div class="bd-input-group bd-report-align">
+                                    <label>Komentari</label> <button type="button" class="btn-comment-book"
+                                        onclick="openCommentModal()">
+                                        <i class="fa-solid fa-flag"></i> Komentari
+                                    </button>
+                                </div>
                     </div>
                 </div>
             </div>
@@ -158,176 +158,98 @@
 
 
         <div id="reportModal" class="report-modal-overlay" style="display: none;">
-    <div class="report-modal-card">
-        <div class="modal-header">
-            <h4><i class="fa-solid fa-triangle-exclamation"></i> Prijavi oglas</h4>
-            <button class="close-modal" onclick="closeReportModal()">&times;</button>
-        </div>
-        <form id="reportForm">
-            <input type="hidden" name="targetId" value="<%= book.id %>">
-            
-            <div class="form-group">
-                <label>Razlog prijave:</label>
-                <select name="reason" required>
-                    <option value="">Odaberite razlog...</option>
-                    <option value="Prevara">Prevara / Lažni podaci</option>
-                    <option value="Neprikladan sadržaj">Neprikladan sadržaj ili slike</option>
-                    <option value="Pogrešna kategorija">Pogrešna kategorija/žanr</option>
-                    <option value="Ostalo">Ostalo</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>Detaljan opis:</label>
-                <textarea name="description" placeholder="Objasnite zašto prijavljujete ovaj oglas..." required></textarea>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn-secondary" onclick="closeReportModal()">Odustani</button>
-                <button type="submit" class="btn-danger">Pošalji prijavu</button>
-            </div>
-        </form>
-    </div>
-</div>
-
-<div id="commentModal" class="report-modal-overlay" style="display: none;">
-    <div class="comment-modal-card">
-        
-        <div class="modal-header" style="padding: 20px 25px; border-bottom: 1px solid #f1f5f9;">
-            <h4 style="margin:0; font-size: 1.1rem;">
-                <i class="fa-solid fa-comments" style="margin-right: 8px; color: #64748b;"></i> 
-                Recenzije knjige
-            </h4>
-            <button class="close-modal" onclick="closeCommentModal()">&times;</button>
-        </div>
-
-        <div class="comments-list-container">
-            <% if (book.bookReviews && book.bookReviews.length > 0) { %>
-                <% book.bookReviews.forEach(rating => { %>
-                    <div class="comment-item">
-                        <div class="comment-avatar-circle">
-                            <i class="fa-solid fa-user"></i>
-                        </div>
-                        
-                        <div class="comment-content-box">
-                            <span class="comment-user-fullname">
-                                <%= rating.reviewer ? (rating.reviewer.firstName + ' ' + rating.reviewer.lastName) : 'Anonimni korisnik' %>
-                            </span>
-                            <p class="comment-text-body">
-                                <%= rating.comment || 'Korisnik nije ostavio tekstualni komentar.' %>
-                            </p>
-                        </div>
-                    </div>
-                <% }) %>
-            <% } else { %>
-                <div style="text-align: center; padding: 50px 0; color: #94a3b8;">
-                    <p style="margin:0;">Nema dostupnih recenzija za ovu knjigu.</p>
+            <div class="report-modal-card">
+                <div class="modal-header">
+                    <h4><i class="fa-solid fa-triangle-exclamation"></i> Prijavi oglas</h4>
+                    <button class="close-modal" onclick="closeReportModal()">&times;</button>
                 </div>
-            <% } %>
+                <form id="reportForm">
+                    <input type="hidden" name="targetId" value="<%= book.id %>">
+
+                    <div class="form-group">
+                        <label>Razlog prijave:</label>
+                        <select name="reason" required>
+                            <option value="">Odaberite razlog...</option>
+                            <option value="Prevara">Prevara / Lažni podaci</option>
+                            <option value="Neprikladan sadržaj">Neprikladan sadržaj ili slike</option>
+                            <option value="Pogrešna kategorija">Pogrešna kategorija/žanr</option>
+                            <option value="Ostalo">Ostalo</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Detaljan opis:</label>
+                        <textarea name="description" placeholder="Objasnite zašto prijavljujete ovaj oglas..."
+                            required></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn-secondary" onclick="closeReportModal()">Odustani</button>
+                        <button type="submit" class="btn-danger">Pošalji prijavu</button>
+                    </div>
+                </form>
+            </div>
         </div>
 
-        <div class="modal-footer" style="padding: 15px 25px; background: #f8fafc; border-top: 1px solid #f1f5f9; display: flex; justify-content: flex-end;">
-            <button type="button" class="btn-secondary" style="padding: 8px 20px;" onclick="closeCommentModal()">Zatvori</button>
+        <div id="commentModal" class="report-modal-overlay" style="display: none;">
+            <div class="comment-modal-card">
+
+                <div class="modal-header" style="padding: 20px 25px; border-bottom: 1px solid #f1f5f9;">
+                    <h4 style="margin:0; font-size: 1.1rem;">
+                        <i class="fa-solid fa-comments" style="margin-right: 8px; color: #64748b;"></i>
+                        Recenzije knjige
+                    </h4>
+                    <button class="close-modal" onclick="closeCommentModal()">&times;</button>
+                </div>
+
+                <div class="comments-list-container">
+                    <% if (book.bookReviews && book.bookReviews.length> 0) { %>
+                        <% book.bookReviews.forEach(rating=> { %>
+                            <div class="comment-item">
+                                <div class="comment-avatar-circle">
+                                    <i class="fa-solid fa-user"></i>
+                                </div>
+
+                                <div class="comment-content-box">
+                                    <span class="comment-user-fullname">
+                                        <%= rating.reviewer ? (rating.reviewer.firstName + ' ' +
+                                            rating.reviewer.lastName) : 'Anonimni korisnik' %>
+                                    </span>
+                                    <p class="comment-text-body">
+                                        <%= rating.comment || 'Korisnik nije ostavio tekstualni komentar.' %>
+                                    </p>
+                                </div>
+                            </div>
+                            <% }) %>
+                                <% } else { %>
+                                    <div style="text-align: center; padding: 50px 0; color: #94a3b8;">
+                                        <p style="margin:0;">Nema dostupnih recenzija za ovu knjigu.</p>
+                                    </div>
+                                    <% } %>
+                </div>
+
+                <div class="modal-footer"
+                    style="padding: 15px 25px; background: #f8fafc; border-top: 1px solid #f1f5f9; display: flex; justify-content: flex-end;">
+                    <button type="button" class="btn-secondary" style="padding: 8px 20px;"
+                        onclick="closeCommentModal()">Zatvori</button>
+                </div>
+            </div>
         </div>
-    </div>
-</div>
-    
+
         <% include partials/footer %>
             <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
             <script src="/javascripts/book.js"></script>
-            <script>
-                const urlParams = new URLSearchParams(window.location.search);
-                if (urlParams.get('success') === 'true') {
-                    const Toast = Swal.mixin({
-                        toast: true,
-                        position: 'top-end',
-                        showConfirmButton: false,
-                        timer: 3000,
-                        timerProgressBar: true,
-                    });
-                    Toast.fire({
-                        icon: 'success',
-                        title: 'Akcija uspješna!'
-                    });
-                    window.history.replaceState({}, document.title, window.location.pathname);
-                }
-               const roomId = "<%= typeof conversation !== 'undefined' && conversation ? conversation.id : '' %>";
-
-// Provjeravamo da li user postoji (da izbjegnemo grešku ako posjetilac nije ulogovan)
-const currentUserId = "<%= typeof user !== 'undefined' && user ? user.id : '' %>";
-
-                function openReportModal() {
-                    document.getElementById('reportModal').style.display = 'flex';
-                }
-
-                function closeReportModal() {
-                    document.getElementById('reportModal').style.display = 'none';
-                }
-
-                // Zatvori modal ako se klikne van njega
-                window.onclick = function (event) {
-                    let modal = document.getElementById('reportModal');
-                    if (event.target == modal) {
-                        closeReportModal();
-                    }
-                }
-
-              $(document).ready(function () {
-    $('#reportForm').on('submit', function (e) {
-        e.preventDefault();
-
-        const formData = {
-            reportedUserId: $('input[name="targetId"]').val(), // Ovdje je to zapravo ID knjige
-            reason: $('select[name="reason"]').val(),
-            description: $('textarea[name="description"]').val(),
-            type: 'KNJIGA' // Ključna promjena: Tip je sada KNJIGA
-        };
-
-        $.ajax({
-            url: '/admin/reports/user', // Koristimo istu rutu jer tvoj kontroler prima te parametre
-            method: 'POST',
-            data: formData,
-            success: function (response) {
-                closeReportModal();
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Prijavljeno!',
-                    text: 'Hvala vam. Administratori će pregledati ovaj oglas.',
-                    confirmButtonColor: '#2563eb'
-                });
-                $('#reportForm')[0].reset();
-            },
-            error: function (err) {
-                console.error(err);
-                Swal.fire('Greška!', 'Došlo je do problema prilikom slanja prijave.', 'error');
-            }
-        });
-    });
-});
-
-function openCommentModal() {
-    const modal = document.getElementById('commentModal');
-    modal.style.display = 'flex';
-    document.body.style.overflow = 'hidden'; // Isključi scroll pozadine
-}
-
-function closeCommentModal() {
-    const modal = document.getElementById('commentModal');
-    modal.style.display = 'none';
-    document.body.style.overflow = 'auto'; // Vrati scroll pozadine
-}
-
-// Proširi tvoj postojeći window.onclick listener da pokrije oba modala
-window.onclick = function (event) {
-    const reportModal = document.getElementById('reportModal');
-    const commentModal = document.getElementById('commentModal');
+            
+          <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> 
     
-    if (event.target === reportModal) {
-        closeReportModal();
-    }
-    if (event.target === commentModal) {
-        closeCommentModal();
-    }
-}
-            </script>
+    <script>
+        window.bookContext = {
+            roomId: "<%= typeof conversation !== 'undefined' && conversation ? conversation.id : '' %>",
+            currentUserId: "<%= typeof user !== 'undefined' && user ? user.id : '' %>"
+        };
+    </script>
+
+     <script src="/javascripts/bookDetails.js"></script>
+
+   
 </body>
 
 </html>
