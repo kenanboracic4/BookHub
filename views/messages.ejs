@@ -163,62 +163,26 @@
 
     <% include partials/footer %>
 
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="/socket.io/socket.io.js"></script>
+
     <script>
-        const roomId = "<%= conversation ? conversation.id : '' %>";
-        const currentUserId = "<%= user.id %>";
-
-        function openReportModal() {
-            document.getElementById('reportModal').style.display = 'flex';
-        }
-
-        function closeReportModal() {
-            document.getElementById('reportModal').style.display = 'none';
-        }
-
-        // Zatvori modal ako se klikne van njega
-        window.onclick = function(event) {
-            let modal = document.getElementById('reportModal');
-            if (event.target == modal) {
-                closeReportModal();
-            }
-        }
-
-        $(document).ready(function() {
-    $('#reportForm').on('submit', function(e) {
-        e.preventDefault();
-
-        // Prikupljanje podataka iz forme
-        const formData = {
-            reportedUserId: $('input[name="reportedUserId"]').val(),
-            reason: $('select[name="reason"]').val(),
-            description: $('textarea[name="description"]').val(),
-            // Tip šaljemo kao KORISNIK jer prijavljujemo osobu iz chata
-            type: 'KORISNIK' 
+        
+        window.chatConfig = {
+            roomId: "<%= conversation ? conversation.id : '' %>",
+            currentUserId: "<%= user.id %>"
         };
 
-        $.ajax({
-            url: '/admin/reports/user', // Ruta koju ćemo napraviti
-            method: 'POST',
-            data: formData,
-            success: function(response) {
-                closeReportModal();
-                // Koristimo SweetAlert ako ga imaš, ako ne, obični alert
-               
-                    Swal.fire('Poslano!', 'Vaša prijava je zaprimljena.', 'success');
-               
-                $('#reportForm')[0].reset(); // Resetuj formu
-            },
-            error: function(err) {
-                console.error(err);
-                Swal.fire('Greška!', 'Došlo je do greške prilikom slanja prijave.', 'error');
-            }
-        });
-    });
-});
+        
+        var roomId = window.chatConfig.roomId;
+        var currentUserId = window.chatConfig.currentUserId;
     </script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="/socket.io/socket.io.js"></script>
+
+    <script src="/javascripts/messages.js"></script>
+    
     <script src="/javascripts/chat.js"></script>
+
 </body>
 </html>
