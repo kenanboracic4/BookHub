@@ -45,6 +45,13 @@ app.use(lkdata);
 app.use(notificationsCount);
 app.use(messageCount);
 
+
+app.get("/pingdb", async (req, res) => {
+  const t0 = Date.now();
+  await sequelize.query("SELECT 1");
+  res.json({ ms: Date.now() - t0 });
+});
+
 app.use('/', indexRouter);
 app.use('/books', booksRouter);
 app.use('/user', userRouter);

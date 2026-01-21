@@ -21,6 +21,11 @@ module.exports = {
         return Book.findAll({
             order: Sequelize.literal('RANDOM()'), 
             limit: 12,
+            where:{
+                id: {
+                    [Op.ne]: 1
+                }
+            },
             include: [{
                 model: GenresLK,
                 as: 'genre',
@@ -34,6 +39,11 @@ module.exports = {
         return Book.findAll({
             order: Book.sequelize.random(),
             limit: 32,
+             where:{
+                id: {
+                    [Op.ne]: 1
+                }
+            },
             include: [{
                 model: GenresLK,
                 as: 'genre'
@@ -46,6 +56,11 @@ module.exports = {
         return Book.findAll({
             order: [["viewCount", 'DESC']],
             limit: 12,
+             where:{
+                id: {
+                    [Op.ne]: 1
+                }
+            },
             include: [{
                 model: GenresLK,
                 as: 'genre'
@@ -84,15 +99,18 @@ module.exports = {
         });
     },
 
-    async findBookById(id) {
-        return await Book.findByPk(id, {
+   async findBookById(id) {
+    return await Book.findByPk(id, {
         include: [
-            { model: Users, as: 'seller' },
-            { model: GenresLK, as: 'genre' },
-            { model: LanguagesLK, as: 'language' },
-            { model: BookConditionsLK, as: 'condition' },
-            { model: LocationsLK, as: 'location' },
-           
+            { 
+                model: Users, 
+                as: 'seller', 
+                attributes: ['id', 'firstName', 'lastName', 'profileImage'] 
+            },
+            { model: GenresLK, as: 'genre', attributes: ['id', 'name'] },
+            { model: LanguagesLK, as: 'language', attributes: ['id', 'name'] },
+            { model: BookConditionsLK, as: 'condition', attributes: ['id', 'name'] },
+            { model: LocationsLK, as: 'location', attributes: ['id', 'name'] },
             {
                 model: BookRating,
                 as: 'bookReviews',
@@ -106,7 +124,7 @@ module.exports = {
             }
         ]
     });
-    },
+},
     getAllGenres() {
         return GenresLK.findAll();
     },

@@ -2,6 +2,8 @@
 html, body {
     height: 100%;
     margin: 0;
+    padding: 0;
+
 }
 
 body {
@@ -10,6 +12,7 @@ body {
     padding: 0px;
     font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
     background: #fffffff8;
+    min-height: 100vh;;
 }
 
 .main-content-wrapper {

@@ -23,10 +23,11 @@ var server = http.createServer(app);
 
 /** 
  * Socket server
- */
+*/ 
 const chatSocket = require('../sockets/chatSocket');
 const  io = chatSocket(server); 
 app.set('io', io);
+
 /**
  * Listen on provided port, on all network interfaces.
  */

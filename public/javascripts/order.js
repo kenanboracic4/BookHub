@@ -3,7 +3,7 @@ $(document).ready(function () {
     // 1. CHECKOUT (Kupovina iz korpe)
     $(document).on('click', '#checkoutBtn', function (e) {
         e.preventDefault();
-        console.log("Šaljem AJAX za checkout...");
+        
 
         $.ajax({
             url: '/orders/checkout',

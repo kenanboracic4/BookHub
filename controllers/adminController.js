@@ -146,7 +146,7 @@ module.exports  ={
             const avgBooksPerSeller = await bookService.getAvgBooksPerSeller();
             const popularGenres = await bookService.getPopularGenres();
 
-            console.log(popularGenres)
+          
 
             res.render('adminStats',{
                 users: users,
@@ -186,9 +186,7 @@ module.exports  ={
            
             const io = req.app.get('io'); 
 
-            console.log("--- DEBUG START ---");
-        console.log("Admin ID:", adminId);
-        console.log("Sadržaj:", content);
+        
             const count = await AdminService.broadcastMessage(adminId, content, io);
 
             res.status(200).json({ 
@@ -198,7 +196,7 @@ module.exports  ={
         } catch (error) {
             console.error("--- ADMIN BROADCAST ERROR ---");
         console.error(error); 
-        console.log("-----------------------------");
+        
             res.status(500).json({ success: false, error: error.message });
         }
     },

@@ -7,6 +7,7 @@ const Users = require('../models/associations').User;
 const Book = require('../models/associations').Book;
 const UserRating = require('../models/associations').UserRating;
 const locationsLK = require('../models/associations').LocationsLK;
+const sequelizeInstance = require('../config/db');
 
 const { Op, Sequelize } = require('sequelize');
 module.exports = {
@@ -97,19 +98,48 @@ module.exports = {
         });
     },
 
-    async updateUser(userId, updateData, genreIds, languageIds) {
-        const user = await Users.findByPk(userId);
-        if (!user) throw new Error('Korisnik nije pronađen');
+ async updateUser(userId, updateData, genreIds, languageIds) {
+    // 1. Koristimo 'sequelizeInstance' koji si uvezao na vrhu fajla
+    const t = await sequelizeInstance.transaction();
 
+    try {
+        // 2. Pronalazimo korisnika unutar transakcije
+        const user = await Users.findByPk(userId, { transaction: t });
+        
+        if (!user) {
+            // Ako korisnik ne postoji, prekidamo i vraćamo grešku
+            await t.rollback();
+            throw new Error('Korisnik nije pronađen');
+        }
 
-        await user.update(updateData);
+        // 3. Ažuriramo osnovne podatke
+        await user.update(updateData, { transaction: t });
 
+        // 4. Pripremamo niz zadataka za Many-to-Many relacije
+        const associationTasks = [];
 
-        if (genreIds) await user.setGenres(genreIds);
-        if (languageIds) await user.setLanguages(languageIds);
+        if (genreIds !== undefined) {
+            associationTasks.push(user.setGenres(genreIds, { transaction: t }));
+        }
+        
+        if (languageIds !== undefined) {
+            associationTasks.push(user.setLanguages(languageIds, { transaction: t }));
+        }
 
+        // 5. Izvršavamo asocijacije paralelno radi brzine
+        await Promise.all(associationTasks);
+
+        // 6. Sve je OK, snimamo promjene trajno
+        await t.commit();
+        
         return user;
-    },
+    } catch (error) {
+        // 7. Ako bilo šta pukne, poništavamo sve promjene u bazi
+        if (t) await t.rollback();
+        console.error("Greška u DAO updateUser:", error);
+        throw error;
+    }
+},
 
     async updateUserRole(userId) {
         const user = await Users.findByPk(userId);

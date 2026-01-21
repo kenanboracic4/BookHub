@@ -40,7 +40,6 @@ Book.belongsTo(BookConditionsLK, { foreignKey: 'conditionId', as: 'condition' })
 LocationsLK.hasMany(Book, { foreignKey: 'locationId' });
 Book.belongsTo(LocationsLK, { foreignKey: 'locationId', as: 'location' });
 
-// Korisnik i njegova lokacija
 LocationsLK.hasMany(User, { foreignKey: 'locationId' });
 User.belongsTo(LocationsLK, { foreignKey: 'locationId', as: 'location' });
 
@@ -71,14 +70,13 @@ Cart.belongsTo(User, { foreignKey: 'userId' });
 Book.hasMany(Cart, { foreignKey: 'bookId' });
 Cart.belongsTo(Book, { foreignKey: 'bookId' });
 
-// Narudžbe (Kupovina i Prodaja)
 User.hasMany(Order, { foreignKey: 'buyerId', as: 'purchases' });
 Order.belongsTo(User, { foreignKey: 'buyerId', as: 'buyer' });
 
 User.hasMany(Order, { foreignKey: 'sellerId', as: 'sales' });
 Order.belongsTo(User, { foreignKey: 'sellerId', as: 'seller' });
 
-// Stavke narudžbe
+
 Order.hasMany(OrderItem, { foreignKey: 'orderId', as: 'items' });
 OrderItem.belongsTo(Order, { foreignKey: 'orderId' });
 
@@ -89,21 +87,19 @@ OrderItem.belongsTo(Book, { foreignKey: 'bookId' , as: 'book' });
 // 5. OCJENJIVANJE (Ratings)
 // ==========================================
 
-// --- Ocjenjivanje Korisnika (User to User) ---
 User.hasMany(UserRating, { foreignKey: 'raterId', as: 'givenUserRatings' });
 UserRating.belongsTo(User, { foreignKey: 'raterId', as: 'rater' });
 
 User.hasMany(UserRating, { foreignKey: 'userId', as: 'receivedUserRatings' });
 UserRating.belongsTo(User, { foreignKey: 'userId', as: 'user' });
 
-// --- Ocjenjivanje Knjiga (Book Ratings) ---
 User.hasMany(BookRating, { foreignKey: 'userId', as: 'bookRatings' });
 BookRating.belongsTo(User, { foreignKey: 'userId', as: 'reviewer' });
 
 Book.hasMany(BookRating, { foreignKey: 'bookId', as: 'bookReviews' });
 BookRating.belongsTo(Book, { foreignKey: 'bookId', as: 'book' });
 
-// Direktna Many-to-Many veza za knjige
+
 User.belongsToMany(Book, { 
     through: BookRating, 
     foreignKey: 'userId', 
@@ -130,25 +126,25 @@ Notification.belongsTo(User, { foreignKey: 'senderId', as: 'sender' });
 // 7. CHAT SISTEM
 // ==========================================
 
-// --- Relacije za Conversations ---
-// Povezivanje kupca sa konverzacijama
+
+
 User.hasMany(Conversation, { foreignKey: 'buyerId', as: 'buyerConversations' });
 Conversation.belongsTo(User, { foreignKey: 'buyerId', as: 'buyer' });
 
-// Povezivanje prodavača sa konverzacijama
+
 User.hasMany(Conversation, { foreignKey: 'sellerId', as: 'sellerConversations' });
 Conversation.belongsTo(User, { foreignKey: 'sellerId', as: 'seller' });
 
-// Povezivanje konverzacije sa konkretnom knjigom
+
 Book.hasMany(Conversation, { foreignKey: 'bookId' });
 Conversation.belongsTo(Book, { foreignKey: 'bookId', as: 'book' });
 
 // --- Relacije za Messages ---
-// Konverzacija ima mnogo poruka
+
 Conversation.hasMany(Messages, { foreignKey: 'conversationId', as: 'messages' });
 Messages.belongsTo(Conversation, { foreignKey: 'conversationId', as: 'conversation' });
 
-// Poruka pripada pošiljaocu (User)
+
 User.hasMany(Messages, { foreignKey: 'senderId', as: 'sentMessages' });
 Messages.belongsTo(User, { foreignKey: 'senderId', as: 'sender' });
 
@@ -157,17 +153,16 @@ Messages.belongsTo(User, { foreignKey: 'senderId', as: 'sender' });
 // 8. SISTEM PRIJAVA (Reports)
 // ==========================================
 
-// Ko je prijavio (User)
+
 User.hasMany(Report, { foreignKey: 'reporterId', as: 'reportsSent' });
 Report.belongsTo(User, { foreignKey: 'reporterId', as: 'reporter' });
 
-// Napomena: Pošto targetId može biti i User i Book, 
-// standardne belongsTo relacije pravimo ovako:
 
-// Ako je prijava na KORISNIKA
+
+
 Report.belongsTo(User, { foreignKey: 'targetId', as: 'reportedUser', constraints: false });
 
-// Ako je prijava na KNJIGU
+
 Report.belongsTo(Book, { foreignKey: 'targetId', as: 'reportedBook', constraints: false });
 module.exports = {
     Sequelize,

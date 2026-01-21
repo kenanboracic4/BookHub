@@ -68,7 +68,7 @@ module.exports = {
 
         return await userDao.getUserBooks(id, filters);
     },
-   async getBasicUser(id) {
+    async getBasicUser(id) {
         return await userDao.findUserBasicInfo(id);
     },
 
@@ -79,38 +79,28 @@ module.exports = {
     async getAllLanguages() {
         return userDao.getAllLanguages();
     },
-    async getAllLocations(){
+    async getAllLocations() {
         return userDao.getAllLocations();
     },
 
     async updateUserProfile(userData, genreIds, languageIds, file, location) {
-
         const user = await userDao.findUserDataById(userData.id);
         if (!user) throw new Error('Korisnik nije pronađen');
 
         let dataToUpdate = {};
-
-
         if (userData.role) dataToUpdate.role = userData.role;
         if (userData.status) dataToUpdate.status = userData.status;
         if (userData.bio !== undefined) dataToUpdate.bio = userData.bio;
-
-        if (file) {
-            dataToUpdate.profileImage = '/uploads/' + file.filename;
-        }
-        if(location){
-            dataToUpdate.locationId = location;
-        }
+        if (file) dataToUpdate.profileImage = '/uploads/' + file.filename;
+        if (location) dataToUpdate.locationId = location;
 
         if (userData.newPassword && userData.newPassword.trim() !== "") {
             const salt = await bcrypt.genSalt(10);
             dataToUpdate.password = await bcrypt.hash(userData.newPassword, salt);
         }
 
-        const finalGenres = (genreIds !== undefined) ? genreIds : user.Genres.map(g => g.id);
-        const finalLanguages = (languageIds !== undefined) ? languageIds : user.Languages.map(l => l.id);
 
-        return await userDao.updateUser(userData.id, dataToUpdate, finalGenres, finalLanguages);
+        return await userDao.updateUser(userData.id, dataToUpdate, genreIds, languageIds);
     },
     async updateUserRole(userId) {
         return await userDao.updateUserRole(userId);
@@ -118,16 +108,16 @@ module.exports = {
     async getAllUsers() {
         return await userDao.getAllUsers();
     },
-    async archiveUser(userId){
+    async archiveUser(userId) {
         return await userDao.archiveUser(userId);
     },
     async banUser(userId, duration) {
-      let block = null;
-      if (duration === '15') {
-        block = new Date();
-        block.setDate(block.getDate() + 15);
-      }
-      return await userDao.banUser(userId, block);
-    }  
+        let block = null;
+        if (duration === '15') {
+            block = new Date();
+            block.setDate(block.getDate() + 15);
+        }
+        return await userDao.banUser(userId, block);
+    }
 
 };

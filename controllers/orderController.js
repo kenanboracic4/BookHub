@@ -37,7 +37,7 @@ module.exports = {
         const orders = await orderService.getPurchasesWithItems(req.user.id);
         
 
-        console.log("orders:", orders);
+       
         res.render('orders', {
             orders: orders
         });
@@ -130,7 +130,7 @@ module.exports = {
                success: true
           })
         }catch(error){
-            console.log(error);
+          
            return res.status(500).json({
                success: false,
                message: error.message
@@ -139,7 +139,7 @@ module.exports = {
     },
 
   async finishOrder(req, res) {
-    console.log("aaaa");
+ 
     try{
         const orderId = req.params.orderId;
         
@@ -149,7 +149,7 @@ module.exports = {
             message: 'Narudžba je završena.'
         })
     }catch(error){
-        console.log(error);
+        
         res.status(500).json({
             success: false,
             message: error.message

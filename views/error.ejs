@@ -1,3 +1,60 @@
-<h1><%= message %></h1>
-<h2><%= error.status %></h2>
-<pre><%= error.stack %></pre>
+<!DOCTYPE html>
+<html lang="hr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Greška | BookHub</title>
+    <link rel="icon" type="image/png" href="/images/favicon.png?v=1">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <link rel="stylesheet" href="/stylesheets/header.css">
+    <link rel="stylesheet" href="/stylesheets/footer.css">
+    <link rel="stylesheet" href="/stylesheets/error.css">
+
+    
+</head>
+
+<body>
+
+    <% include partials/header %>
+
+    <div class="main-content-wrapper">
+        <div class="error-container">
+            
+            <div class="error-icon">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+
+            <h1 class="error-code"><%= (error && error.status) ? error.status : '500' %></h1>
+
+            <h2 class="error-title">
+                <%= message || 'Ups! Došlo je do greške.' %>
+            </h2>
+
+            <p class="error-desc">
+                <% if ((error && error.status) === 404) { %>
+                    Stranica koju tražite ne postoji, premještena je ili trenutno nije dostupna.
+                <% } else { %>
+                    Nažalost, došlo je do neočekivane greške na serveru. Pokušajte ponovo kasnije.
+                <% } %>
+            </p>
+
+            <a href="/" class="btn-home">
+                <i class="fa-solid fa-house"></i> Povratak na početnu
+            </a>
+
+          
+
+        </div>
+    </div>
+
+    <% include partials/footer %>
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/javascripts/header.js"></script>
+    
+</body>
+
+</html>

@@ -126,7 +126,7 @@ module.exports = {
         const { status, date, price, title } = req.query;
 
         const user = await userService.findUserDataById(parseInt(id));
-        console.log("User" , user);
+       
         if (!user) {
             return res.status(404).send('Korisnik nije pronađen.');
         }
@@ -159,11 +159,13 @@ module.exports = {
             if(req.user.id != id && isAdmin.role != 'Admin'){
                 return res.status(401).send('Niste ovlašćeni za uređivanje korisnika.');
             }
-            const user = await userService.findUserDataById(parseInt(id));
-            const userBooks = await userService.getUserBooks(id);
-            const genres = await userService.getAllGenres();
-            const languages = await userService.getAllLanguages();
-            const locations = await userService.getAllLocations();
+           const [user, userBooks, genres, languages, locations] = await Promise.all([
+            userService.findUserDataById(parseInt(id)),
+            userService.getUserBooks(id),
+            userService.getAllGenres(),
+            userService.getAllLanguages(),
+            userService.getAllLocations()
+        ]);
 
             if (!user) {
                 return res.status(404).send('Korisnik nije pronađen.');

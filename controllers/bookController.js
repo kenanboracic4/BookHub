@@ -27,7 +27,7 @@ module.exports = {
             res.render('bookDetail', { book: book });
 
         } catch (error) {
-            console.error("Greška na details stranici:", error);
+            
             res.status(500).send("Serverska greška");
         }
     },

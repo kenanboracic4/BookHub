@@ -10,7 +10,7 @@ $(document).ready(function () {
             url: '/notifications/read/' + notifId,
             method: 'PUT',
             success: function (data) {
-                console.log("Notifikacija označena kao pročitana");
+                console.log("   procitano");
                 
                 window.location.href = targetUrl;
             },
