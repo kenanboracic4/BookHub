@@ -18,7 +18,8 @@ module.exports = {
         if (!cartItems || cartItems.length === 0) {
             throw new Error('Korpa je prazna!');
         }
-
+       
+        // grupisanje knjiga po prodavacima
         cartItems.forEach(item => {
 
             const bookData = item.Book || item.book;
@@ -31,7 +32,7 @@ module.exports = {
                 sellers[sId].push(bookData);
             }
         });
-        console.log("Sellers mapa:", JSON.stringify(sellers, null, 2));
+       
 
         const t = await sequelize.transaction();
         const createdOrdersInfo = [];
