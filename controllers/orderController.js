@@ -12,7 +12,7 @@ module.exports = {
 
             const createdOrdersInfo = await orderService.createOrder(currentUserId);
 
-            
+            // kreiranje notifikacija o kreiranim narudzbama
             for (const orderInfo of createdOrdersInfo) {
                 await notificationService.createNotification({
                     userId: orderInfo.sellerId, 

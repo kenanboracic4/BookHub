@@ -54,7 +54,7 @@ const setUserContext = withTiming("setUserContext", async (req, res, next) => {
             cartCount,
         };
         res.locals.user = req.user;
-        return next();
+        return next(); 
     } catch (error) {
         res.clearCookie("token");
         res.locals.user = null;
