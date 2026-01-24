@@ -157,7 +157,7 @@ module.exports = {
             
             const isAdmin = await userService.findUserDataById(parseInt(req.user.id));
             if(req.user.id != id && isAdmin.role != 'Admin'){
-                return res.status(401).send('Niste ovlašćeni za uređivanje korisnika.');
+                return res.status(403).send('Niste ovlašćeni za uređivanje korisnika.');
             }
            const [user, userBooks, genres, languages, locations] = await Promise.all([
             userService.findUserDataById(parseInt(id)),
