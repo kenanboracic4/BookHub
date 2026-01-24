@@ -1,5 +1,5 @@
 const notificationService = require("../services/NotificationService");
-const withTiming = require("./timingHelper"); // Ovo ti je falilo!
+const withTiming = require("./timingHelper");
 
 const notifications = withTiming("notifications", async (req, res, next) => {
     try {

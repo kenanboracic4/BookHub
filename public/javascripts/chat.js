@@ -39,7 +39,7 @@ $(document).ready(function () {
     });
 
     // Slusamo notifikacije za sve ostale chatove 
-   
+    // mijenjanje konverzacije
     socket.on('updateNotification', function(data) {
        
         const convBox = $(`.conv-link[data-id="${data.conversationId}"]`);
