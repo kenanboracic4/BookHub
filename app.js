@@ -7,7 +7,7 @@ var logger = require('morgan');
 const sequelize = require('./config/db');
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
-const { User, Book, Cart, Order, OrderItem, UserGenres, Users, UserLanguages, GenresLK, LanguagesLK, BookConditionsLK, LocationsLK } = require('./models/associations');
+
 
 
 const { setUserContext } = require('./middleware/auth');
